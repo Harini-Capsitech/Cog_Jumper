@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GapTrigger : MonoBehaviour
 {
     private bool isActive = false;
+    public Transform snapMagnet;
 
     public void EnableTrigger(bool value)
     {
@@ -11,7 +12,6 @@ public class GapTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       
         if (!isActive) return;
         if (!other.CompareTag("PlayerCube")) return;
 

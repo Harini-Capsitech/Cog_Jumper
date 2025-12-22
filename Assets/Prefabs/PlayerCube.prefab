@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.012523285, y: 0.8243796, z: 0.0077740443, w: 0.5658453}
   m_LocalPosition: {x: 5.8658, y: -2.7251, z: 9.7085}
-  m_LocalScale: {x: 2, y: 3, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -108,8 +108,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.7201769, y: 1.2490977, z: 1.1508629}
-  m_Center: {x: 0.130074, y: -0.009771228, z: 0.030500796}
+  m_Size: {x: 1.6939995, y: 1.420414, z: 1.1574175}
+  m_Center: {x: 0.23487245, y: 0.051573396, z: 0.022124106}
 --- !u!54 &7337247133416891101
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -118,7 +118,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1154865867092905632}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -149,5 +149,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffeb47b072b442648ac2cbed5d763e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
   targetWheel: {fileID: 0}

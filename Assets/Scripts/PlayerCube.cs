@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerCube : MonoBehaviour
 {
-    public float jumpForce = 40f;
+    private float jumpForce = 90f;
 
     private Rigidbody rb;
     private bool hasJumped=false;
@@ -20,8 +20,6 @@ public class PlayerCube : MonoBehaviour
     void Update()
     {
        
-        
-
         if (Input.GetMouseButtonDown(0) )
         {
             JumpToTarget();
@@ -44,6 +42,8 @@ public class PlayerCube : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!hasJumped || !isAlive) return;
+        if (other.GetComponent<GapTrigger>() != null)
+            return;
 
         if (!other.CompareTag("Magnet"))
         {
@@ -53,25 +53,31 @@ public class PlayerCube : MonoBehaviour
 
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
-        Debug.Log($"AttachToMagnet - Wheel: {wheel.name}, Magnet: {magnet.name}");
-        Debug.Log($"Magnet world pos: {magnet.position}, local pos: {magnet.localPosition}");
-
-        
         rb.isKinematic = true;
         transform.SetParent(null);
 
-        
         transform.position = magnet.position;
-
-        Debug.Log($"Player moved to: {transform.position}");
-
-        
         transform.SetParent(wheel, true);
 
         hasJumped = false;
 
-        Debug.Log($"Player parented to {wheel.name}, final pos: {transform.position}");
     }
+
+    //public void AttachToMagnet(Transform wheel, Transform magnet)
+    //{
+    //    rb.isKinematic = true;
+
+    //    // Parent first (local space)
+    //    transform.SetParent(wheel, false);
+
+    //    // Match cube exactly
+    //    transform.localPosition = magnet.localPosition;
+    //    transform.localRotation = magnet.localRotation;
+    //    transform.localScale = magnet.localScale;
+
+    //    hasJumped = false;
+    //}
+
 
     public void Die()
     {
@@ -87,4 +93,5 @@ public class PlayerCube : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         GameFlowController.Instance.GameOver();
     }
+   
 }
