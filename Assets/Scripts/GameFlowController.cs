@@ -9,6 +9,8 @@ public class GameFlowController : MonoBehaviour
     public Transform wheelsParent;
     public GameObject playerCubePrefab;
 
+    private int score = 0;
+
     [HideInInspector] public List<GameObject> wheels = new List<GameObject>();
 
     private PlayerCube player;
@@ -102,6 +104,7 @@ public class GameFlowController : MonoBehaviour
 
     public void PlayerLanded(GapTrigger gap)
     {
+        score += 5;
         Transform wheelTransform = gap.transform.parent;
         GameObject landedWheel = wheelTransform.parent.gameObject;
 
@@ -174,6 +177,7 @@ public class GameFlowController : MonoBehaviour
 
     public void GameOver()
     {
+        GameOverUI.Instance.Show(score);
         Debug.Log("Game Over!");
     }
 }
