@@ -3,13 +3,14 @@ using System.Collections;
 
 public class PlayerCube : MonoBehaviour
 {
-    private float jumpForce = 90f;
+    private float jumpForce = 100f;
 
     private Rigidbody rb;
     private bool hasJumped=false;
     private bool isAlive = true;
 
     [HideInInspector] public Transform targetWheel;
+    [SerializeField] private Transform SpawnPos;
     private Coroutine jumpTimeoutRoutine;
 
 
@@ -73,6 +74,7 @@ public class PlayerCube : MonoBehaviour
         transform.SetParent(null);
 
         transform.position = magnet.position;
+        transform.rotation = magnet.rotation;
         transform.SetParent(wheel, true);
 
         hasJumped = false;

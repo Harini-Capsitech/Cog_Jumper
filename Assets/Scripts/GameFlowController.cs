@@ -177,7 +177,13 @@ public class GameFlowController : MonoBehaviour
 
     public void GameOver()
     {
+        Time.timeScale = 0f;
+
+        wheelsParent.gameObject.SetActive(false);
+        player.gameObject.SetActive(false);
         GameOverUI.Instance.Show(score);
+        player.GetComponent<Rigidbody>().isKinematic = false;
+        player.GetComponent<Rigidbody>().mass = 5f;
         Debug.Log("Game Over!");
     }
 }
