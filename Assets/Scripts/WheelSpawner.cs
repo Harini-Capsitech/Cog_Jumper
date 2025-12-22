@@ -1,103 +1,6 @@
-﻿//using UnityEngine;
-//using System.Collections;
-
-//public class WheelSpawner : MonoBehaviour
-//{
-//    public GameObject wheelPrefab;
-
-//    // Borders
-//    public Transform leftBorder;    // B
-//    public Transform rightBorder;   // B2
-
-//    public float rotationSpeed = 120f;
-//    public float spawnDelay = 2f;
-
-//    // Offsets
-//    public float verticalSpacing = 2.5f;
-//    public float horizontalInset = 1.2f;
-
-//    private int spawnIndex = 0;
-//    private bool isGameOver = false;
-
-//    void Start()
-//    {
-//        StartCoroutine(SpawnLoop());
-//    }
-
-//    IEnumerator SpawnLoop()
-//    {
-//        while (!isGameOver)
-//        {
-//            SpawnSingleWheel();
-//            yield return new WaitForSeconds(spawnDelay);
-//        }
-//    }
-
-//    void SpawnSingleWheel()
-//    {
-//        Vector3 spawnPosition = GetNextSpawnPosition();
-
-//        GameObject wheel = Instantiate(
-//            wheelPrefab,
-//            spawnPosition,
-//            Quaternion.identity
-//        );
-
-//        WheelRotation rotation = wheel.AddComponent<WheelRotation>();
-
-//        // rotation logic unchanged
-//        rotation.rotationSpeed = (spawnIndex % 2 == 0)
-//            ? rotationSpeed
-//            : -rotationSpeed;
-
-//        spawnIndex++;
-//    }
-
-//    Vector3 GetNextSpawnPosition()
-//    {
-//        int pattern = spawnIndex % 4;
-//        int row = spawnIndex / 2; // vertical stacking
-
-//        switch (pattern)
-//        {
-//            case 0: // Bottom Right
-//                return new Vector3(
-//                    rightBorder.position.x - horizontalInset,
-//                    -row * verticalSpacing,
-//                    0f
-//                );
-
-//            case 1: // Top Left
-//                return new Vector3(
-//                    leftBorder.position.x + horizontalInset,
-//                    -row * verticalSpacing,
-//                    0f
-//                );
-
-//            case 2: // Top Right
-//                return new Vector3(
-//                    rightBorder.position.x - horizontalInset,
-//                    -row * verticalSpacing,
-//                    0f
-//                );
-
-//            case 3: // Top Left again
-//                return new Vector3(
-//                    leftBorder.position.x + horizontalInset,
-//                    -row * verticalSpacing,
-//                    0f
-//                );
-//        }
-
-//        return Vector3.zero;
-//    }
-
-//    public void GameOver()
-//    {
-//        isGameOver = true;
-//    }
-//}
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WheelSpawner : MonoBehaviour
 {
@@ -108,9 +11,16 @@ public class WheelSpawner : MonoBehaviour
 
     public float rotationSpeed = 120f;
 
+    // Game Over UI
+    public GameObject gameOverPanel;
     void Start()
     {
+        gameOverPanel.SetActive(false);
+
         SpawnWheels();
+
+        // Trigger Game Over after 5 seconds
+        StartCoroutine(GameOverAfterDelay());
     }
 
     void SpawnWheels()
@@ -136,5 +46,22 @@ public class WheelSpawner : MonoBehaviour
                 ? rotationSpeed
                 : -rotationSpeed;
         }
+    }
+    IEnumerator GameOverAfterDelay()
+    {
+        yield return new WaitForSeconds(10f);
+        GameOver();
+    }
+
+    void GameOver()
+    {
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0f; // pause game
+    }
+    //  Called from Restart Button (OnClick)
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
