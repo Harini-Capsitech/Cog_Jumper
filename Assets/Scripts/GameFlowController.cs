@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameFlowController : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class GameFlowController : MonoBehaviour
     public Transform wheelsParent;
     public GameObject playerCubePrefab;
 
+    private int score = 0;
+
     [HideInInspector] public List<GameObject> wheels = new List<GameObject>();
 
     private PlayerCube player;
@@ -16,10 +18,10 @@ public class GameFlowController : MonoBehaviour
 
     public GameObject currentWheel;
 
-    
+
     private Camera mainCam;
 
-    
+
     public float cameraMoveSpeed = 4f;
 
     void Awake()
@@ -102,16 +104,21 @@ public class GameFlowController : MonoBehaviour
 
     public void PlayerLanded(GapTrigger gap)
     {
+        score += 5;
+
+        //
+        // UPDATE UI
+        GameOverUI.Instance.UpdateScore(score);
         Transform wheelTransform = gap.transform.parent;
         GameObject landedWheel = wheelTransform.parent.gameObject;
 
-        
+
         player.AttachToMagnet(wheelTransform, gap.snapMagnet);
         currentWheel = landedWheel;
 
         SetWheelGapTriggers(landedWheel, false);
 
-      
+
         GameObject nextWheel = wheelSpawner.SpawnWheelAtPoint(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
 
@@ -123,7 +130,7 @@ public class GameFlowController : MonoBehaviour
         CleanupOldWheels();
     }
 
-   
+
     void MoveCameraBetweenWheels(GameObject current, GameObject next)
     {
         float midZ = (current.transform.position.z + next.transform.position.z) * 0.5f;
@@ -137,7 +144,7 @@ public class GameFlowController : MonoBehaviour
         StartCoroutine(SmoothMoveCamera(targetPos));
     }
 
-    
+
     System.Collections.IEnumerator SmoothMoveCamera(Vector3 targetPos)
     {
         while (Vector3.Distance(mainCam.transform.position, targetPos) > 0.01f)
@@ -174,6 +181,13 @@ public class GameFlowController : MonoBehaviour
 
     public void GameOver()
     {
+        Time.timeScale = 0f;
+
+        wheelsParent.gameObject.SetActive(false);
+        player.gameObject.SetActive(false);
+
+        GameOverUI.Instance.ShowGameOver(score);
+
         Debug.Log("Game Over!");
     }
 }
