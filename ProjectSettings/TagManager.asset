@@ -7,6 +7,7 @@ TagManager:
   - Wheel
   - Magnet
   - Cube
+  - PlayerCube
   layers:
   - Default
   - TransparentFX
