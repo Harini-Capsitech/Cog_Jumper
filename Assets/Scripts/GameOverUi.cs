@@ -18,13 +18,14 @@ public class GameOverUI : MonoBehaviour
     public void Show(int score)
     {
         panel.SetActive(true);
-        scoreText.text = score.ToString();
+        scoreText.text = "Score: " + score;
     }
 
     public void RestartGame()
     {
-
-        AppManager.instance.RestartGame();
+       
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1f;
     }
     public void Hide()
     {
