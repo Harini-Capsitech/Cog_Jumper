@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class GameFlowController : MonoBehaviour
 {
@@ -28,10 +28,12 @@ public class GameFlowController : MonoBehaviour
     {
         Instance = this;
         mainCam = Camera.main;
+        AppStateManager.Instance.SetGameplay();
     }
 
     void Start()
     {
+      
         player = FindAnyObjectByType<PlayerCube>();
 
         if (player == null && playerCubePrefab != null)
@@ -105,10 +107,13 @@ public class GameFlowController : MonoBehaviour
     public void PlayerLanded(GapTrigger gap)
     {
         score += 5;
+        //
+        if (GameplayScoreUI.Instance != null)
+            GameplayScoreUI.Instance.UpdateScore(score);
+
+        Debug.Log("Score updated: " + score);
 
         //
-        // UPDATE UI
-        GameOverUI.Instance.UpdateScore(score);
         Transform wheelTransform = gap.transform.parent;
         GameObject landedWheel = wheelTransform.parent.gameObject;
 
@@ -185,9 +190,9 @@ public class GameFlowController : MonoBehaviour
 
         wheelsParent.gameObject.SetActive(false);
         player.gameObject.SetActive(false);
-
-        GameOverUI.Instance.ShowGameOver(score);
-
+        GameOverUI.Instance.Show(score);
+        player.GetComponent<Rigidbody>().isKinematic = false;
+        player.GetComponent<Rigidbody>().mass = 5f;
         Debug.Log("Game Over!");
     }
 }
