@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8924434622937982803}
   - component: {fileID: 1276239047517725416}
   - component: {fileID: 6276726433374653472}
+  - component: {fileID: 3102441803906663218}
   m_Layer: 5
   m_Name: GameOverP
   m_TagString: Untagged
@@ -78,6 +79,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3102441803906663218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059436625298345478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b99175bd528d4b4cb76a5c6783dab52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 1059436625298345478}
+  scoreText: {fileID: 1745506963354208952}
 --- !u!1 &2270590165792503133
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +286,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3102441803906663218}
         m_TargetAssemblyTypeName: GameOverUI, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1

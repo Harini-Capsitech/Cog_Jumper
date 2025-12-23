@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheelPrefab: {fileID: 2110913723211796381, guid: 83066773c85b1e24899f51a694c917ff, type: 3}
-  wheelSpacingZ: 20
+  wheelSpacingZ: 35
   startZ: 0
   centerX: 0
   centerY: 0

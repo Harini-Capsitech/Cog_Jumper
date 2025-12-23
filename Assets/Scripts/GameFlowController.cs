@@ -107,7 +107,8 @@ public class GameFlowController : MonoBehaviour
     public void PlayerLanded(GapTrigger gap)
     {
         score += 5;
-        
+        if (GameplayScoreUI.Instance != null)
+            GameplayScoreUI.Instance.UpdateScore(score);
         Transform wheelTransform = gap.transform.parent;
         GameObject landedWheel = wheelTransform.parent.gameObject;
 
@@ -184,6 +185,7 @@ public class GameFlowController : MonoBehaviour
 
         wheelsParent.gameObject.SetActive(false);
         player.gameObject.SetActive(false);
+        AppManager.instance.GameOver();
         GameOverUI.Instance.Show(score);
         player.GetComponent<Rigidbody>().isKinematic = false;
         player.GetComponent<Rigidbody>().mass = 5f;
