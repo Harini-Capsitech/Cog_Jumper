@@ -586,6 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameLogicPrefab: {fileID: 6233302562040447484, guid: 6d9c26eb9779fff4f95c585fd6decaa1, type: 3}
+  camStartPos: {x: 0, y: 0, z: 0}
 --- !u!4 &957037330
 Transform:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2836010185323504442}
   - component: {fileID: 6386979118417635725}
   - component: {fileID: 6809336509064423100}
-  - component: {fileID: 170031812370550863}
+  - component: {fileID: 2549003503867375080}
   m_Layer: 5
   m_Name: ScoreP
   m_TagString: Untagged
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &170031812370550863
+--- !u!114 &2549003503867375080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 837972143865885083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d08324d77cff33c48999a5ebfbfc4301, type: 3}
+  m_Script: {fileID: 11500000, guid: 306d2e0d842a89149aa281cc567d1ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 110480160877395856}
@@ -122,10 +122,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2836010185323504442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -393.35056, y: 1220.9998}
-  m_SizeDelta: {x: 400.8577, y: 244.7708}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 440, y: 1245}
+  m_SizeDelta: {x: -883.14233, y: -2533.2292}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6296900283477700068
 CanvasRenderer:
