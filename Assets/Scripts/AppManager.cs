@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AppManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     [SerializeField] private GameObject GameLogicPrefab;
     private GameObject GameLogic;
 
@@ -17,7 +17,6 @@ public class AppManager : MonoBehaviour
         camStartPos = Camera.main.transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -51,21 +50,18 @@ public class AppManager : MonoBehaviour
             Destroy(GameLogic);
         }
 
-        // Show Game Over UI
         AppStateManager.Instance.SetGameOver();
     }
 
     public void RestartGame()
     {
         
-
-        // Reset time
         Time.timeScale = 1f;
         this.StartGame();
         Camera.main.transform.position = camStartPos;
     }
 
-    // 🏠 Optional: Go back to Home
+    
     public void GoToHome()
     {
         if (GameLogic != null)

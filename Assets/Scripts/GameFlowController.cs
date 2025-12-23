@@ -53,10 +53,10 @@ public class GameFlowController : MonoBehaviour
 
     void SpawnInitialWheels()
     {
-        GameObject firstWheel = wheelSpawner.SpawnWheelAtPoint(wheelIndex++, wheelsParent);
+        GameObject firstWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(firstWheel);
 
-        GameObject secondWheel = wheelSpawner.SpawnWheelAtPoint(wheelIndex++, wheelsParent);
+        GameObject secondWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(secondWheel);
 
         StartCoroutine(InitializePlayerAfterFrame(firstWheel, secondWheel));
@@ -119,7 +119,7 @@ public class GameFlowController : MonoBehaviour
         SetWheelGapTriggers(landedWheel, false);
 
       
-        GameObject nextWheel = wheelSpawner.SpawnWheelAtPoint(wheelIndex++, wheelsParent);
+        GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
 
         player.targetWheel = nextWheel.transform;

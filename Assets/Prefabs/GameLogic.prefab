@@ -47,9 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelPrefab: {fileID: 2110913723211796381, guid: 83066773c85b1e24899f51a694c917ff, type: 3}
   wheelSpacingZ: 35
-  startZ: 0
-  centerX: 0
+  startZ: 3
   centerY: 0
+  centerX: 0
+  leftOffset: 8
+  rightOffset: 10
 --- !u!212 &4622913928228875220
 SpriteRenderer:
   m_ObjectHideFlags: 0
