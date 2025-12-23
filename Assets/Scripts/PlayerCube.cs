@@ -157,6 +157,7 @@ using System.Collections;
 
 public class PlayerCube : MonoBehaviour
 {
+<<<<<<< HEAD
     [Header("Jump Settings")]
     [SerializeField] private float jumpForce = 250f;
     [SerializeField] private float jumpTimeout = 0.35f;
@@ -165,9 +166,19 @@ public class PlayerCube : MonoBehaviour
 
     private bool hasJumped = false;
     private bool jumpResolved = false;
+=======
+    private float jumpForce = 100f;
+
+    private Rigidbody rb;
+    private bool hasJumped = false;
+>>>>>>> origin/Dev
     private bool isAlive = true;
 
     [HideInInspector] public Transform targetWheel;
+    [SerializeField] private Transform SpawnPos;
+    private Coroutine jumpTimeoutRoutine;
+    private bool landedThisJump = false;
+
 
     private Coroutine jumpTimeoutRoutine;
 
@@ -179,9 +190,13 @@ public class PlayerCube : MonoBehaviour
 
     void Update()
     {
+<<<<<<< HEAD
         if (!isAlive) return;
 
         if (Input.GetMouseButtonDown(0) && !hasJumped)
+=======
+        if (Input.GetMouseButtonDown(0))
+>>>>>>> origin/Dev
         {
             JumpToTarget();
         }
@@ -189,11 +204,17 @@ public class PlayerCube : MonoBehaviour
 
     void JumpToTarget()
     {
+        landedThisJump = false;
         hasJumped = true;
+<<<<<<< HEAD
         jumpResolved = false;
 
         GetComponent<Collider>().enabled = true;
 
+=======
+        GetComponent<Collider>().enabled = true;
+        Debug.Log("player enter");
+>>>>>>> origin/Dev
         GameFlowController.Instance.OnPlayerJumped();
 
         transform.SetParent(null);
@@ -204,6 +225,7 @@ public class PlayerCube : MonoBehaviour
 
         Vector3 dir = (targetWheel.position - transform.position).normalized;
         rb.AddForce(dir * jumpForce, ForceMode.Impulse);
+<<<<<<< HEAD
 
         jumpTimeoutRoutine = StartCoroutine(JumpTimeout());
     }
@@ -217,15 +239,37 @@ public class PlayerCube : MonoBehaviour
         {
             DieDelayed();
         }
+=======
+        jumpTimeoutRoutine = StartCoroutine(JumpTimeout());
+>>>>>>> origin/Dev
     }
+    IEnumerator JumpTimeout()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        if (hasJumped && isAlive)
+        {
+            Die();
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
+<<<<<<< HEAD
         if (!isAlive || !hasJumped || jumpResolved)
             return;
 
         // ✅ SUCCESS: Magnet touched first
         if (other.CompareTag("Magnet"))
+=======
+
+        if (!isAlive) return;
+        if (!hasJumped) return;
+
+
+        if (other.CompareTag("Cube"))
+>>>>>>> origin/Dev
         {
             jumpResolved = true;
             return;
@@ -247,11 +291,25 @@ public class PlayerCube : MonoBehaviour
 
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
+<<<<<<< HEAD
         // 🔒 Block landing after death
         if (!isAlive) return;
 
         if (jumpTimeoutRoutine != null)
             StopCoroutine(jumpTimeoutRoutine);
+=======
+        if (jumpTimeoutRoutine != null)
+            StopCoroutine(jumpTimeoutRoutine);
+
+        landedThisJump = true;
+        rb.isKinematic = true;
+        GetComponent<Collider>().enabled = false;
+        transform.SetParent(null);
+
+        transform.position = magnet.position;
+        transform.rotation = magnet.rotation;
+        transform.SetParent(wheel, true);
+>>>>>>> origin/Dev
 
         hasJumped = false;
         jumpResolved = true;
@@ -264,8 +322,12 @@ public class PlayerCube : MonoBehaviour
         transform.SetParent(wheel, true);
     }
 
+<<<<<<< HEAD
     // ❌ Immediate Game Over (FixedCube hit)
     void DieImmediate()
+=======
+    public void Die()
+>>>>>>> origin/Dev
     {
         if (!isAlive) return;
 
@@ -288,7 +350,14 @@ public class PlayerCube : MonoBehaviour
 
     IEnumerator GameOverDelay()
     {
+<<<<<<< HEAD
         yield return new WaitForSecondsRealtime(0.3f);
         GameFlowController.Instance.GameOver();
     }
 }
+=======
+        yield return new WaitForSecondsRealtime(1.5f);
+        GameFlowController.Instance.GameOver();
+    }
+}
+>>>>>>> origin/Dev
