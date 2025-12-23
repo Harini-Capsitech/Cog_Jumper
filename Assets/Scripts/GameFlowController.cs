@@ -48,6 +48,7 @@ public class GameFlowController : MonoBehaviour
         }
 
         SpawnInitialWheels();
+        
     }
 
     void SpawnInitialWheels()
@@ -99,12 +100,14 @@ public class GameFlowController : MonoBehaviour
         if (currentWheel != null)
         {
             SetWheelGapTriggers(currentWheel, false);
+
         }
     }
 
     public void PlayerLanded(GapTrigger gap)
     {
         score += 5;
+        
         Transform wheelTransform = gap.transform.parent;
         GameObject landedWheel = wheelTransform.parent.gameObject;
 

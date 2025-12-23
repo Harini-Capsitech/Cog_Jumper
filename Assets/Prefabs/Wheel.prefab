@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3788341134563193575}
   - component: {fileID: 3033886527912241321}
   - component: {fileID: 3225763446965347680}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magnet
   m_TagString: Magnet
   m_Icon: {fileID: 0}
@@ -107,8 +107,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 188.32925, z: 1.7541469}
-  m_Center: {x: 0.00087184785, y: 93.69648, z: -0.043759834}
+  m_Size: {x: 1, y: 188.32925, z: 0.5714825}
+  m_Center: {x: 0.0007152104, y: 93.79282, z: -0.096372895}
 --- !u!114 &3225763446965347680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 8266721001082550454}
   - component: {fileID: 3107294772067850532}
   - component: {fileID: 1270749971437839738}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magnet
   m_TagString: Magnet
   m_Icon: {fileID: 0}
@@ -229,8 +229,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 205.75685, z: 1.562695}
-  m_Center: {x: -0.000003936775, y: 102.5137, z: 0.12994821}
+  m_Size: {x: 1, y: 205.75685, z: 0.5317199}
+  m_Center: {x: -0.0002924883, y: 102.13187, z: 0.064044744}
 --- !u!114 &1270749971437839738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 2293780964031391779}
   - component: {fileID: 6861087522790525431}
   - component: {fileID: 3352234454763865978}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: 'Magnet '
   m_TagString: Magnet
   m_Icon: {fileID: 0}
@@ -351,8 +351,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99999934, y: 230.75597, z: 1.510703}
-  m_Center: {x: 0.0011415618, y: 84.142105, z: -0.052432604}
+  m_Size: {x: 0.99999934, y: 230.75586, z: 0.8002303}
+  m_Center: {x: 0.0007358379, y: 84.81145, z: 0.07437876}
 --- !u!114 &3352234454763865978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 2649302501650108295}
   - component: {fileID: 4269795601420568303}
   - component: {fileID: -3828900007398309440}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wheel
   m_TagString: Wheel
   m_Icon: {fileID: 0}
@@ -396,7 +396,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 5, z: 10}
+  m_LocalScale: {x: 20, y: 5, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7473063066502959332}
@@ -481,10 +481,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 0.498732
+  m_Height: 2.0000005
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0.000000047683717, y: 0, z: 0.0012680053}
 --- !u!114 &-3828900007398309440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,9 +510,9 @@ GameObject:
   - component: {fileID: 5619525594453880580}
   - component: {fileID: 7342725619655258468}
   - component: {fileID: 1974218670054609548}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FixedCube1
-  m_TagString: Cube
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,12 +601,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.68, y: 1, z: 0.66}
+  m_Center: {x: -0.15546083, y: 0, z: 0.007987382}
 --- !u!1 &3417181671565760009
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +620,7 @@ GameObject:
   - component: {fileID: 9114740640595863541}
   - component: {fileID: 1388454692929844841}
   - component: {fileID: 1153796671205560821}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magnet
   m_TagString: Magnet
   m_Icon: {fileID: 0}
@@ -714,8 +714,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99999934, y: 230.75597, z: 1.510703}
-  m_Center: {x: 0.0011415618, y: 84.142105, z: -0.052432604}
+  m_Size: {x: 0.99999934, y: 230.75594, z: 0.72781587}
+  m_Center: {x: 0.0011439057, y: 84.27045, z: -0.023519713}
 --- !u!114 &1153796671205560821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,9 +741,9 @@ GameObject:
   - component: {fileID: 5318247702032682197}
   - component: {fileID: 9004775044106286659}
   - component: {fileID: 4757888072078627279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FixedCube4
-  m_TagString: Cube
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -832,7 +832,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -851,7 +851,7 @@ GameObject:
   - component: {fileID: 2013848768193750820}
   - component: {fileID: 8040041761697685782}
   - component: {fileID: 3141554194783274475}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magnet
   m_TagString: Magnet
   m_Icon: {fileID: 0}
@@ -945,8 +945,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 277.70206, z: 1.7395866}
-  m_Center: {x: -0.00041114906, y: 138.56827, z: 0.092891514}
+  m_Size: {x: 0.80596626, y: 277.702, z: 0.61904424}
+  m_Center: {x: -0.09711094, y: 138.19202, z: 0.020914383}
 --- !u!114 &3141554194783274475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,9 +972,9 @@ GameObject:
   - component: {fileID: 8111370173247898776}
   - component: {fileID: 8854545997017135717}
   - component: {fileID: 4970651641213109846}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FixedCube7
-  m_TagString: Cube
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1063,12 +1063,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.6547282, y: 1, z: 0.584802}
+  m_Center: {x: 0.17263593, y: 0.000000010209314, z: -0.026234169}
 --- !u!1 &5794216695647931254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,9 +1081,9 @@ GameObject:
   - component: {fileID: 6256621464764038533}
   - component: {fileID: 6280593999149049632}
   - component: {fileID: 1207232334244892897}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FixedCube6
-  m_TagString: Cube
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1172,12 +1172,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.6138046, y: 1, z: 0.5843615}
+  m_Center: {x: 0.19309771, y: 0.000000011921883, z: 0.033017326}
 --- !u!1 &5920715823298315151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,7 +1191,7 @@ GameObject:
   - component: {fileID: 823550470690268572}
   - component: {fileID: 413903306274335380}
   - component: {fileID: 2946634280556149273}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magnet
   m_TagString: Magnet
   m_Icon: {fileID: 0}
@@ -1285,8 +1285,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9263555, y: 98.61055, z: 1.5127463}
-  m_Center: {x: -0.46328735, y: 48.989117, z: -0.03295653}
+  m_Size: {x: 1.9263554, y: 179.7905, z: 0.7293793}
+  m_Center: {x: -0.46484303, y: 89.82189, z: -0.077863604}
 --- !u!114 &2946634280556149273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1312,9 +1312,9 @@ GameObject:
   - component: {fileID: 2716091917452309527}
   - component: {fileID: 1553852930877051722}
   - component: {fileID: 2614003047614457919}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FixedCube3
-  m_TagString: Cube
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1403,12 +1403,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.67440087, y: 1, z: 0.4985599}
+  m_Center: {x: -0.16280007, y: 2.828048e-10, z: 0.016217887}
 --- !u!1 &7549948910126327042
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,9 +1421,9 @@ GameObject:
   - component: {fileID: 4337130262406279951}
   - component: {fileID: 6216029830123460981}
   - component: {fileID: 7571220406134533182}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FixedCube2
-  m_TagString: Cube
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1512,12 +1512,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.39135653, y: 1, z: 0.66}
+  m_Center: {x: -0.010678315, y: 0, z: 0.0069999928}
 --- !u!1 &8253089350003714015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,7 +1531,7 @@ GameObject:
   - component: {fileID: 286802035688554230}
   - component: {fileID: 1213338393328091929}
   - component: {fileID: 6147668333139184073}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magnet
   m_TagString: Magnet
   m_Icon: {fileID: 0}
@@ -1625,8 +1625,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99999976, y: 188.67584, z: 1.3994228}
-  m_Center: {x: -0.0015172751, y: 93.9292, z: 0.106617935}
+  m_Size: {x: 0.9999998, y: 195.42828, z: 0.4692369}
+  m_Center: {x: -0.0017139959, y: 97.5057, z: 0.14606923}
 --- !u!114 &6147668333139184073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1652,9 +1652,9 @@ GameObject:
   - component: {fileID: 8075815881193161484}
   - component: {fileID: 6839092717213042336}
   - component: {fileID: 3707772047223627785}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FixedCube5
-  m_TagString: Cube
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1743,7 +1743,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1761,9 +1761,9 @@ GameObject:
   - component: {fileID: 6350919100004292387}
   - component: {fileID: 8165673333917754619}
   - component: {fileID: 8870734369207860071}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FixedCube8
-  m_TagString: Cube
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1852,12 +1852,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.7498174, y: 1, z: 0.45474884}
+  m_Center: {x: 0.1250905, y: 0.0000000061253798, z: -0.013787955}
 --- !u!1 &8645504016128036752
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 6886967744398317635}
   - component: {fileID: 5873477978398949801}
   - component: {fileID: 4459227664260954880}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magnet
   m_TagString: Magnet
   m_Icon: {fileID: 0}
@@ -1965,8 +1965,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99999976, y: 160.50652, z: 1.0245172}
-  m_Center: {x: 0.0035693846, y: 79.15106, z: -0.058782794}
+  m_Size: {x: 0.9999998, y: 173.11533, z: 0.44854367}
+  m_Center: {x: 0.0016771641, y: 85.77595, z: -0.14382076}
 --- !u!114 &4459227664260954880
 MonoBehaviour:
   m_ObjectHideFlags: 0
