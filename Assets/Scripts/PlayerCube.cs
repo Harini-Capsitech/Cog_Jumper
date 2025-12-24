@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
-    [SerializeField] private float jumpForce = 250f;
+    [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float jumpTimeout = 0.35f;
 
     private Rigidbody rb;
@@ -39,6 +39,10 @@ public class PlayerCube : MonoBehaviour
         jumpResolved = false;
 
         GetComponent<Collider>().enabled = true;
+
+        //PLAY JUMP SOUND
+        SoundManager.Instance.PlayJump();
+        //
 
         GameFlowController.Instance.OnPlayerJumped();
 
@@ -118,6 +122,12 @@ public class PlayerCube : MonoBehaviour
         isAlive = false;
         rb.isKinematic = true;
 
+        // to stop sound after GAME starts .
+        SoundManager.Instance.StopSfx();
+
+        //Gameover sond
+        SoundManager.Instance.PlayGameOver();
+        //
         GameFlowController.Instance.GameOver();
     }
 
