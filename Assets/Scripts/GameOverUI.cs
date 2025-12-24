@@ -12,20 +12,22 @@ public class GameOverUI : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        panel.SetActive(false); 
+        panel.SetActive(false);
     }
 
     public void Show(int score)
     {
         panel.SetActive(true);
-        scoreText.text = "Score: " + score;
+        scoreText.text = score.ToString();
     }
 
     public void RestartGame()
     {
-       
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1f;
+        AppManager.instance.RestartGame();
+    }
+    public void Home()
+    {
+        AppManager.instance.GoToHome();
     }
     public void Hide()
     {

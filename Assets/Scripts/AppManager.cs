@@ -3,23 +3,27 @@ using UnityEngine;
 
 public class AppManager : MonoBehaviour
 {
-    
-    [SerializeField] private GameObject GameLogicPrefab;
-    private GameObject GameLogic;
+    [SerializeField] private GameObject gameLogicPrefab;
+    private GameObject gameLogic;
 
     public static AppManager instance;
 
-    [SerializeField] private Vector3 camStartPos;
-    void Start()
+    private Vector3 camStartPos;
+
+    private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         instance = this;
-        StartCoroutine(ShowLoading());
-        camStartPos = Camera.main.transform.position;
     }
 
-    void Update()
+    private void Start()
     {
-        
+        camStartPos = Camera.main.transform.position;
+        StartCoroutine(ShowLoading());
     }
 
     IEnumerator ShowLoading()
@@ -31,23 +35,27 @@ public class AppManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (GameLogic == null)
+        Time.timeScale = 1f;
+
+        Camera.main.transform.position = camStartPos;
+
+        if (gameLogic != null)
         {
-            GameLogic = Instantiate(GameLogicPrefab);
+            Destroy(gameLogic);
+            gameLogic = null;
         }
-        else
-        {
-            GameLogic.SetActive(true);
-        }
+
+        gameLogic = Instantiate(gameLogicPrefab);
+
         AppStateManager.Instance.SetGameplay();
     }
 
     public void GameOver()
     {
-        if (GameLogic != null)
+        if (gameLogic != null)
         {
-            GameLogic.SetActive(false);
-            Destroy(GameLogic);
+            Destroy(gameLogic);
+            gameLogic = null;
         }
 
         AppStateManager.Instance.SetGameOver();
@@ -55,22 +63,19 @@ public class AppManager : MonoBehaviour
 
     public void RestartGame()
     {
-        
-        Time.timeScale = 1f;
-        this.StartGame();
-        Camera.main.transform.position = camStartPos;
+        StartGame();
     }
 
-    
     public void GoToHome()
     {
-        if (GameLogic != null)
+        Time.timeScale = 1f;
+
+        if (gameLogic != null)
         {
-            Destroy(GameLogic);
-            GameLogic = null;
+            Destroy(gameLogic);
+            gameLogic = null;
         }
 
-        Time.timeScale = 1f;
         AppStateManager.Instance.SetHome();
     }
 }

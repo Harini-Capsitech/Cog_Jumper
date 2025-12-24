@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
-    [SerializeField] private float jumpForce = 250f;
+    [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float jumpTimeout = 0.35f;
 
     private Rigidbody rb;
@@ -40,6 +40,10 @@ public class PlayerCube : MonoBehaviour
 
         GetComponent<Collider>().enabled = true;
 
+        //PLAY JUMP SOUND
+        //SoundManager.Instance.PlayJump();
+        //
+
         GameFlowController.Instance.OnPlayerJumped();
 
         transform.SetParent(null);
@@ -58,7 +62,7 @@ public class PlayerCube : MonoBehaviour
     {
         yield return new WaitForSeconds(jumpTimeout);
 
-        
+
         if (hasJumped && !jumpResolved && isAlive)
         {
             DieDelayed();
@@ -70,14 +74,14 @@ public class PlayerCube : MonoBehaviour
         if (!isAlive || !hasJumped || jumpResolved)
             return;
 
-        
+
         if (other.CompareTag("Magnet"))
         {
             jumpResolved = true;
             return;
         }
 
-        
+
         if (other.CompareTag("FixedCube"))
         {
             jumpResolved = true;
@@ -93,7 +97,6 @@ public class PlayerCube : MonoBehaviour
 
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
-        
         if (!isAlive) return;
 
         if (jumpTimeoutRoutine != null)
@@ -110,7 +113,7 @@ public class PlayerCube : MonoBehaviour
         transform.SetParent(wheel, true);
     }
 
-   
+
     void DieImmediate()
     {
         if (!isAlive) return;
@@ -118,10 +121,16 @@ public class PlayerCube : MonoBehaviour
         isAlive = false;
         rb.isKinematic = true;
 
+        // to stop sound after GAME starts .
+        //SoundManager.Instance.StopSfx();
+
+        //Gameover sond
+       // SoundManager.Instance.PlayGameOver();
+        //
         GameFlowController.Instance.GameOver();
     }
 
-    
+
     void DieDelayed()
     {
         if (!isAlive) return;
