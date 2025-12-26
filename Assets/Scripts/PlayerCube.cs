@@ -40,8 +40,7 @@ public class PlayerCube : MonoBehaviour
 
         GetComponent<Collider>().enabled = true;
 
-        //PLAY JUMP SOUND
-        SoundManager.Instance.PlayJump();
+        
         //
 
         GameFlowController.Instance.OnPlayerJumped();
@@ -97,7 +96,9 @@ public class PlayerCube : MonoBehaviour
 
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
-        
+        //PLAY JUMP SOUND
+        SoundManager.Instance.PlayJump();
+
         if (!isAlive) return;
 
         if (jumpTimeoutRoutine != null)
