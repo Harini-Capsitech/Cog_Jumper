@@ -4,8 +4,8 @@ using System.Collections;
 public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
-    [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float jumpTimeout = 0.35f;
+    [SerializeField] private float jumpForce = 100f;
+    [SerializeField] private float jumpTimeout = 0.3f;
 
     private Rigidbody rb;
 
@@ -31,6 +31,7 @@ public class PlayerCube : MonoBehaviour
         {
             JumpToTarget();
         }
+
     }
 
     void JumpToTarget()
@@ -39,9 +40,7 @@ public class PlayerCube : MonoBehaviour
         jumpResolved = false;
 
         GetComponent<Collider>().enabled = true;
-
-        
-        //
+        SoundManager.Instance.PlayJump();
 
         GameFlowController.Instance.OnPlayerJumped();
 
@@ -52,7 +51,8 @@ public class PlayerCube : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
 
         Vector3 dir = (targetWheel.position - transform.position).normalized;
-        rb.AddForce(dir * jumpForce, ForceMode.Impulse);
+        dir.y += 0.25f;
+        rb.linearVelocity = dir * jumpForce;
 
         jumpTimeoutRoutine = StartCoroutine(JumpTimeout());
     }
@@ -61,35 +61,42 @@ public class PlayerCube : MonoBehaviour
     {
         yield return new WaitForSeconds(jumpTimeout);
 
-        
+
         if (hasJumped && !jumpResolved && isAlive)
         {
-            DieDelayed();
+            DieImmediate();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isAlive || !hasJumped || jumpResolved)
+        if (!isAlive)
             return;
 
+
+        if (other.CompareTag("Border"))
+        {
+           
+                DieImmediate();
+
+            return;
+        }
         
+
+        if (!hasJumped || jumpResolved)
+            return;
+
+
         if (other.CompareTag("Magnet"))
         {
             jumpResolved = true;
             return;
         }
 
-        
+
         if (other.CompareTag("FixedCube"))
         {
             jumpResolved = true;
-
-            if (jumpTimeoutRoutine != null)
-                StopCoroutine(jumpTimeoutRoutine);
-
-            GetComponent<Collider>().enabled = false;
-
             DieImmediate();
         }
     }
@@ -99,6 +106,7 @@ public class PlayerCube : MonoBehaviour
         //PLAY JUMP SOUND
         SoundManager.Instance.PlayJump();
 
+
         if (!isAlive) return;
 
         if (jumpTimeoutRoutine != null)
@@ -107,15 +115,34 @@ public class PlayerCube : MonoBehaviour
         hasJumped = false;
         jumpResolved = true;
 
+
+        StartCoroutine(SmoothAttach(wheel, magnet));
+
+    }
+    IEnumerator SmoothAttach(Transform wheel, Transform magnet)
+    {
         rb.isKinematic = true;
         GetComponent<Collider>().enabled = false;
+
+        Vector3 startPos = transform.position;
+        Quaternion startRot = transform.rotation;
+
+        float t = 0f;
+        float duration = 0.22f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duration;
+            transform.position = Vector3.Lerp(startPos, magnet.position, t);
+            transform.rotation = Quaternion.Slerp(startRot, magnet.rotation, t);
+            yield return null;
+        }
 
         transform.position = magnet.position;
         transform.rotation = magnet.rotation;
         transform.SetParent(wheel, true);
     }
 
-   
     void DieImmediate()
     {
         if (!isAlive) return;
@@ -123,29 +150,13 @@ public class PlayerCube : MonoBehaviour
         isAlive = false;
         rb.isKinematic = true;
 
-        // to stop sound after GAME starts .
+
         SoundManager.Instance.StopSfx();
 
-        //Gameover sond
         SoundManager.Instance.PlayGameOver();
-        //
+
         GameFlowController.Instance.GameOver();
     }
 
-    
-    void DieDelayed()
-    {
-        if (!isAlive) return;
-
-        isAlive = false;
-        rb.isKinematic = true;
-
-        StartCoroutine(GameOverDelay());
-    }
-
-    IEnumerator GameOverDelay()
-    {
-        yield return new WaitForSecondsRealtime(0.3f);
-        GameFlowController.Instance.GameOver();
-    }
 }
+

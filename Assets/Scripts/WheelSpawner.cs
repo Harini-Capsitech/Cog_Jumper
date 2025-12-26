@@ -9,7 +9,6 @@ public class WheelSpawner : MonoBehaviour
     public float startZ = 3f;
     public float centerY = 0f;
 
-    [Header("ZigZag (Asymmetric)")]
     public float centerX = 0f;
     public float leftOffset = 1.5f;   
     public float rightOffset = 10f; 

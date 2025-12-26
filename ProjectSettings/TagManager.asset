@@ -9,6 +9,7 @@ TagManager:
   - Cube
   - Magnet
   - FixedCube
+  - Border
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,4 @@
 ﻿#nullable disable
-
 using System;
 using UnityEngine;
 [DefaultExecutionOrder(-100)]
@@ -62,23 +61,21 @@ public class AppStateManager : MonoBehaviour
     [Serializable]
     public sealed class OverlayBinding
     {
-        public string key; // e.g., Pause, HUD, Warning
+        public string key; 
         public GameObject prefab;
         [NonSerialized] public GameObject instance;
     }
 
     [SerializeField]
     private OverlayBinding[] overlays = Array.Empty<OverlayBinding>();
-
-    // Current state
     public AppState CurrentState { get; private set; } = AppState.Unknown;
 
-    // Events
-    public event Action<AppState, AppState> OnStateChanged; // (oldState, newState)
+    
+    public event Action<AppState, AppState> OnStateChanged; 
 
     private void Awake()
     {
-        // Singleton guard
+        
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -93,8 +90,7 @@ public class AppStateManager : MonoBehaviour
 
     }
 
-    // Public: high-level state setters for single-scene flows
-
+    
     public void SetSplash() => SetState(AppState.Splash);
     public void SetSplashOnLoad() => SetState(AppState.SplashOnLoad);
     public void SetTutorial() => SetState(AppState.Tutorial);
