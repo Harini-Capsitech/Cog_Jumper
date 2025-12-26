@@ -296,7 +296,7 @@ public class GameFlowController : MonoBehaviour
 
         player.GetComponent<Rigidbody>().isKinematic = false;
 
-        player.GetComponent<Rigidbody>().mass = 5f;
+        player.GetComponent<Rigidbody>().mass = 0.5f;
 
         Debug.Log("Game Over!");
 

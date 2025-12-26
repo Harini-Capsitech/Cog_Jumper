@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour
     [Header("SFX Clips")]
     [SerializeField] private AudioClip sfxClip;
     [SerializeField] private AudioClip jumpSfx;
-    [SerializeField] private AudioClip gameOverSfx; // optional
+    [SerializeField] private AudioClip gameOverSfx; 
 
     private void Awake()
     {
