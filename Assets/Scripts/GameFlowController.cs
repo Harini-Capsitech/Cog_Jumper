@@ -25,9 +25,7 @@ public class GameFlowController : MonoBehaviour
     public GameObject currentWheel;
 
 
-
     private Camera mainCam;
-
 
 
     public float cameraMoveSpeed = 4f;
@@ -53,6 +51,8 @@ public class GameFlowController : MonoBehaviour
         {
 
             GameObject playerObj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
+
+            
 
             player = playerObj.GetComponent<PlayerCube>();
 
@@ -171,13 +171,11 @@ public class GameFlowController : MonoBehaviour
         GameObject landedWheel = wheelTransform.parent.gameObject;
 
 
-
         player.AttachToMagnet(wheelTransform, gap.snapMagnet);
 
         currentWheel = landedWheel;
 
         SetWheelGapTriggers(landedWheel, false);
-
 
 
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
@@ -193,7 +191,6 @@ public class GameFlowController : MonoBehaviour
         CleanupOldWheels();
 
     }
-
 
 
     void MoveCameraBetweenWheels(GameObject current, GameObject next)
@@ -217,7 +214,6 @@ public class GameFlowController : MonoBehaviour
         StartCoroutine(SmoothMoveCamera(targetPos));
 
     }
-
 
 
     System.Collections.IEnumerator SmoothMoveCamera(Vector3 targetPos)

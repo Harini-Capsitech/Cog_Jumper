@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WheelRotation : MonoBehaviour
 {
-    public float rotationSpeed = 250f;
+    public float rotationSpeed = 200f;
 
     void Update()
     {

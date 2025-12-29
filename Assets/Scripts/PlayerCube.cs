@@ -5,7 +5,7 @@ public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
     [SerializeField] private float jumpForce = 100f;
-    [SerializeField] private float jumpTimeout = 0.3f;
+    [SerializeField] private float jumpTimeout = 0.1f;
 
     private Rigidbody rb;
 
@@ -22,6 +22,8 @@ public class PlayerCube : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
     }
+
+
 
     void Update()
     {
@@ -44,7 +46,7 @@ public class PlayerCube : MonoBehaviour
         SoundManager.Instance.PlayJump();
 
         GameFlowController.Instance.OnPlayerJumped();
-
+        Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
         transform.SetParent(null);
 
         rb.isKinematic = false;
@@ -65,7 +67,10 @@ public class PlayerCube : MonoBehaviour
 
         if (hasJumped && !jumpResolved && isAlive)
         {
-            DieImmediate();
+            Debug.Log("Enter");
+            //Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+            StartCoroutine(GameOverDelay());
+            
         }
     }
 
@@ -77,12 +82,12 @@ public class PlayerCube : MonoBehaviour
 
         if (other.CompareTag("Border"))
         {
-           
-                DieImmediate();
-
+            Debug.Log("Border gameover");
+            Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+            StartCoroutine(GameOverDelay());
             return;
         }
-        
+
 
         if (!hasJumped || jumpResolved)
             return;
@@ -106,7 +111,7 @@ public class PlayerCube : MonoBehaviour
     {
 
         if (!isAlive) return;
-
+        Camera.main.GetComponent<CameraFollow>().SetTarget(null);
         if (jumpTimeoutRoutine != null)
             StopCoroutine(jumpTimeoutRoutine);
 
@@ -156,5 +161,14 @@ public class PlayerCube : MonoBehaviour
         GameFlowController.Instance.GameOver();
     }
 
+    IEnumerator GameOverDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        DieImmediate();
+    }
+
+
+
 }
+
 
