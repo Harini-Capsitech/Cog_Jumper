@@ -64,14 +64,27 @@ public class AppManager : MonoBehaviour
 
     public void RestartGame()
     {
+
+        SoundManager.Instance.PlaySfx();
+        Time.timeScale = 1f;
+        this.StartGame();
+        Camera.main.transform.position = camStartPos;
+
         StartGame();
     }
 
     public void GoToHome()
     {
+
+        // to stop sound after GAME starts .
+        SoundManager.Instance.StopSfx();
+
+        
+
         Time.timeScale = 1f;
 
         if (gameLogic != null)
+
         {
             Destroy(gameLogic);
             gameLogic = null;
