@@ -3,11 +3,11 @@
 public class CameraFollow : MonoBehaviour
 {
     [Header("Follow Target (Assigned at Runtime)")]
-    public Transform target;       // Player cube will be assigned after spawn
+    public Transform target;     
 
     [Header("Camera Settings")]
     public float smoothSpeed = 5f;
-    public Vector3 followOffset = new Vector3(0f, 3f, -6f); // Customize for your game
+    public Vector3 followOffset = new Vector3(0f, 3f, -6f); 
 
     [Header("Follow Options")]
     public bool followX = true;
@@ -16,7 +16,7 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (target == null) return;  // Do nothing until target is assigned
+        if (target == null) return;  
 
         Vector3 desiredPos = target.position + followOffset;
         Vector3 currentPos = transform.position;
@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.Lerp(currentPos, finalPos, smoothSpeed * Time.deltaTime);
     }
 
-    // ⭐ CALLED FROM SPAWNER
+   
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;

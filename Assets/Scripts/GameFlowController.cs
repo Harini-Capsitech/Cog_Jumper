@@ -30,6 +30,11 @@ public class GameFlowController : MonoBehaviour
 
     public float cameraMoveSpeed = 4f;
 
+    public static float CurrentWheelSpeed;
+    private const float BASE_WHEEL_SPEED = 150f;
+    private const int SCORE_STEP = 25;
+    private const float SPEED_INCREMENT = 25f;
+
     void Awake()
 
     {
@@ -37,7 +42,7 @@ public class GameFlowController : MonoBehaviour
         Instance = this;
 
         mainCam = Camera.main;
-
+        CurrentWheelSpeed = BASE_WHEEL_SPEED;
     }
 
     void Start()
@@ -52,7 +57,7 @@ public class GameFlowController : MonoBehaviour
 
             GameObject playerObj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
 
-            
+
 
             player = playerObj.GetComponent<PlayerCube>();
 
@@ -165,6 +170,7 @@ public class GameFlowController : MonoBehaviour
         if (GameplayScoreUI.Instance != null)
 
             GameplayScoreUI.Instance.UpdateScore(score);
+        UpdateWheelSpeed();
 
         Transform wheelTransform = gap.transform.parent;
 
@@ -186,61 +192,66 @@ public class GameFlowController : MonoBehaviour
 
         SetWheelGapTriggers(nextWheel, true);
 
-        MoveCameraBetweenWheels(landedWheel, nextWheel);
+        //MoveCameraBetweenWheels(landedWheel, nextWheel);
 
         CleanupOldWheels();
 
     }
 
-
-    void MoveCameraBetweenWheels(GameObject current, GameObject next)
-
+    void UpdateWheelSpeed()
     {
-
-        float midZ = (current.transform.position.z + next.transform.position.z) * 0.5f;
-
-        Vector3 targetPos = new Vector3(
-
-            mainCam.transform.position.x,
-
-            mainCam.transform.position.y,
-
-            midZ
-
-        );
-
-        StopAllCoroutines();
-
-        StartCoroutine(SmoothMoveCamera(targetPos));
-
+        int steps = score / SCORE_STEP;
+        CurrentWheelSpeed = BASE_WHEEL_SPEED + (steps * SPEED_INCREMENT);
     }
 
+    //void MoveCameraBetweenWheels(GameObject current, GameObject next)
 
-    System.Collections.IEnumerator SmoothMoveCamera(Vector3 targetPos)
+    //{
 
-    {
+    //    float midZ = (current.transform.position.z + next.transform.position.z) * 0.5f;
 
-        while (Vector3.Distance(mainCam.transform.position, targetPos) > 0.01f)
+    //    Vector3 targetPos = new Vector3(
 
-        {
+    //        mainCam.transform.position.x,
 
-            mainCam.transform.position = Vector3.Lerp(
+    //        mainCam.transform.position.y,
 
-                mainCam.transform.position,
+    //        midZ
 
-                targetPos,
+    //    );
 
-                Time.deltaTime * cameraMoveSpeed
+    //    StopAllCoroutines();
 
-            );
+    //    StartCoroutine(SmoothMoveCamera(targetPos));
 
-            yield return null;
+    //}
 
-        }
 
-        mainCam.transform.position = targetPos;
+    //System.Collections.IEnumerator SmoothMoveCamera(Vector3 targetPos)
 
-    }
+    //{
+
+    //    while (Vector3.Distance(mainCam.transform.position, targetPos) > 0.01f)
+
+    //    {
+
+    //        mainCam.transform.position = Vector3.Lerp(
+
+    //            mainCam.transform.position,
+
+    //            targetPos,
+
+    //            Time.deltaTime * cameraMoveSpeed
+
+    //        );
+
+    //        yield return null;
+
+    //    }
+
+    //    mainCam.transform.position = targetPos;
+
+    //}
 
     void SetWheelGapTriggers(GameObject wheel, bool value)
 
@@ -299,4 +310,5 @@ public class GameFlowController : MonoBehaviour
     }
 
 }
+
 

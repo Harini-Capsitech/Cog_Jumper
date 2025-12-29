@@ -46,7 +46,8 @@ public class PlayerCube : MonoBehaviour
         SoundManager.Instance.PlayJump();
 
         GameFlowController.Instance.OnPlayerJumped();
-        Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+       // Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+
         transform.SetParent(null);
 
         rb.isKinematic = false;
@@ -83,7 +84,7 @@ public class PlayerCube : MonoBehaviour
         if (other.CompareTag("Border"))
         {
             Debug.Log("Border gameover");
-            Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+   
             StartCoroutine(GameOverDelay());
             return;
         }
@@ -130,7 +131,7 @@ public class PlayerCube : MonoBehaviour
         SoundManager.Instance.PlayJump();
 
         if (!isAlive) return;
-        Camera.main.GetComponent<CameraFollow>().SetTarget(null);
+       // Camera.main.GetComponent<CameraFollow>().SetTarget(null);
         if (jumpTimeoutRoutine != null)
             StopCoroutine(jumpTimeoutRoutine);
 
