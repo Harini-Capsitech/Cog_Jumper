@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 4329884171778818830}
   - component: {fileID: 2649302501650108295}
   - component: {fileID: 4269795601420568303}
-  - component: {fileID: -3828900007398309440}
+  - component: {fileID: -5610962524007239893}
   m_Layer: 9
   m_Name: Wheel
   m_TagString: Wheel
@@ -485,7 +485,7 @@ CapsuleCollider:
   m_Height: 2.0000005
   m_Direction: 1
   m_Center: {x: 0.000000047683717, y: 0, z: 0.0012680053}
---- !u!114 &-3828900007398309440
+--- !u!114 &-5610962524007239893
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2616005194a2a4a908b57fd39bafca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 200
+  rotationSpeed: 250
 --- !u!1 &2578086732556043121
 GameObject:
   m_ObjectHideFlags: 0
