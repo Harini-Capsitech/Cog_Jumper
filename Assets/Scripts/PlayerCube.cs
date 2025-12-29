@@ -8,7 +8,8 @@ public class PlayerCube : MonoBehaviour
     [SerializeField] private float jumpTimeout = 0.3f;
 
     private Rigidbody rb;
-
+    public PlayerJumpEffect jumpEffect; // assign in Inspector
+    private bool hasAttachedOnce = false;
     private bool hasJumped = false;
     private bool jumpResolved = false;
     private bool isAlive = true;
@@ -101,11 +102,27 @@ public class PlayerCube : MonoBehaviour
         }
     }
 
+    //public void AttachToMagnet(Transform wheel, Transform magnet)
+    //{
+    //    //PLAY JUMP SOUND
+    //    SoundManager.Instance.PlayJump();
+
+
+    //    if (!isAlive) return;
+
+    //    if (jumpTimeoutRoutine != null)
+    //        StopCoroutine(jumpTimeoutRoutine);
+
+    //    hasJumped = false;
+    //    jumpResolved = true;
+
+
+    //    StartCoroutine(SmoothAttach(wheel, magnet));
+
+    //}
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
-        //PLAY JUMP SOUND
         SoundManager.Instance.PlayJump();
-
 
         if (!isAlive) return;
 
@@ -115,10 +132,20 @@ public class PlayerCube : MonoBehaviour
         hasJumped = false;
         jumpResolved = true;
 
+        // Play effect ONLY after first successful jump
+        if (hasAttachedOnce)
+        {
+            if (jumpEffect != null)
+                jumpEffect.PlayAttachEffect(0.1f);
+        }
+        else
+        {
+            hasAttachedOnce = true; // skip first attach
+        }
 
         StartCoroutine(SmoothAttach(wheel, magnet));
-
     }
+
     IEnumerator SmoothAttach(Transform wheel, Transform magnet)
     {
         rb.isKinematic = true;
