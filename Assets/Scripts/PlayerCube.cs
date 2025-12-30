@@ -5,14 +5,15 @@ public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
     [SerializeField] private float jumpForce = 100f;
-    [SerializeField] private float jumpTimeout = 0.1f;
+    [SerializeField] private float jumpTimeout = 0.5f;
 
     private Rigidbody rb;
-    public PlayerJumpEffect jumpEffect; // assign in Inspector
+    public PlayerJumpEffect jumpEffect; 
     private bool hasAttachedOnce = false;
     private bool hasJumped = false;
     private bool jumpResolved = false;
     private bool isAlive = true;
+    private bool inputLocked = false;
 
     [HideInInspector] public Transform targetWheel;
 
@@ -25,13 +26,13 @@ public class PlayerCube : MonoBehaviour
     }
 
 
-
     void Update()
     {
         if (!isAlive) return;
 
-        if (Input.GetMouseButtonDown(0) && !hasJumped)
+        if (Input.GetMouseButtonDown(0) && !inputLocked)
         {
+            inputLocked = true;
             JumpToTarget();
         }
 
@@ -46,7 +47,7 @@ public class PlayerCube : MonoBehaviour
         SoundManager.Instance.PlayJump();
 
         GameFlowController.Instance.OnPlayerJumped();
-       // Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+        // Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
         transform.SetParent(null);
 
         rb.isKinematic = false;
@@ -68,8 +69,7 @@ public class PlayerCube : MonoBehaviour
         if (hasJumped && !jumpResolved && isAlive)
         {
             Debug.Log("Enter");
-            //Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
-            StartCoroutine(GameOverDelay());
+            DieImmediate();
             
         }
     }
@@ -83,8 +83,8 @@ public class PlayerCube : MonoBehaviour
         if (other.CompareTag("Border"))
         {
             Debug.Log("Border gameover");
-          //  Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
-            StartCoroutine(GameOverDelay());
+            //  Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
+            DieImmediate();
             return;
         }
 
@@ -96,6 +96,7 @@ public class PlayerCube : MonoBehaviour
         if (other.CompareTag("Magnet"))
         {
             jumpResolved = true;
+            inputLocked = false;
             return;
         }
 
@@ -107,37 +108,20 @@ public class PlayerCube : MonoBehaviour
         }
     }
 
-    //public void AttachToMagnet(Transform wheel, Transform magnet)
-    //{
-    //    //PLAY JUMP SOUND
-    //    SoundManager.Instance.PlayJump();
-
-
-    //    if (!isAlive) return;
-
-    //    if (jumpTimeoutRoutine != null)
-    //        StopCoroutine(jumpTimeoutRoutine);
-
-    //    hasJumped = false;
-    //    jumpResolved = true;
-
-
-    //    StartCoroutine(SmoothAttach(wheel, magnet));
-
-    //}
+    
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
         SoundManager.Instance.PlayJump();
 
         if (!isAlive) return;
-     //   Camera.main.GetComponent<CameraFollow>().SetTarget(null);
+        //   Camera.main.GetComponent<CameraFollow>().SetTarget(null);
         if (jumpTimeoutRoutine != null)
             StopCoroutine(jumpTimeoutRoutine);
 
         hasJumped = false;
         jumpResolved = true;
+        inputLocked = false;
 
-        // Play effect ONLY after first successful jump
         if (hasAttachedOnce)
         {
             if (jumpEffect != null)
@@ -145,7 +129,7 @@ public class PlayerCube : MonoBehaviour
         }
         else
         {
-            hasAttachedOnce = true; // skip first attach
+            hasAttachedOnce = true; 
         }
 
         StartCoroutine(SmoothAttach(wheel, magnet));
@@ -180,6 +164,7 @@ public class PlayerCube : MonoBehaviour
         if (!isAlive) return;
 
         isAlive = false;
+        inputLocked = true;
         rb.isKinematic = true;
 
 
@@ -190,14 +175,5 @@ public class PlayerCube : MonoBehaviour
         GameFlowController.Instance.GameOver();
     }
 
-    IEnumerator GameOverDelay()
-    {
-        yield return new WaitForSeconds(2f);
-        DieImmediate();
-    }
-
-
 
 }
-
-
