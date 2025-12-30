@@ -192,7 +192,7 @@ public class GameFlowController : MonoBehaviour
 
         SetWheelGapTriggers(nextWheel, true);
 
-        //MoveCameraBetweenWheels(landedWheel, nextWheel);
+        MoveCameraBetweenWheels(landedWheel, nextWheel);
 
         CleanupOldWheels();
 
@@ -204,54 +204,54 @@ public class GameFlowController : MonoBehaviour
         CurrentWheelSpeed = BASE_WHEEL_SPEED + (steps * SPEED_INCREMENT);
     }
 
-    //void MoveCameraBetweenWheels(GameObject current, GameObject next)
+    void MoveCameraBetweenWheels(GameObject current, GameObject next)
 
-    //{
+    {
 
-    //    float midZ = (current.transform.position.z + next.transform.position.z) * 0.5f;
+        float midZ = (current.transform.position.z + next.transform.position.z) * 0.5f;
 
-    //    Vector3 targetPos = new Vector3(
+        Vector3 targetPos = new Vector3(
 
-    //        mainCam.transform.position.x,
+            mainCam.transform.position.x,
 
-    //        mainCam.transform.position.y,
+            mainCam.transform.position.y,
 
-    //        midZ
+            midZ
 
-    //    );
+        );
 
-    //    StopAllCoroutines();
+        StopAllCoroutines();
 
-    //    StartCoroutine(SmoothMoveCamera(targetPos));
+        StartCoroutine(SmoothMoveCamera(targetPos));
 
-    //}
+    }
 
 
-    //System.Collections.IEnumerator SmoothMoveCamera(Vector3 targetPos)
+    System.Collections.IEnumerator SmoothMoveCamera(Vector3 targetPos)
 
-    //{
+    {
 
-    //    while (Vector3.Distance(mainCam.transform.position, targetPos) > 0.01f)
+        while (Vector3.Distance(mainCam.transform.position, targetPos) > 0.01f)
 
-    //    {
+        {
 
-    //        mainCam.transform.position = Vector3.Lerp(
+            mainCam.transform.position = Vector3.Lerp(
 
-    //            mainCam.transform.position,
+                mainCam.transform.position,
 
-    //            targetPos,
+                targetPos,
 
-    //            Time.deltaTime * cameraMoveSpeed
+                Time.deltaTime * cameraMoveSpeed
 
-    //        );
+            );
 
-    //        yield return null;
+            yield return null;
 
-    //    }
+        }
 
-    //    mainCam.transform.position = targetPos;
+        mainCam.transform.position = targetPos;
 
-    //}
+    }
 
     void SetWheelGapTriggers(GameObject wheel, bool value)
 
