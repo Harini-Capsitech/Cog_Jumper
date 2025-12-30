@@ -6,6 +6,9 @@ public class GameFlowController : MonoBehaviour
 
 {
 
+    private int bestScore = 0;
+    private const string BEST_SCORE_KEY = "BEST_SCORE";
+
     public static GameFlowController Instance;
 
     public WheelSpawner wheelSpawner;
@@ -30,6 +33,9 @@ public class GameFlowController : MonoBehaviour
 
     public float cameraMoveSpeed = 4f;
 
+    
+
+
     void Awake()
 
     {
@@ -37,6 +43,9 @@ public class GameFlowController : MonoBehaviour
         Instance = this;
 
         mainCam = Camera.main;
+        //
+        bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
+        //
 
     }
 
@@ -279,6 +288,14 @@ public class GameFlowController : MonoBehaviour
     public void GameOver()
 
     {
+        // Save Best Score
+        if (score > bestScore)
+        {
+            bestScore = score;
+            PlayerPrefs.SetInt(BEST_SCORE_KEY, bestScore);
+            PlayerPrefs.Save();
+        }
+        //
 
         Time.timeScale = 0f;
 
@@ -288,14 +305,14 @@ public class GameFlowController : MonoBehaviour
 
         AppManager.instance.GameOver();
 
-        GameOverUI.Instance.Show(score);
+        GameOverUI.Instance.Show(score,bestScore);
 
         player.GetComponent<Rigidbody>().isKinematic = false;
 
         player.GetComponent<Rigidbody>().mass = 0.5f;
 
         Debug.Log("Game Over!");
-
+        Debug.Log("Game Over! Best Score: " + bestScore);
     }
 
 }
