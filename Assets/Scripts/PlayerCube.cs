@@ -69,8 +69,8 @@ public class PlayerCube : MonoBehaviour
         if (hasJumped && !jumpResolved && isAlive)
         {
             Debug.Log("Enter");
-            //Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
-            StartCoroutine(GameOverDelay());
+            DieImmediate();
+            
         }
     }
 
@@ -84,7 +84,7 @@ public class PlayerCube : MonoBehaviour
         {
             Debug.Log("Border gameover");
             //  Camera.main.GetComponent<CameraFollow>().SetTarget(this.transform);
-            StartCoroutine(GameOverDelay());
+            DieImmediate();
             return;
         }
 
@@ -129,7 +129,7 @@ public class PlayerCube : MonoBehaviour
         }
         else
         {
-            hasAttachedOnce = true; // skip first attach
+            hasAttachedOnce = true; 
         }
 
         StartCoroutine(SmoothAttach(wheel, magnet));
@@ -173,12 +173,6 @@ public class PlayerCube : MonoBehaviour
         SoundManager.Instance.PlayGameOver();
 
         GameFlowController.Instance.GameOver();
-    }
-
-    IEnumerator GameOverDelay()
-    {
-        yield return new WaitForSeconds(0.5f);
-        DieImmediate();
     }
 
 
