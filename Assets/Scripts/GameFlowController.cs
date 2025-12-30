@@ -33,7 +33,10 @@ public class GameFlowController : MonoBehaviour
 
     public float cameraMoveSpeed = 4f;
 
-    
+    public static float CurrentWheelSpeed;
+    private const float BASE_WHEEL_SPEED = 150f;
+    private const int SCORE_STEP = 25;
+    private const float SPEED_INCREMENT = 25f;
 
 
     void Awake()
@@ -46,7 +49,7 @@ public class GameFlowController : MonoBehaviour
         //
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         //
-
+        CurrentWheelSpeed = BASE_WHEEL_SPEED;
     }
 
     void Start()
@@ -174,6 +177,7 @@ public class GameFlowController : MonoBehaviour
         if (GameplayScoreUI.Instance != null)
 
             GameplayScoreUI.Instance.UpdateScore(score);
+        UpdateWheelSpeed();
 
         Transform wheelTransform = gap.transform.parent;
 
@@ -200,7 +204,11 @@ public class GameFlowController : MonoBehaviour
         CleanupOldWheels();
 
     }
-
+    void UpdateWheelSpeed()
+    {
+        int steps = score / SCORE_STEP;
+        CurrentWheelSpeed = BASE_WHEEL_SPEED + (steps * SPEED_INCREMENT);
+    }
 
     void MoveCameraBetweenWheels(GameObject current, GameObject next)
 
