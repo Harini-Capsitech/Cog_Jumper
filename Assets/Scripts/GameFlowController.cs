@@ -6,6 +6,9 @@ public class GameFlowController : MonoBehaviour
 
 {
 
+    private int bestScore = 0;
+    private const string BEST_SCORE_KEY = "BEST_SCORE";
+
     public static GameFlowController Instance;
 
     public WheelSpawner wheelSpawner;
@@ -30,10 +33,8 @@ public class GameFlowController : MonoBehaviour
 
     public float cameraMoveSpeed = 4f;
 
-    public static float CurrentWheelSpeed;
-    private const float BASE_WHEEL_SPEED = 150f;
-    private const int SCORE_STEP = 25;
-    private const float SPEED_INCREMENT = 25f;
+    
+
 
     void Awake()
 
@@ -42,7 +43,10 @@ public class GameFlowController : MonoBehaviour
         Instance = this;
 
         mainCam = Camera.main;
-        CurrentWheelSpeed = BASE_WHEEL_SPEED;
+        //
+        bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
+        //
+
     }
 
     void Start()
@@ -57,7 +61,7 @@ public class GameFlowController : MonoBehaviour
 
             GameObject playerObj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
 
-
+            
 
             player = playerObj.GetComponent<PlayerCube>();
 
@@ -170,7 +174,6 @@ public class GameFlowController : MonoBehaviour
         if (GameplayScoreUI.Instance != null)
 
             GameplayScoreUI.Instance.UpdateScore(score);
-        UpdateWheelSpeed();
 
         Transform wheelTransform = gap.transform.parent;
 
@@ -198,11 +201,6 @@ public class GameFlowController : MonoBehaviour
 
     }
 
-    void UpdateWheelSpeed()
-    {
-        int steps = score / SCORE_STEP;
-        CurrentWheelSpeed = BASE_WHEEL_SPEED + (steps * SPEED_INCREMENT);
-    }
 
     void MoveCameraBetweenWheels(GameObject current, GameObject next)
 
@@ -290,6 +288,14 @@ public class GameFlowController : MonoBehaviour
     public void GameOver()
 
     {
+        // Save Best Score
+        if (score > bestScore)
+        {
+            bestScore = score;
+            PlayerPrefs.SetInt(BEST_SCORE_KEY, bestScore);
+            PlayerPrefs.Save();
+        }
+        //
 
         Time.timeScale = 0f;
 
@@ -299,16 +305,15 @@ public class GameFlowController : MonoBehaviour
 
         AppManager.instance.GameOver();
 
-        GameOverUI.Instance.Show(score);
+        GameOverUI.Instance.Show(score,bestScore);
 
         player.GetComponent<Rigidbody>().isKinematic = false;
 
         player.GetComponent<Rigidbody>().mass = 0.5f;
 
         Debug.Log("Game Over!");
-
+        Debug.Log("Game Over! Best Score: " + bestScore);
     }
 
 }
-
 

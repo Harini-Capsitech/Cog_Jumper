@@ -9,17 +9,18 @@ public class GameOverUI : MonoBehaviour
 
     public GameObject panel;
     public TextMeshProUGUI scoreText;
-
+    public TextMeshProUGUI bestScoreText;
     void Awake()
     {
         Instance = this;
         panel.SetActive(false);
     }
 
-    public void Show(int score)
+    public void Show(int score, int bestScore)
     {
         panel.SetActive(true);
         scoreText.text = score.ToString();
+        bestScoreText.text = bestScore.ToString();
     }
 
     public void RestartGame()
