@@ -1,38 +1,39 @@
-﻿using UnityEngine;
+﻿//using UnityEngine;
+//using System.Collections;
 
-public class CameraFollow : MonoBehaviour
-{
-    [Header("Follow Target (Assigned at Runtime)")]
-    public Transform target;     
+//public class GameOverCameraFollow : MonoBehaviour
+//{
+//    [SerializeField] private Vector3 offset = new Vector3(0f, 3f, -6f);
+//    [SerializeField] private float followSpeed = 5f;
+//    [SerializeField] private float followTime = 3f; // 2–5 seconds
 
-    [Header("Camera Settings")]
-    public float smoothSpeed = 5f;
-    public Vector3 followOffset = new Vector3(0f, 3f, -6f); 
+//    private Transform target;
+//    private bool follow = false;
 
-    [Header("Follow Options")]
-    public bool followX = true;
-    public bool followY = true;
-    public bool followZ = true;
+//    void LateUpdate()
+//    {
+//        if (!follow || target == null) return;
 
-    private void LateUpdate()
-    {
-        if (target == null) return;  
+//        Vector3 targetPos = target.position + offset;
+//        transform.position = Vector3.Lerp(
+//            transform.position,
+//            targetPos,
+//            followSpeed * Time.deltaTime
+//        );
 
-        Vector3 desiredPos = target.position + followOffset;
-        Vector3 currentPos = transform.position;
+//        transform.LookAt(target);
+//    }
 
-        Vector3 finalPos = new Vector3(
-            followX ? desiredPos.x : currentPos.x,
-            followY ? desiredPos.y : currentPos.y,
-            followZ ? desiredPos.z : currentPos.z
-        );
+//    public void StartFollow(Transform cube)
+//    {
+//        target = cube;
+//        StartCoroutine(FollowRoutine());
+//    }
 
-        transform.position = Vector3.Lerp(currentPos, finalPos, smoothSpeed * Time.deltaTime);
-    }
-
-   
-    public void SetTarget(Transform newTarget)
-    {
-        target = newTarget;
-    }
-}
+//    private IEnumerator FollowRoutine()
+//    {
+//        follow = true;
+//        yield return new WaitForSeconds(followTime);
+//        follow = false;
+//    }
+//}

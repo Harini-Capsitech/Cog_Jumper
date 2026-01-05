@@ -114,7 +114,7 @@ public class PlayerCube : MonoBehaviour
         SoundManager.Instance.PlayJump();
 
         if (!isAlive) return;
-        //   Camera.main.GetComponent<CameraFollow>().SetTarget(null);
+        
         if (jumpTimeoutRoutine != null)
             StopCoroutine(jumpTimeoutRoutine);
 
@@ -167,6 +167,9 @@ public class PlayerCube : MonoBehaviour
         inputLocked = true;
         rb.isKinematic = true;
 
+        //// ✅ CAMERA FOLLOW ONLY ON GAME OVER
+        //Camera.main.GetComponent<GameOverCameraFollow>()
+        //           .StartFollow(transform);  
 
         SoundManager.Instance.StopSfx();
 
