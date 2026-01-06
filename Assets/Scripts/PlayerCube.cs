@@ -23,7 +23,7 @@ public class PlayerCube : MonoBehaviour
 
     [HideInInspector] public Transform targetWheel;
 
-    private Coroutine jumpTimeoutRoutine;
+    //private Coroutine jumpTimeoutRoutine;
 
     void Awake()
     {
@@ -60,15 +60,16 @@ public class PlayerCube : MonoBehaviour
         dir.y += 0.25f;
         rb.linearVelocity = dir * jumpForce;
 
-        if (jumpTimeoutRoutine != null)
-            StopCoroutine(jumpTimeoutRoutine);
+        //if (jumpTimeoutRoutine != null)
+        //    StopCoroutine(jumpTimeoutRoutine);
 
-        jumpTimeoutRoutine = StartCoroutine(JumpTimeout());
+        Invoke("JumpTimeout", 5f); 
+        //JumpTimeout());
     }
 
-    IEnumerator JumpTimeout()
+    void JumpTimeout()
     {
-        yield return new WaitForSeconds(jumpTimeout);
+        //yield return new WaitForSeconds(jumpTimeout);
         if (hasJumped && !jumpResolved && isAlive)
         {
             StartGameOver();
@@ -113,8 +114,8 @@ public class PlayerCube : MonoBehaviour
 
         CancelGameOver();
 
-        if (jumpTimeoutRoutine != null)
-            StopCoroutine(jumpTimeoutRoutine);
+        //if (jumpTimeoutRoutine != null)
+        //    StopCoroutine(jumpTimeoutRoutine);
 
         hasJumped = false;
         jumpResolved = true;

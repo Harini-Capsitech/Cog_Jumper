@@ -15,7 +15,7 @@ public class GameFlowController : MonoBehaviour
 
     [Header("Camera")]
     public float cameraMoveSpeed = 4f;
-    public bool followPlayerAfterGameOver = false;  
+    public bool followPlayerAfterGameOver = false;
     public float followSmoothSpeed = 5f;
     public Vector3 playerCameraOffset = new Vector3(0, 2f, -6f);
 
@@ -29,7 +29,7 @@ public class GameFlowController : MonoBehaviour
     private PlayerCube player;
     private Camera mainCam;
 
-    public bool IsStarted =false;
+    public bool IsStarted = false;
     public static float CurrentWheelSpeed;
     private const float BASE_WHEEL_SPEED = 150f;
     private const int SCORE_STEP = 25;
@@ -43,7 +43,7 @@ public class GameFlowController : MonoBehaviour
         mainCam = Camera.main;
         startPos = mainCam.transform.position;
         rot = mainCam.transform.rotation;
-        followPlayerAfterGameOver = false;   
+        followPlayerAfterGameOver = false;
 
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
@@ -57,17 +57,16 @@ public class GameFlowController : MonoBehaviour
             player = obj.GetComponent<PlayerCube>();
             IsStarted = true;
         }
-        ResetGame();
+        Invoke("ResetGame", 0.1f); //ResetGame();
     }
 
     void LateUpdate()
     {
-       
         if (!followPlayerAfterGameOver || player == null) return;
 
     }
 
-    
+
     public void ResetGame()
     {
         StopAllCoroutines();
@@ -90,7 +89,7 @@ public class GameFlowController : MonoBehaviour
                 Destroy(child.gameObject);
         }
 
-        
+
         player.ResetPlayerState();
         player.transform.SetParent(null);
         player.transform.position = Vector3.zero;
@@ -101,7 +100,7 @@ public class GameFlowController : MonoBehaviour
 
     void SpawnInitialWheels()
     {
-        followPlayerAfterGameOver = false;  
+        followPlayerAfterGameOver = false;
         GameObject firstWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(firstWheel);
 
@@ -207,7 +206,6 @@ public class GameFlowController : MonoBehaviour
             wheelsParent.gameObject.SetActive(false);
 
         followPlayerAfterGameOver = true;
-      
     }
 
     public void FinalGameOver()
@@ -223,6 +221,9 @@ public class GameFlowController : MonoBehaviour
         AppManager.instance.GameOver();
         mainCam.transform.parent = null;
         player.gameObject.SetActive(false);
-        GameOverUI.Instance.Show(score,bestScore);
+        //player.enabled = false;
+        //player.GetComponent<Rigidbody>().isKinematic = true;
+
+        GameOverUI.Instance.Show(score, bestScore);
     }
 }
