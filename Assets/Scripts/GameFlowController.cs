@@ -223,6 +223,9 @@ public class GameFlowController : MonoBehaviour
         AppManager.instance.GameOver();
         mainCam.transform.parent = null;
         player.gameObject.SetActive(false);
+        //player.enabled = false;
+        //player.GetComponent<Rigidbody>().isKinematic = true;
+
         GameOverUI.Instance.Show(score,bestScore);
     }
 }
