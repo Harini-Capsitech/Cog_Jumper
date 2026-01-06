@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8924434622937982803}
   - component: {fileID: 1276239047517725416}
   - component: {fileID: 6276726433374653472}
-  - component: {fileID: 983893581484790221}
+  - component: {fileID: 8514215232398484722}
   m_Layer: 5
   m_Name: GameOverP
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &983893581484790221
+--- !u!114 &8514215232398484722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 983893581484790221}
+      - m_Target: {fileID: 8514215232398484722}
         m_TargetAssemblyTypeName: GameOverUI, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
@@ -620,7 +620,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 983893581484790221}
+      - m_Target: {fileID: 8514215232398484722}
         m_TargetAssemblyTypeName: GameOverUI, Assembly-CSharp
         m_MethodName: Home
         m_Mode: 1
