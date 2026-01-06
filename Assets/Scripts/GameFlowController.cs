@@ -51,12 +51,13 @@ public class GameFlowController : MonoBehaviour
 
     void Start()
     {
-        if (player == null && playerCubePrefab != null)
-        {
-            GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
-            player = obj.GetComponent<PlayerCube>();
-            IsStarted = true;
-        }
+        //if (player == null && playerCubePrefab != null)
+        //{
+        //    GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
+        //    player = obj.GetComponent<PlayerCube>();
+        //    IsStarted = true;
+        //}
+        IsStarted = true;
         Invoke("ResetGame", 0.1f); //ResetGame();
     }
 
@@ -69,7 +70,13 @@ public class GameFlowController : MonoBehaviour
 
     public void ResetGame()
     {
+      
         StopAllCoroutines();
+        if (player == null)
+        {
+            GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
+            player = obj.GetComponent<PlayerCube>();
+        }
         mainCam.transform.position = startPos;
         mainCam.transform.rotation = rot;
         Time.timeScale = 1f;
@@ -220,9 +227,9 @@ public class GameFlowController : MonoBehaviour
         Time.timeScale = 0f;
         AppManager.instance.GameOver();
         mainCam.transform.parent = null;
-        player.gameObject.SetActive(false);
-        //player.enabled = false;
-        //player.GetComponent<Rigidbody>().isKinematic = true;
+        Destroy(player.gameObject);
+        player = null;
+
 
         GameOverUI.Instance.Show(score, bestScore);
     }

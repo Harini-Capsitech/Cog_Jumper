@@ -63,7 +63,7 @@ public class PlayerCube : MonoBehaviour
         //if (jumpTimeoutRoutine != null)
         //    StopCoroutine(jumpTimeoutRoutine);
 
-        Invoke("JumpTimeout", 5f); 
+        Invoke("JumpTimeout", 0.5f); 
         //JumpTimeout());
     }
 
