@@ -1,39 +1,43 @@
-﻿//using UnityEngine;
-//using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 
-//public class GameOverCameraFollow : MonoBehaviour
-//{
-//    [SerializeField] private Vector3 offset = new Vector3(0f, 3f, -6f);
-//    [SerializeField] private float followSpeed = 5f;
-//    [SerializeField] private float followTime = 3f; // 2–5 seconds
+public class CameraFollow : MonoBehaviour
+{
+    [SerializeField] private Vector3 offset = new Vector3(0f, 3f, -6f);
+    [SerializeField] private float followSpeed = 5f;
+    [SerializeField] private float followTime = 3f;
+    private Transform target;
+    public Transform player_;
+    private bool follow = false;
+    public float smoothTime = 0.25f;
+    private Vector3 velocity = Vector3.zero;
 
-//    private Transform target;
-//    private bool follow = false;
+    private void Start()
+    {
 
-//    void LateUpdate()
-//    {
-//        if (!follow || target == null) return;
+    }
 
-//        Vector3 targetPos = target.position + offset;
-//        transform.position = Vector3.Lerp(
-//            transform.position,
-//            targetPos,
-//            followSpeed * Time.deltaTime
-//        );
 
-//        transform.LookAt(target);
-//    }
+    void LateUpdate()
+    {
+        if (GameFlowController.Instance == null) return;
+        if (!GameFlowController.Instance.IsStarted) return;
 
-//    public void StartFollow(Transform cube)
-//    {
-//        target = cube;
-//        StartCoroutine(FollowRoutine());
-//    }
+        PlayerCube player = FindAnyObjectByType<PlayerCube>();
+        if (player == null) return;
 
-//    private IEnumerator FollowRoutine()
-//    {
-//        follow = true;
-//        yield return new WaitForSeconds(followTime);
-//        follow = false;
-//    }
-//}
+        player_ = player.transform;
+        if (player_ == null) return;
+
+        Vector3 targetPosition =
+            new Vector3(player_.position.x, 0, player_.position.z) + offset;
+
+        transform.position = Vector3.SmoothDamp(
+            transform.position,
+            targetPosition,
+            ref velocity,
+            smoothTime
+        );
+    }
+
+}

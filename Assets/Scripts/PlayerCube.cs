@@ -18,16 +18,12 @@ public class PlayerCube : MonoBehaviour
     private bool jumpResolved = false;
     private bool isAlive = true;
     private bool inputLocked = false;
-
-    
     private bool jumpSfxUnlocked = false;
-
-   
     private bool gameOverStarted = false;
 
     [HideInInspector] public Transform targetWheel;
 
-    private Coroutine jumpTimeoutRoutine;
+    //private Coroutine jumpTimeoutRoutine;
 
     void Awake()
     {
@@ -64,16 +60,16 @@ public class PlayerCube : MonoBehaviour
         dir.y += 0.25f;
         rb.linearVelocity = dir * jumpForce;
 
-        if (jumpTimeoutRoutine != null)
-            StopCoroutine(jumpTimeoutRoutine);
+        //if (jumpTimeoutRoutine != null)
+        //    StopCoroutine(jumpTimeoutRoutine);
 
-        jumpTimeoutRoutine = StartCoroutine(JumpTimeout());
+        Invoke("JumpTimeout", 5f); 
+        //JumpTimeout());
     }
 
-    IEnumerator JumpTimeout()
+    void JumpTimeout()
     {
-        Debug.Log("jump time out called");
-        yield return new WaitForSeconds(jumpTimeout);
+        //yield return new WaitForSeconds(jumpTimeout);
         if (hasJumped && !jumpResolved && isAlive)
         {
             StartGameOver();
@@ -83,6 +79,7 @@ public class PlayerCube : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!isAlive) return;
+
         if (other.CompareTag("Border"))
         {
             StartGameOver();
@@ -91,16 +88,13 @@ public class PlayerCube : MonoBehaviour
 
         if (!hasJumped || jumpResolved) return;
 
-        
         if (other.CompareTag("FixedCube"))
         {
             jumpResolved = true;
             StartGameOver();
             return;
-            
         }
 
-      
         if (other.CompareTag("Magnet"))
         {
             jumpResolved = true;
@@ -110,7 +104,6 @@ public class PlayerCube : MonoBehaviour
 
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
-        
         if (magnet == null || !magnet.CompareTag("Magnet"))
         {
             StartGameOver();
@@ -119,34 +112,24 @@ public class PlayerCube : MonoBehaviour
 
         if (!isAlive) return;
 
-        
         CancelGameOver();
 
-        if (jumpTimeoutRoutine != null)
-            StopCoroutine(jumpTimeoutRoutine);
+        //if (jumpTimeoutRoutine != null)
+        //    StopCoroutine(jumpTimeoutRoutine);
 
         hasJumped = false;
         jumpResolved = true;
         inputLocked = false;
 
-       
         if (!jumpSfxUnlocked)
-        {
-            jumpSfxUnlocked = true; 
-        }
+            jumpSfxUnlocked = true;
         else
-        {
             SoundManager.Instance.PlayJump();
-        }
 
         if (hasAttachedOnce)
-        {
             jumpEffect?.PlayAttachEffect(0.1f);
-        }
         else
-        {
             hasAttachedOnce = true;
-        }
 
         StartCoroutine(SmoothAttach(wheel, magnet));
     }
@@ -180,6 +163,10 @@ public class PlayerCube : MonoBehaviour
         if (gameOverStarted) return;
 
         gameOverStarted = true;
+
+        
+        GameFlowController.Instance.PreGameOverCleanup();
+
         StartCoroutine(DelayedGameOver());
     }
 
@@ -188,6 +175,31 @@ public class PlayerCube : MonoBehaviour
         gameOverStarted = false;
         StopAllCoroutines();
     }
+
+    public void ResetPlayerState()
+    {
+        StopAllCoroutines();
+
+        hasAttachedOnce = false;
+        hasJumped = false;
+        jumpResolved = false;
+        isAlive = true;
+        inputLocked = false;
+        jumpSfxUnlocked = false;
+        gameOverStarted = false;
+
+        targetWheel = null;
+
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = true;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.isKinematic = true;
+        rb.useGravity = false;
+    }
+
+
 
     IEnumerator DelayedGameOver()
     {
@@ -202,16 +214,12 @@ public class PlayerCube : MonoBehaviour
         isAlive = false;
         inputLocked = true;
 
-        // ````````````````````//
-        rb.isKinematic = true; // keep player moving
-
-       
-
-        //```````````````````````//
+        rb.isKinematic = false;
+        rb.useGravity = true;
 
         SoundManager.Instance.StopSfx();
         SoundManager.Instance.PlayGameOver();
 
-        GameFlowController.Instance.GameOver();
+        GameFlowController.Instance.FinalGameOver();
     }
 }

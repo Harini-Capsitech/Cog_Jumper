@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,6 +28,7 @@ public class GameOverUI : MonoBehaviour
 
         AppManager.instance.RestartGame();
     }
+
     public void Home()
     {
         AppManager.instance.GoToHome();
