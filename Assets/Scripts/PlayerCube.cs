@@ -72,6 +72,7 @@ public class PlayerCube : MonoBehaviour
 
     IEnumerator JumpTimeout()
     {
+        Debug.Log("jump time out called");
         yield return new WaitForSeconds(jumpTimeout);
         if (hasJumped && !jumpResolved && isAlive)
         {
@@ -96,6 +97,7 @@ public class PlayerCube : MonoBehaviour
             jumpResolved = true;
             StartGameOver();
             return;
+            
         }
 
       
@@ -200,7 +202,12 @@ public class PlayerCube : MonoBehaviour
         isAlive = false;
         inputLocked = true;
 
-        rb.isKinematic = true;
+        // ````````````````````//
+        rb.isKinematic = true; // keep player moving
+
+       
+
+        //```````````````````````//
 
         SoundManager.Instance.StopSfx();
         SoundManager.Instance.PlayGameOver();
