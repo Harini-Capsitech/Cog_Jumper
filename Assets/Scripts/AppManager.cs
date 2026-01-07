@@ -53,13 +53,15 @@ public class AppManager : MonoBehaviour
 
     public void GameOver()
     {
+        AppStateManager.Instance.SetGameOver();
+
         if (gameLogic != null)
         {
             Destroy(gameLogic);
             gameLogic = null;
         }
 
-        AppStateManager.Instance.SetGameOver();
+       
     }
 
     public void RestartGame()
