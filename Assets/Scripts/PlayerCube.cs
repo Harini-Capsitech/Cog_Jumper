@@ -8,7 +8,7 @@ public class PlayerCube : MonoBehaviour
     [SerializeField] private float jumpTimeout = 0.5f;
 
     [Header("Game Over")]
-    [SerializeField] private float gameOverDelay = 4f;
+    [SerializeField] private float gameOverDelay = 0.1f;
 
     private Rigidbody rb;
     public PlayerJumpEffect jumpEffect;
@@ -22,9 +22,6 @@ public class PlayerCube : MonoBehaviour
     private bool gameOverStarted = false;
 
     [HideInInspector] public Transform targetWheel;
-
-    //private Coroutine jumpTimeoutRoutine;
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -59,18 +56,14 @@ public class PlayerCube : MonoBehaviour
         Vector3 dir = (targetWheel.position - transform.position).normalized;
         dir.y += 0.25f;
         rb.linearVelocity = dir * jumpForce;
-
-        //if (jumpTimeoutRoutine != null)
-        //    StopCoroutine(jumpTimeoutRoutine);
-
-        Invoke("JumpTimeout", 5f); 
-        //JumpTimeout());
+        Invoke(nameof(JumpTimeout), 0.5f); 
+        
     }
 
     void JumpTimeout()
     {
-        //yield return new WaitForSeconds(jumpTimeout);
-        if (hasJumped && !jumpResolved && isAlive)
+        
+        if (gameObject.transform.parent == null)
         {
             StartGameOver();
         }
@@ -98,29 +91,21 @@ public class PlayerCube : MonoBehaviour
         if (other.CompareTag("Magnet"))
         {
             jumpResolved = true;
-            inputLocked = false;
+            StartCoroutine(InputLockCoroutine());
         }
     }
 
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
-        if (magnet == null || !magnet.CompareTag("Magnet"))
-        {
-            StartGameOver();
-            return;
-        }
+        
 
         if (!isAlive) return;
 
         CancelGameOver();
 
-        //if (jumpTimeoutRoutine != null)
-        //    StopCoroutine(jumpTimeoutRoutine);
-
         hasJumped = false;
         jumpResolved = true;
-        inputLocked = false;
-
+        StartCoroutine(InputLockCoroutine());
         if (!jumpSfxUnlocked)
             jumpSfxUnlocked = true;
         else
@@ -132,6 +117,11 @@ public class PlayerCube : MonoBehaviour
             hasAttachedOnce = true;
 
         StartCoroutine(SmoothAttach(wheel, magnet));
+    }
+    IEnumerator InputLockCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        inputLocked = false;
     }
 
     IEnumerator SmoothAttach(Transform wheel, Transform magnet)
@@ -198,28 +188,25 @@ public class PlayerCube : MonoBehaviour
         rb.isKinematic = true;
         rb.useGravity = false;
     }
-
-
-
     IEnumerator DelayedGameOver()
     {
         yield return new WaitForSecondsRealtime(gameOverDelay);
         DieImmediate();
+        yield return null;
     }
 
     void DieImmediate()
     {
         if (!isAlive) return;
 
+
+        GameFlowController.Instance.FinalGameOver();
         isAlive = false;
         inputLocked = true;
 
         rb.isKinematic = false;
         rb.useGravity = true;
-
         SoundManager.Instance.StopSfx();
         SoundManager.Instance.PlayGameOver();
-
-        GameFlowController.Instance.FinalGameOver();
     }
 }

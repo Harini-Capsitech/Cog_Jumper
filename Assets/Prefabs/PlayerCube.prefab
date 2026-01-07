@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 150
   jumpTimeout: 0.1
-  gameOverDelay: 1
+  gameOverDelay: 0.5
   jumpEffect: {fileID: 2869172018882592325}
   targetWheel: {fileID: 0}
 --- !u!1 &1248404354276288927

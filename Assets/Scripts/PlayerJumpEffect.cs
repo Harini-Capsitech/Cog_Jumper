@@ -20,7 +20,8 @@ public class PlayerJumpEffect : MonoBehaviour
             ParticleSystem fx = Instantiate(
                 jumpEffectPrefab,
                 point.position,
-                Quaternion.identity
+                Quaternion.identity,
+                gameObject.transform
             );
 
             fx.Play();

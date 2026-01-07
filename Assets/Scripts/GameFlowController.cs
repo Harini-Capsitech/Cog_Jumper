@@ -31,7 +31,7 @@ public class GameFlowController : MonoBehaviour
 
     public bool IsStarted = false;
     public static float CurrentWheelSpeed;
-    private const float BASE_WHEEL_SPEED = 150f;
+    private const float BASE_WHEEL_SPEED = 100f;
     private const int SCORE_STEP = 25;
     private const float SPEED_INCREMENT = 25f;
     private Vector3 startPos;
