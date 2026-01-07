@@ -51,12 +51,12 @@ public class GameFlowController : MonoBehaviour
 
     void Start()
     {
-        //if (player == null && playerCubePrefab != null)
-        //{
-        //    GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
-        //    player = obj.GetComponent<PlayerCube>();
-        //    IsStarted = true;
-        //}
+        if (player == null && playerCubePrefab != null)
+        {
+            GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
+            player = obj.GetComponent<PlayerCube>();
+            IsStarted = true;
+        }
         IsStarted = true;
         Invoke("ResetGame", 0.1f); //ResetGame();
     }
