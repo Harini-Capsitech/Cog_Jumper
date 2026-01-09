@@ -4,14 +4,18 @@ using System.Collections;
 public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
-    [SerializeField] private float jumpForce = 100f;
+    [SerializeField] private float jumpForce = 150f;
     [SerializeField] private float jumpTimeout = 0.5f;
 
     [Header("Game Over")]
-    [SerializeField] private float gameOverDelay = 0.1f;
+    [SerializeField] private float gameOverDelay = 0.6f;
 
     private Rigidbody rb;
     public PlayerJumpEffect jumpEffect;
+
+    public float shakeDuration = 0.2f;
+    public float shakeStrength = 0.5f;
+    public Camera cameraObj;
 
     private bool hasAttachedOnce = false;
     private bool hasJumped = false;
@@ -20,12 +24,16 @@ public class PlayerCube : MonoBehaviour
     private bool inputLocked = false;
     private bool jumpSfxUnlocked = false;
     private bool gameOverStarted = false;
-
     [HideInInspector] public Transform targetWheel;
+    [SerializeField] float steeringDuration = 0.25f;
+    [SerializeField] float steeringStrength = 6f;
+    [SerializeField] float upwardBias = 0.25f;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
+        cameraObj = Camera.main;
     }
 
     void Update()
@@ -53,16 +61,47 @@ public class PlayerCube : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
+        // Initial direction
         Vector3 dir = (targetWheel.position - transform.position).normalized;
-        dir.y += 0.25f;
+        dir.y += upwardBias;
+        dir.Normalize();
+
         rb.linearVelocity = dir * jumpForce;
-        Invoke(nameof(JumpTimeout), 0.5f); 
-        
+
+        // Start smoothing
+        StartCoroutine(SteerTowardTarget());
+
+        StartCoroutine(CheckForGameOver());
     }
+
+    IEnumerator SteerTowardTarget()
+    {
+        float timer = 0f;
+
+        while (timer < steeringDuration)
+        {
+            timer += Time.fixedDeltaTime;
+
+            Vector3 desiredDir =
+                (targetWheel.position - rb.position).normalized;
+
+            Vector3 desiredVelocity =
+                desiredDir * rb.linearVelocity.magnitude;
+
+            rb.linearVelocity = Vector3.Lerp(
+                rb.linearVelocity,
+                desiredVelocity,
+                steeringStrength * Time.fixedDeltaTime
+            );
+
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
 
     void JumpTimeout()
     {
-        
+
         if (gameObject.transform.parent == null)
         {
             StartGameOver();
@@ -97,7 +136,7 @@ public class PlayerCube : MonoBehaviour
 
     public void AttachToMagnet(Transform wheel, Transform magnet)
     {
-        
+
 
         if (!isAlive) return;
 
@@ -117,6 +156,7 @@ public class PlayerCube : MonoBehaviour
             hasAttachedOnce = true;
 
         StartCoroutine(SmoothAttach(wheel, magnet));
+        
     }
     IEnumerator InputLockCoroutine()
     {
@@ -154,12 +194,12 @@ public class PlayerCube : MonoBehaviour
 
         gameOverStarted = true;
 
-        
-        GameFlowController.Instance.PreGameOverCleanup();
 
-        StartCoroutine(DelayedGameOver());
+        //GameFlowController.Instance.PreGameOverCleanup();
+
+        // StartCoroutine(DelayedGameOver());
     }
-
+   
     void CancelGameOver()
     {
         gameOverStarted = false;
@@ -188,12 +228,6 @@ public class PlayerCube : MonoBehaviour
         rb.isKinematic = true;
         rb.useGravity = false;
     }
-    IEnumerator DelayedGameOver()
-    {
-        yield return new WaitForSecondsRealtime(gameOverDelay);
-        DieImmediate();
-        yield return null;
-    }
 
     void DieImmediate()
     {
@@ -209,4 +243,18 @@ public class PlayerCube : MonoBehaviour
         SoundManager.Instance.StopSfx();
         SoundManager.Instance.PlayGameOver();
     }
+
+    IEnumerator CheckForGameOver()
+    {
+        Debug.Log("the game over check is running");
+        yield return new WaitForSeconds(gameOverDelay);
+        if (gameObject.transform.parent == null)
+        {
+
+            yield return new WaitForSeconds(1f);
+            DieImmediate();
+        }
+    }
 }
+
+

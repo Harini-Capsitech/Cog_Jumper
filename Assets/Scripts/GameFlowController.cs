@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameFlowController : MonoBehaviour
 {
@@ -36,6 +37,10 @@ public class GameFlowController : MonoBehaviour
     private const float SPEED_INCREMENT = 25f;
     private Vector3 startPos;
     private Quaternion rot;
+
+    //public float shakeDuration = 0.08f;
+    //public float shakeStrength = 0.1f;
+    //public Camera cameraObj;
     void Awake()
     {
         Time.timeScale = 1f;
@@ -47,6 +52,7 @@ public class GameFlowController : MonoBehaviour
 
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
+        //cameraObj = Camera.main;
     }
 
     void Start()
@@ -176,7 +182,37 @@ public class GameFlowController : MonoBehaviour
 
         SetWheelGapTriggers(nextWheel, true);
         CleanupOldWheels();
+        //StartCoroutine(ShakeCoroutine());
     }
+
+    //IEnumerator ShakeCoroutine()
+
+    //{
+
+    //    float elapsed = 0f;
+
+    //    Vector3 beforePos = cameraObj.transform.position;
+
+    //    while (elapsed < shakeDuration)
+
+    //    {
+
+    //        float x = Random.Range(-1f, 1f) * shakeStrength;
+
+    //        float y = Random.Range(-1f, 1f) * shakeStrength;
+
+    //        cameraObj.transform.localPosition = cameraObj.transform.position + new Vector3(x, y, 0);
+
+    //        elapsed += Time.deltaTime;
+
+    //        yield return null;
+
+    //    }
+
+    //    cameraObj.transform.localPosition = beforePos;
+
+    //}
+
 
     void UpdateWheelSpeed()
     {

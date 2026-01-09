@@ -431,13 +431,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831216894}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.703737, y: 0.17658821, z: 0.20697677, w: 0.6563013}
-  m_LocalPosition: {x: -125, y: 210, z: 51}
+  m_LocalRotation: {x: 0.6532815, y: -0.27059805, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 1.2, y: 6.6, z: 32.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 121.72, y: -84.23, z: -81.67}
+  m_LocalEulerAnglesHint: {x: 45, y: -90, z: -90}
 --- !u!114 &831216898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,7 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e77bb6223dd53c4992abf48101867b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: -30, y: 40, z: 20}
+  offset: {x: 56.3, y: 54.24, z: 24.4}
   followSpeed: 5
   followTime: 3
   player_: {fileID: 0}
@@ -896,7 +896,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 831216896}
-  m_PlaneDistance: 1
+  m_PlaneDistance: 30
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0

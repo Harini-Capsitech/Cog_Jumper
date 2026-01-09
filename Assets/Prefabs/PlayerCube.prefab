@@ -156,7 +156,13 @@ MonoBehaviour:
   jumpTimeout: 0.1
   gameOverDelay: 0.5
   jumpEffect: {fileID: 2869172018882592325}
+  shakeDuration: 0.2
+  shakeStrength: 0.5
+  cameraObj: {fileID: 0}
   targetWheel: {fileID: 0}
+  steeringDuration: 0.25
+  steeringStrength: 6
+  upwardBias: 0.25
 --- !u!1 &1248404354276288927
 GameObject:
   m_ObjectHideFlags: 0
