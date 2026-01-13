@@ -25,6 +25,10 @@ public class GameFlowController : MonoBehaviour
     private int wheelIndex = 0;
     public GameObject currentWheel;
 
+    [Header("Laser")]
+    public LaserSpawner laserSpawner;
+
+
     [HideInInspector] public List<GameObject> wheels = new List<GameObject>();
 
     private PlayerCube player;
@@ -177,6 +181,18 @@ public class GameFlowController : MonoBehaviour
 
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
+
+
+        //laser script 
+        // 🔥 SPAWN LASER BETWEEN CURRENT & NEXT WHEEL
+        if (laserSpawner != null)
+        {
+            laserSpawner.SpawnLaserBetween(
+                landedWheel.transform,
+                nextWheel.transform
+            );
+        }
+        ////end 
 
         player.targetWheel = nextWheel.transform;
 

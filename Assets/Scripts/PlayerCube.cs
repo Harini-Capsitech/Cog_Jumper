@@ -229,7 +229,7 @@ public class PlayerCube : MonoBehaviour
         rb.useGravity = false;
     }
 
-    void DieImmediate()
+   public void DieImmediate()
     {
         if (!isAlive) return;
 
