@@ -25,6 +25,23 @@ public class GameFlowController : MonoBehaviour
     private int wheelIndex = 0;
     public GameObject currentWheel;
 
+    [Header("Combo Settings")]
+    [SerializeField] private int comboTriggerScore = 35;
+    private const int COMBO_HITS = 3;
+    [SerializeField] private float comboDuration = 5f;
+
+    private bool comboActive = false;
+    private bool comboTriggered = false;
+    private int scoreMultiplier = 1;
+    private int comboRemainingHits = 0;
+    [Header("Rod Obstacle Settings")]
+    [SerializeField] private GameObject rodPrefabA;   
+   [SerializeField] private GameObject rodPrefabB; 
+    [SerializeField] private int firstRodScore = 75;
+    [SerializeField] private int rodScoreInterval = 25;
+
+    private int nextRodSpawnScore;
+    
     [HideInInspector] public List<GameObject> wheels = new List<GameObject>();
 
     private PlayerCube player;
@@ -38,9 +55,7 @@ public class GameFlowController : MonoBehaviour
     private Vector3 startPos;
     private Quaternion rot;
 
-    //public float shakeDuration = 0.08f;
-    //public float shakeStrength = 0.1f;
-    //public Camera cameraObj;
+    private bool perfectShown = false;
     void Awake()
     {
         Time.timeScale = 1f;
@@ -52,7 +67,7 @@ public class GameFlowController : MonoBehaviour
 
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
-        //cameraObj = Camera.main;
+      
     }
 
     void Start()
@@ -64,7 +79,7 @@ public class GameFlowController : MonoBehaviour
             IsStarted = true;
         }
         IsStarted = true;
-        Invoke("ResetGame", 0.1f); //ResetGame();
+        Invoke("ResetGame", 0.1f);
     }
 
     void LateUpdate()
@@ -73,10 +88,8 @@ public class GameFlowController : MonoBehaviour
 
     }
 
-
     public void ResetGame()
     {
-      
         StopAllCoroutines();
         if (player == null)
         {
@@ -90,6 +103,16 @@ public class GameFlowController : MonoBehaviour
 
         score = 0;
         wheelIndex = 0;
+        perfectShown = false;
+
+        comboActive = false;
+        comboTriggered = false;
+        scoreMultiplier = 1;
+        comboRemainingHits = 0;
+
+        nextRodSpawnScore = firstRodScore;
+
+
         currentWheel = null;
         wheels.Clear();
 
@@ -101,7 +124,6 @@ public class GameFlowController : MonoBehaviour
             foreach (Transform child in wheelsParent)
                 Destroy(child.gameObject);
         }
-
 
         player.ResetPlayerState();
         player.transform.SetParent(null);
@@ -148,7 +170,6 @@ public class GameFlowController : MonoBehaviour
 
         if (magnets.Count == 0)
         {
-            Debug.LogError("❌ No Magnet found on wheel!");
             return;
         }
 
@@ -163,10 +184,34 @@ public class GameFlowController : MonoBehaviour
 
     public void PlayerLanded(GapTrigger gap)
     {
-        score += 5;
+        
+        int baseScore = 5;
+        score += baseScore * scoreMultiplier;
+        if (!comboTriggered && score >= comboTriggerScore)
+        {
+            comboTriggered = true;
+            scoreMultiplier = 2;
+            comboRemainingHits = COMBO_HITS;
+            ComboX2Popup.Instance?.Show();
+           
+        }
+        if (scoreMultiplier > 1)
+        {
+            comboRemainingHits--;
+
+            if (comboRemainingHits <= 0)
+            {
+                scoreMultiplier = 1;
+            }
+        }
         GameplayScoreUI.Instance?.UpdateScore(score);
         UpdateWheelSpeed();
 
+        if (!perfectShown && score > 20)
+        {
+            perfectShown = true;
+            PerfectPopup.Instance?.Show();
+        }
         Transform wheelTransform = gap.transform.parent;
         GameObject landedWheel = wheelTransform.parent.gameObject;
 
@@ -178,42 +223,28 @@ public class GameFlowController : MonoBehaviour
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
 
+        if (score >= nextRodSpawnScore)
+        {
+            SpawnTwoRodsBetweenWheels(currentWheel.transform, nextWheel.transform);
+            nextRodSpawnScore += rodScoreInterval;
+        }
         player.targetWheel = nextWheel.transform;
 
         SetWheelGapTriggers(nextWheel, true);
         CleanupOldWheels();
-        //StartCoroutine(ShakeCoroutine());
+       
     }
+    void SpawnTwoRodsBetweenWheels(Transform wheelA, Transform wheelB)
+    {
+        Debug.Log("Rods are spawned");
+        if (rodPrefabA == null ) return;
+        int offset = 5;
+        Vector3 midPoint = (wheelA.position + wheelB.position) / 2f;
 
-    //IEnumerator ShakeCoroutine()
-
-    //{
-
-    //    float elapsed = 0f;
-
-    //    Vector3 beforePos = cameraObj.transform.position;
-
-    //    while (elapsed < shakeDuration)
-
-    //    {
-
-    //        float x = Random.Range(-1f, 1f) * shakeStrength;
-
-    //        float y = Random.Range(-1f, 1f) * shakeStrength;
-
-    //        cameraObj.transform.localPosition = cameraObj.transform.position + new Vector3(x, y, 0);
-
-    //        elapsed += Time.deltaTime;
-
-    //        yield return null;
-
-    //    }
-
-    //    cameraObj.transform.localPosition = beforePos;
-
-    //}
-
-
+        Instantiate(rodPrefabA, new Vector3(midPoint.x - offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
+        Instantiate(rodPrefabB, new Vector3(midPoint.x + offset,midPoint.y,midPoint.z), Quaternion.identity, wheelsParent);
+    }
+    
     void UpdateWheelSpeed()
     {
         int steps = score / SCORE_STEP;
@@ -236,21 +267,6 @@ public class GameFlowController : MonoBehaviour
         }
     }
 
-
-    public void PreGameOverCleanup()
-    {
-        foreach (GameObject wheel in wheels)
-            if (wheel != null)
-                Destroy(wheel);
-
-        wheels.Clear();
-
-        if (wheelsParent != null)
-            wheelsParent.gameObject.SetActive(false);
-
-        followPlayerAfterGameOver = true;
-    }
-
     public void FinalGameOver()
     {
         if (score > bestScore)
@@ -266,7 +282,10 @@ public class GameFlowController : MonoBehaviour
         Destroy(player.gameObject);
         player = null;
 
-
         GameOverUI.Instance.Show(score, bestScore);
     }
 }
+
+
+
+
