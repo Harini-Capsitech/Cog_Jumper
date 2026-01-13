@@ -10,6 +10,7 @@ TagManager:
   - Magnet
   - FixedCube
   - Border
+  - Rod
   layers:
   - Default
   - TransparentFX

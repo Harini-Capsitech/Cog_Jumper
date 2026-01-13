@@ -61,16 +61,14 @@ public class PlayerCube : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // Initial direction
+        
         Vector3 dir = (targetWheel.position - transform.position).normalized;
         dir.y += upwardBias;
         dir.Normalize();
 
         rb.linearVelocity = dir * jumpForce;
 
-        // Start smoothing
         StartCoroutine(SteerTowardTarget());
-
         StartCoroutine(CheckForGameOver());
     }
 
@@ -95,42 +93,6 @@ public class PlayerCube : MonoBehaviour
             );
 
             yield return new WaitForFixedUpdate();
-        }
-    }
-
-
-    void JumpTimeout()
-    {
-
-        if (gameObject.transform.parent == null)
-        {
-            StartGameOver();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!isAlive) return;
-
-        if (other.CompareTag("Border"))
-        {
-            StartGameOver();
-            return;
-        }
-
-        if (!hasJumped || jumpResolved) return;
-
-        if (other.CompareTag("FixedCube"))
-        {
-            jumpResolved = true;
-            StartGameOver();
-            return;
-        }
-
-        if (other.CompareTag("Magnet"))
-        {
-            jumpResolved = true;
-            StartCoroutine(InputLockCoroutine());
         }
     }
 
@@ -193,11 +155,6 @@ public class PlayerCube : MonoBehaviour
         if (gameOverStarted) return;
 
         gameOverStarted = true;
-
-
-        //GameFlowController.Instance.PreGameOverCleanup();
-
-        // StartCoroutine(DelayedGameOver());
     }
    
     void CancelGameOver()
