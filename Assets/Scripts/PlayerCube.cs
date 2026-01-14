@@ -39,7 +39,6 @@ public class PlayerCube : MonoBehaviour
     void Update()
     {
         if (!isAlive) return;
-
         if (Input.GetMouseButtonDown(0) && !inputLocked)
         {
             inputLocked = true;
@@ -189,7 +188,14 @@ public class PlayerCube : MonoBehaviour
    public void DieImmediate()
     {
         if (!isAlive) return;
+        //
 
+        if (Filler.IsPowerActive)
+        {
+            ForceAttachToTargetWheel();
+            return;
+        }
+        //
 
         GameFlowController.Instance.FinalGameOver();
         isAlive = false;
@@ -207,11 +213,45 @@ public class PlayerCube : MonoBehaviour
         yield return new WaitForSeconds(gameOverDelay);
         if (gameObject.transform.parent == null)
         {
+            //
+            // 🔥 POWER MODE SAFETY
+            if (Filler.IsPowerActive)
+            {
+                ForceAttachToTargetWheel();
+                yield break;
+            }
+            //
 
             yield return new WaitForSeconds(1f);
             DieImmediate();
         }
     }
+    void ForceAttachToTargetWheel()
+    {
+        //
+        if (jumpResolved) return;           // 🔒 prevent double trigger
+        
+        if (targetWheel == null) return;
+
+        // 1️⃣ Find GapTrigger on target wheel
+        GapTrigger gap = targetWheel.GetComponentInChildren<GapTrigger>(true);
+        if (gap == null) return;
+
+        // Find a magnet on target wheel
+        Transform[] children = targetWheel.GetComponentsInChildren<Transform>();
+        foreach (Transform t in children)
+        {
+            if (t.CompareTag("Magnet"))
+            {
+                AttachToMagnet(targetWheel, t);
+
+                // 4️⃣ Tell GameFlowController we "landed"
+                GameFlowController.Instance.PlayerLanded(gap);
+                break;
+            }
+        }
+    }
+
 }
 
 

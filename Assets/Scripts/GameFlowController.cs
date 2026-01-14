@@ -30,6 +30,15 @@ public class GameFlowController : MonoBehaviour
     private const int COMBO_HITS = 3;
     [SerializeField] private float comboDuration = 5f;
 
+    //laser
+    [Header("Laser Obstacle Settings")]
+    [SerializeField] private LaserSpawner laserSpawner;
+    [SerializeField] private int firstLaserScore = 10;
+    [SerializeField] private int laserScoreInterval = 20;
+
+    private int nextLaserSpawnScore;
+
+
     private bool comboActive = false;
     private bool comboTriggered = false;
     private int scoreMultiplier = 1;
@@ -111,7 +120,10 @@ public class GameFlowController : MonoBehaviour
         comboRemainingHits = 0;
 
         nextRodSpawnScore = firstRodScore;
-
+        //laser
+        nextLaserSpawnScore = firstLaserScore;
+        Debug.Log("laser emitted");
+        //
 
         currentWheel = null;
         wheels.Clear();
@@ -187,6 +199,7 @@ public class GameFlowController : MonoBehaviour
         
         int baseScore = 5;
         score += baseScore * scoreMultiplier;
+        Filler.instance.FillSlider();
         if (!comboTriggered && score >= comboTriggerScore)
         {
             comboTriggered = true;
@@ -222,6 +235,20 @@ public class GameFlowController : MonoBehaviour
 
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
+
+        //laser
+        // 🔥 LASER SPAWN LOGIC
+        if (score >= nextLaserSpawnScore && laserSpawner != null)
+        {
+            laserSpawner.SpawnLaserBetweenWheels(
+                currentWheel.transform,
+                nextWheel.transform
+            );
+
+            nextLaserSpawnScore += laserScoreInterval;
+        }
+
+        ///
 
         if (score >= nextRodSpawnScore)
         {

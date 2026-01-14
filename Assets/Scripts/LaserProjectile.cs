@@ -1,171 +1,87 @@
-﻿//using UnityEngine;
-
-//public class LaserProjectile : MonoBehaviour
-//{
-//    [Header("Laser Movement")]
-//    public float speed = 8f;
-
-//    private Vector3 direction;
-
-//    void Start()
-//    {
-//        // Destroy laser after some time
-//        Destroy(gameObject, 5f);
-//    }
-
-//    void Update()
-//    {
-//        // Move laser like a bullet
-//        transform.Translate(direction * speed * Time.deltaTime, Space.World);
-//    }
-
-//    // Called by spawner
-//    public void SetDirection(Vector3 newDirection)
-//    {
-//        direction = newDirection.normalized;
-//    }
-
-//    private void OnTriggerEnter(Collider other)
-//    {
-//        if (other.CompareTag("Player"))
-//        {
-//            other.GetComponent<PlayerCube>()?.DieImmediate();
-//            Destroy(gameObject);
-//        }
-//    }
-//}
-//using UnityEngine;
-
-//public class LaserProjectile : MonoBehaviour
-//{
-//    public float speed = 8f;
-
-//    private Vector3 targetPos;
-//    private bool hasTarget = false;
-
-//    void Update()
-//    {
-//        if (!hasTarget) return;
-
-//        // Move towards target
-//        transform.position = Vector3.MoveTowards(
-//            transform.position,
-//            targetPos,
-//            speed * Time.deltaTime
-//        );
-
-//        // Reached target → destroy
-//        if (Vector3.Distance(transform.position, targetPos) < 0.05f)
-//        {
-//            Destroy(gameObject);
-//        }
-//    }
-
-//    // Called by spawner
-//    public void SetTarget(Vector3 target)
-//    {
-//        targetPos = target;
-//        hasTarget = true;
-//    }
-
-//    private void OnTriggerEnter(Collider other)
-//    {
-//        if (other.CompareTag("Player"))
-//        {
-//            other.GetComponent<PlayerCube>()?.DieImmediate();
-//            Destroy(gameObject);
-//        }
-//    }
-//}
-//using UnityEngine;
-
-//public class LaserProjectile : MonoBehaviour
-//{
-//    [Header("Movement")]
-//    public float speed = 8f;
-
-//    private Vector3 startPos;
-//    private Vector3 targetPos;
-//    private bool movingToTarget = true;
-
-//    void Update()
-//    {
-//        if (movingToTarget)
-//        {
-//            transform.position = Vector3.MoveTowards(
-//                transform.position,
-//                targetPos,
-//                speed * Time.deltaTime
-//            );
-
-//            if (Vector3.Distance(transform.position, targetPos) < 0.05f)
-//            {
-//                // Reverse direction
-//                Vector3 temp = startPos;
-//                startPos = targetPos;
-//                targetPos = temp;
-//            }
-//        }
-//    }
-
-//    // Called by LaserSpawner
-//    public void Initialize(Vector3 start, Vector3 target)
-//    {
-//        startPos = start;
-//        targetPos = target;
-//        transform.position = startPos;
-//        movingToTarget = true;
-//    }
-
-//    private void OnTriggerEnter(Collider other)
-//    {
-//        if (other.CompareTag("Player"))
-//        {
-//            other.GetComponent<PlayerCube>()?.DieImmediate();
-//        }
-//    }
-//}
-
-
-
+﻿using System.Collections;
 using UnityEngine;
 
 public class LaserProjectile : MonoBehaviour
 {
-    [Header("Movement")]
-    public float speed = 10f;
+    private float speed = 500f;
+    private float lifeTime = 5f;
 
-    private Vector3 targetPos;
     private bool isMoving = false;
+    private bool isMovingLeft = false;
+    private bool isMovingRight = false;
+
+    private float distance = 1000f;
+    private float travelDis = 0f;
+    private Vector3 direction;
+
+    void Start()
+    {
+        Destroy(gameObject,30f);
+    }
 
     void Update()
     {
-        if (!isMoving) return;
-
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPos,
-            speed * Time.deltaTime
-        );
-
-        // Destroy when reached right point
-        if (Vector3.Distance(transform.position, targetPos) < 0.05f)
+        if (!isMoving)
         {
-            Destroy(gameObject);
+            StopCoroutine(leftMoveRoutine());
+            StopCoroutine(rightMoveRoutine());
+        }
+
+        if (isMoving && (isMovingLeft || isMovingRight))
+        {
+            if ((distance - travelDis) >= 0.03f)
+            {
+                travelDis += Time.deltaTime * speed;
+                if (isMovingRight) transform.position += new Vector3(Time.deltaTime * speed, 0f, 0f);
+                else
+                {
+                    transform.position -= new Vector3(Time.deltaTime * speed, 0f, 0f);
+                }
+            }
+            else
+            {
+                if (isMovingRight)
+                {
+                    isMovingRight = false;
+                    StartCoroutine(leftMoveRoutine());
+                }
+                else
+                {
+                    isMovingLeft = false;
+                    StartCoroutine(rightMoveRoutine());
+                }
+            }
+
         }
     }
 
-    // Called by spawner
-    public void Fire(Vector3 startPos, Vector3 endPos)
+    IEnumerator rightMoveRoutine()
     {
-        transform.position = startPos;
-        targetPos = endPos;
+        distance = 1000f;
+        speed = 500f;
+        travelDis = 0f;
+        yield return new WaitForSeconds(0.3f);
+        isMovingRight = true;
+    }
+
+    IEnumerator leftMoveRoutine()
+    {
+        distance = 1000f;
+        speed = 2000f;
+        travelDis = 0f;
+        yield return new WaitForSeconds(0.3f);
+        isMovingLeft = true;
+    }
+
+    public void Fire(Vector3 moveDirection)
+    {
         isMoving = true;
+        isMovingRight = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PlayerCube"))
         {
             other.GetComponent<PlayerCube>()?.DieImmediate();
         }
