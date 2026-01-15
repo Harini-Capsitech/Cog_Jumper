@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+  <string name="gcm_defaultSenderId" translatable="false">918030179153</string>
+  <string name="google_storage_bucket" translatable="false">cogjumper-d248f.firebasestorage.app</string>
+  <string name="project_id" translatable="false">cogjumper-d248f</string>
+  <string name="google_api_key" translatable="false">AIzaSyD895yWgNJaFGBaJPCdtmCEpBpjtJaoPaU</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyD895yWgNJaFGBaJPCdtmCEpBpjtJaoPaU</string>
+  <string name="google_app_id" translatable="false">1:918030179153:android:561b56039488dc139c5170</string>
+</resources>

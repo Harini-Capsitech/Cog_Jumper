@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "918030179153",
+    "project_id": "cogjumper-d248f",
+    "storage_bucket": "cogjumper-d248f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918030179153:android:561b56039488dc139c5170",
+        "android_client_info": {
+          "package_name": "com.TheGameWise.CogJumper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD895yWgNJaFGBaJPCdtmCEpBpjtJaoPaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
