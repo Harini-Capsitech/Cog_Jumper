@@ -1,0 +1,141 @@
+{
+    "m_SelectedDeviceId": "00055345F000471",
+    "m_SelectedProcess": {
+        "deviceId": "00055345F000471",
+        "name": "com.TheGameWise.CogJumper",
+        "processId": 30271,
+        "exited": false
+    },
+    "m_SelectedPriority": 0,
+    "m_KnownProcessesForSerialization": [
+        {
+            "deviceId": "00055345F000471",
+            "name": "com.nothing.launcher",
+            "processId": 3325,
+            "exited": false
+        },
+        {
+            "deviceId": "00055345F000471",
+            "name": "com.TheGameWise.CogJumper",
+            "processId": 25391,
+            "exited": true
+        },
+        {
+            "deviceId": "00055345F000471",
+            "name": "com.TheGameWise.CogJumper",
+            "processId": 26615,
+            "exited": true
+        },
+        {
+            "deviceId": "00055345F000471",
+            "name": "com.TheGameWise.CogJumper",
+            "processId": 27553,
+            "exited": true
+        },
+        {
+            "deviceId": "00055345F000471",
+            "name": "com.TheGameWise.CogJumper",
+            "processId": 28821,
+            "exited": false
+        },
+        {
+            "deviceId": "00055345F000471",
+            "name": "com.TheGameWise.CogJumper",
+            "processId": 30271,
+            "exited": false
+        }
+    ],
+    "m_Tags": {
+        "m_Entries": [
+            {
+                "m_Name": "Filter by all listed tags",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "No Filter",
+                "m_Selected": true
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Tag Control...",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Unity",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "CRASH",
+                "m_Selected": false
+            }
+        ]
+    },
+    "m_ExtraWindowState": {
+        "Type": 0,
+        "Height": 0.0
+    },
+    "m_MemoryViewerState": {
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "MemoryGroup": 2,
+        "AutoCapture": true
+    },
+    "m_FilterOptions": {
+        "m_Filter": "game",
+        "m_UseRegularExpressions": false,
+        "m_MatchCase": false
+    },
+    "m_SymbolPaths": [],
+    "m_CaptureVideoSettings": {
+        "TimeLimitEnabled": false,
+        "TimeLimit": 180,
+        "VideoSizeEnabled": false,
+        "VideoSizeX": 1280,
+        "VideoSizeY": 720,
+        "BitRateEnabled": false,
+        "BitRateK": 20000,
+        "DisplayIdEnabled": false,
+        "DisplayId": ""
+    },
+    "m_ScreenCaptureSettings": {
+        "Mode": 0,
+        "m_LastSaveLocation": [
+            "C:\\Users\\CT_USER\\Documents\\Create with Code\\Cog_Jump",
+            "C:\\Users\\CT_USER\\Documents\\Create with Code\\Cog_Jump"
+        ]
+    },
+    "m_QueryLayoutSettings": {
+        "LastLayoutSaveLocation": "",
+        "LastScreenshotSaveLocation": ""
+    },
+    "m_InputSettings": {
+        "ShiftModifier": false,
+        "SendText": "",
+        "PosixKillSignal": 0,
+        "TargetProcess": {
+            "deviceId": "",
+            "name": "",
+            "processId": 0,
+            "exited": false
+        }
+    },
+    "m_AutoScroll": 2
+}
