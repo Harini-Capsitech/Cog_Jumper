@@ -31,6 +31,15 @@ public class GameFlowController : MonoBehaviour
     private const int COMBO_HITS = 3;
     [SerializeField] private float comboDuration = 5f;
 
+    //laser
+    [Header("Laser Obstacle Settings")]
+    [SerializeField] private LaserSpawner laserSpawner;
+    [SerializeField] private int firstLaserScore = 50;
+    [SerializeField] private int laserScoreInterval = 70;
+
+    private int nextLaserSpawnScore;
+
+
     private bool comboActive = false;
     private bool comboTriggered = false;
     private int scoreMultiplier = 1;
@@ -38,11 +47,13 @@ public class GameFlowController : MonoBehaviour
     [Header("Rod Obstacle Settings")]
     [SerializeField] private GameObject rodPrefabA;
     [SerializeField] private GameObject rodPrefabB;
-    [SerializeField] private int firstRodScore = 75;
-    [SerializeField] private int rodScoreInterval = 25;
+    [SerializeField] private int firstRodScore = 35;
+    [SerializeField] private int rodScoreInterval = 30;
+
+    private GameObject saveMeButton;
+    private bool saveMeUsed = false;
 
     private int nextRodSpawnScore;
-
     [HideInInspector] public List<GameObject> wheels = new List<GameObject>();
 
     private PlayerCube player;
@@ -68,11 +79,11 @@ public class GameFlowController : MonoBehaviour
 
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
-
     }
 
     void Start()
     {
+        FindSaveMeButton();
         Debug.Log("start");
         LogGameStart();
         if (player == null && playerCubePrefab != null)
@@ -82,7 +93,6 @@ public class GameFlowController : MonoBehaviour
             IsStarted = true;
         }
         IsStarted = true;
-
         Invoke("ResetGame", 0.1f);
     }
 
@@ -90,6 +100,20 @@ public class GameFlowController : MonoBehaviour
     {
         if (!followPlayerAfterGameOver || player == null) return;
 
+    }
+    void FindSaveMeButton()
+    {
+        GameObject canvas = GameObject.Find("Canvas (Environment)");
+        if (canvas == null) return;
+
+        Transform gameOverP = canvas.transform.Find("GameOverP");
+        if (gameOverP == null) return;
+
+        Transform btn = gameOverP.transform.Find("SaveMeButton");
+        if (btn == null) return;
+
+        saveMeButton = btn.gameObject;
+        saveMeButton.SetActive(false);
     }
 
     public void ResetGame()
@@ -115,7 +139,10 @@ public class GameFlowController : MonoBehaviour
         comboRemainingHits = 0;
 
         nextRodSpawnScore = firstRodScore;
-
+        //laser
+        nextLaserSpawnScore = firstLaserScore;
+        Debug.Log("laser emitted");
+        //
 
         currentWheel = null;
         wheels.Clear();
@@ -188,9 +215,9 @@ public class GameFlowController : MonoBehaviour
 
     public void PlayerLanded(GapTrigger gap)
     {
-
         int baseScore = 5;
         score += baseScore * scoreMultiplier;
+        Filler.instance.FillSlider();
         if (!comboTriggered && score >= comboTriggerScore)
         {
             comboTriggered = true;
@@ -198,7 +225,6 @@ public class GameFlowController : MonoBehaviour
             comboRemainingHits = COMBO_HITS;
             LogComboActivated();
             ComboX2Popup.Instance?.Show();
-
         }
         if (scoreMultiplier > 1)
         {
@@ -214,12 +240,14 @@ public class GameFlowController : MonoBehaviour
         {
             LogScoreMilestone();
         }
+
         UpdateWheelSpeed();
 
         if (!perfectShown && score > 20)
         {
             perfectShown = true;
             LogPerfectJump();
+
             PerfectPopup.Instance?.Show();
         }
         Transform wheelTransform = gap.transform.parent;
@@ -233,6 +261,20 @@ public class GameFlowController : MonoBehaviour
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
 
+        //laser
+        // 🔥 LASER SPAWN LOGIC
+        if (score >= nextLaserSpawnScore && laserSpawner != null)
+        {
+            laserSpawner.SpawnLaserBetweenWheels(
+                currentWheel.transform,
+                nextWheel.transform
+            );
+
+            nextLaserSpawnScore += laserScoreInterval;
+        }
+
+        ///
+
         if (score >= nextRodSpawnScore)
         {
             SpawnTwoRodsBetweenWheels(currentWheel.transform, nextWheel.transform);
@@ -242,12 +284,10 @@ public class GameFlowController : MonoBehaviour
 
         SetWheelGapTriggers(nextWheel, true);
         CleanupOldWheels();
-
     }
     void SpawnTwoRodsBetweenWheels(Transform wheelA, Transform wheelB)
     {
         LogRodSpawned();
-
         Debug.Log("Rods are spawned");
         if (rodPrefabA == null) return;
         int offset = 5;
@@ -256,7 +296,6 @@ public class GameFlowController : MonoBehaviour
         Instantiate(rodPrefabA, new Vector3(midPoint.x - offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
         Instantiate(rodPrefabB, new Vector3(midPoint.x + offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
     }
-
     void UpdateWheelSpeed()
     {
         int steps = score / SCORE_STEP;
@@ -278,28 +317,86 @@ public class GameFlowController : MonoBehaviour
             wheels.RemoveAt(0);
         }
     }
+    GameObject GetNextWheelAfter(GameObject wheel)
+    {
+        int index = wheels.IndexOf(wheel);
+        if (index >= 0 && index + 1 < wheels.Count)
+            return wheels[index + 1];
+
+        return null;
+    }
 
     public void FinalGameOver()
     {
-      
-
-            if (score > bestScore)
-            {
-                bestScore = score;
-                PlayerPrefs.SetInt(BEST_SCORE_KEY, bestScore);
-                PlayerPrefs.Save();
-            }
+        if (score > bestScore)
+        {
+            bestScore = score;
+            PlayerPrefs.SetInt(BEST_SCORE_KEY, bestScore);
+            PlayerPrefs.Save();
+        }
         Debug.Log("game ends");
         LogGameOver();
-        Time.timeScale = 0f;
-            AppManager.instance.GameOver();
-            mainCam.transform.parent = null;
-            Destroy(player.gameObject);
-            player = null;
 
-            GameOverUI.Instance.Show(score, bestScore);
+        Time.timeScale = 0f;
+        AppManager.instance.isSaveMeActive = !saveMeUsed;
+        AppManager.instance.GameOver();
+        mainCam.transform.parent = null;
+        Destroy(player.gameObject);
+        player = null;
+
+        GameOverUI.Instance.Show(score, bestScore);
+        if (!saveMeUsed && saveMeButton != null)
+            saveMeButton.SetActive(true);
+    }
+
+
+    public void SaveMe()
+
+    {
+        Debug.Log("save me activated 2");
+        if (saveMeUsed) return;
+
+        saveMeUsed = true;
+
+        Time.timeScale = 1f;
+
+        AppManager.instance.isSaveMeActive = false;
+
+        if (saveMeButton != null)
+
+            saveMeButton.SetActive(false);
+
+        AppStateManager.Instance.SetGameplay();
+
+        GameOverUI.Instance.Hide();
+
+        GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
+
+        player = obj.GetComponent<PlayerCube>();
+
+        player.ResetJumpState();
+
+        AttachPlayerToFirstWheel(currentWheel);
+
+        GameObject nextWheel = GetNextWheelAfter(currentWheel);
+
+        if (nextWheel != null)
+
+        {
+
+            player.targetWheel = nextWheel.transform;
+
+            SetWheelGapTriggers(nextWheel, true);
+
         }
 
+        followPlayerAfterGameOver = false;
+
+        GameplayScoreUI.Instance?.UpdateScore(score);
+
+        Debug.Log("SaveMe complete: gameplay fully restored at score " + score);
+
+    }
     #region Firebase Analytics
 
     void LogGameStart()
@@ -307,13 +404,13 @@ public class GameFlowController : MonoBehaviour
         if (!FirebaseInitializer.IsFirebaseReady) return;
 
         FirebaseAnalytics.LogEvent("game_start");
-       
+
     }
 
     void LogGameOver()
     {
         if (!FirebaseInitializer.IsFirebaseReady) return;
-        
+
         FirebaseAnalytics.LogEvent(
             "game_over",
             new Parameter("score", score),
@@ -357,9 +454,7 @@ public class GameFlowController : MonoBehaviour
 
     #endregion
 
+
 }
-
-
-
 
 

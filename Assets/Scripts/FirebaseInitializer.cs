@@ -33,7 +33,7 @@ public class FirebaseInitializer : MonoBehaviour
                 IsFirebaseReady = true;
 
                 Debug.Log("🔥 Firebase initialized successfully!");
-                FirebaseAnalytics.LogEvent("firebase_initialized");   // test event
+                FirebaseAnalytics.LogEvent("firebase_initialized");   
             }
             else
             {
