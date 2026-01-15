@@ -24,6 +24,7 @@ public class PlayerCube : MonoBehaviour
     private bool inputLocked = false;
     private bool jumpSfxUnlocked = false;
     private bool gameOverStarted = false;
+    
     [HideInInspector] public Transform targetWheel;
     [SerializeField] float steeringDuration = 0.25f;
     [SerializeField] float steeringStrength = 6f;
@@ -148,7 +149,19 @@ public class PlayerCube : MonoBehaviour
         transform.rotation = magnet.rotation;
         transform.SetParent(wheel, true);
     }
+    public void ResetJumpState()
+    {
+        hasAttachedOnce = false;
+        hasJumped = false;
+        jumpResolved = false;
+        inputLocked = false;
+        jumpSfxUnlocked = false;
+        gameOverStarted = false;
 
+        isAlive = true;
+
+        StopAllCoroutines();
+    }
     void StartGameOver()
     {
         if (gameOverStarted) return;

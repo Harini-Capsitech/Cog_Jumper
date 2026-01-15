@@ -33,8 +33,8 @@ public class GameFlowController : MonoBehaviour
     //laser
     [Header("Laser Obstacle Settings")]
     [SerializeField] private LaserSpawner laserSpawner;
-    [SerializeField] private int firstLaserScore = 10;
-    [SerializeField] private int laserScoreInterval = 20;
+    [SerializeField] private int firstLaserScore = 50;
+    [SerializeField] private int laserScoreInterval = 70;
 
     private int nextLaserSpawnScore;
 
@@ -46,8 +46,11 @@ public class GameFlowController : MonoBehaviour
     [Header("Rod Obstacle Settings")]
     [SerializeField] private GameObject rodPrefabA;   
    [SerializeField] private GameObject rodPrefabB; 
-    [SerializeField] private int firstRodScore = 75;
-    [SerializeField] private int rodScoreInterval = 25;
+    [SerializeField] private int firstRodScore = 35;
+    [SerializeField] private int rodScoreInterval = 30;
+
+    private GameObject saveMeButton;
+    private bool saveMeUsed = false;
 
     private int nextRodSpawnScore;
     
@@ -81,6 +84,7 @@ public class GameFlowController : MonoBehaviour
 
     void Start()
     {
+        FindSaveMeButton();
         if (player == null && playerCubePrefab != null)
         {
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
@@ -95,6 +99,21 @@ public class GameFlowController : MonoBehaviour
     {
         if (!followPlayerAfterGameOver || player == null) return;
 
+    }
+
+    void FindSaveMeButton()
+    {
+        GameObject canvas = GameObject.Find("Canvas (Environment)");
+        if (canvas == null) return;
+
+        Transform gameOverP = canvas.transform.Find("GameOverP");
+        if (gameOverP == null) return;
+
+        Transform btn = gameOverP.transform.Find("SaveMeButton");
+        if (btn == null) return;
+
+        saveMeButton = btn.gameObject;
+        saveMeButton.SetActive(false);
     }
 
     public void ResetGame()
@@ -293,6 +312,14 @@ public class GameFlowController : MonoBehaviour
             wheels.RemoveAt(0);
         }
     }
+    GameObject GetNextWheelAfter(GameObject wheel)
+    {
+        int index = wheels.IndexOf(wheel);
+        if (index >= 0 && index + 1 < wheels.Count)
+            return wheels[index + 1];
+
+        return null;
+    }
 
     public void FinalGameOver()
     {
@@ -304,13 +331,66 @@ public class GameFlowController : MonoBehaviour
         }
 
         Time.timeScale = 0f;
+        AppManager.instance.isSaveMeActive = !saveMeUsed;
         AppManager.instance.GameOver();
         mainCam.transform.parent = null;
         Destroy(player.gameObject);
         player = null;
 
         GameOverUI.Instance.Show(score, bestScore);
+        if (!saveMeUsed && saveMeButton != null)
+            saveMeButton.SetActive(true);
     }
+
+
+    public void SaveMe()
+
+    {
+        Debug.Log("save me activated 2");
+        if (saveMeUsed) return;
+
+        saveMeUsed = true;
+
+        Time.timeScale = 1f;
+
+        AppManager.instance.isSaveMeActive = false;
+
+        if (saveMeButton != null)
+
+            saveMeButton.SetActive(false);
+
+        AppStateManager.Instance.SetGameplay();
+
+        GameOverUI.Instance.Hide();
+
+        GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
+
+        player = obj.GetComponent<PlayerCube>();
+
+        player.ResetJumpState();
+
+        AttachPlayerToFirstWheel(currentWheel);
+
+        GameObject nextWheel = GetNextWheelAfter(currentWheel);
+
+        if (nextWheel != null)
+
+        {
+
+            player.targetWheel = nextWheel.transform;
+
+            SetWheelGapTriggers(nextWheel, true);
+
+        }
+
+        followPlayerAfterGameOver = false;
+
+        GameplayScoreUI.Instance?.UpdateScore(score);
+
+        Debug.Log("SaveMe complete: gameplay fully restored at score " + score);
+
+    }
+
 }
 
 

@@ -7,7 +7,7 @@ public class AppManager : MonoBehaviour
     private GameObject gameLogic;
 
     public static AppManager instance;
-
+    public bool isSaveMeActive = false;
     private Vector3 camStartPos;
 
     private void Awake()
@@ -54,7 +54,8 @@ public class AppManager : MonoBehaviour
     public void GameOver()
     {
         AppStateManager.Instance.SetGameOver();
-
+        if (isSaveMeActive)
+            return;
         if (gameLogic != null)
         {
             Destroy(gameLogic);

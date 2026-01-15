@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffeb47b072b442648ac2cbed5d763e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 150
+  jumpForce: 500
   jumpTimeout: 0.1
   gameOverDelay: 0.5
   jumpEffect: {fileID: 2869172018882592325}

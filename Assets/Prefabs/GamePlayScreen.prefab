@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filler: {fileID: 5636675679565229841}
-  increment: 0.005
+  increment: 0.05
   powerDuration: 5
 --- !u!1 &5454426611547384514
 GameObject:

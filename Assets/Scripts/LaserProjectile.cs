@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class LaserProjectile : MonoBehaviour
 {
+    //
+    [SerializeField] private ParticleSystem hitEffect;
+
     private float speed = 500f;
     private float lifeTime = 5f;
 
@@ -10,7 +13,7 @@ public class LaserProjectile : MonoBehaviour
     private bool isMovingLeft = false;
     private bool isMovingRight = false;
 
-    private float distance = 1000f;
+    private float distance = 800f;
     private float travelDis = 0f;
     private Vector3 direction;
 
@@ -57,7 +60,7 @@ public class LaserProjectile : MonoBehaviour
 
     IEnumerator rightMoveRoutine()
     {
-        distance = 1000f;
+        distance = 800f;
         speed = 500f;
         travelDis = 0f;
         yield return new WaitForSeconds(0.3f);
@@ -66,7 +69,7 @@ public class LaserProjectile : MonoBehaviour
 
     IEnumerator leftMoveRoutine()
     {
-        distance = 1000f;
+        distance = 800f;
         speed = 2000f;
         travelDis = 0f;
         yield return new WaitForSeconds(0.3f);
@@ -82,8 +85,38 @@ public class LaserProjectile : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerCube"))
-        {
-            other.GetComponent<PlayerCube>()?.DieImmediate();
-        }
+            // 🔥 Spawn hit VFX
+            if (hitEffect != null)
+            {
+                ParticleSystem vfx = Instantiate(
+                    hitEffect,
+                    other.transform.position,
+                    Quaternion.identity
+                );
+                vfx.Play();
+            }
+
+        // Respect power mode
+        if (Filler.IsPowerActive)
+            return;
+
+        //other.GetComponent<PlayerCube>()?.DieImmediate();
+        // ⏱ Delay death
+        StartCoroutine(DelayedKill(other.GetComponent<PlayerCube>()));
     }
+
+    IEnumerator DelayedKill(PlayerCube player)
+    {
+        if (player == null) yield break;
+
+        yield return new WaitForSeconds(2f); // ⏱ adjust delay here
+
+        // Check again (player might already be saved / attached)
+        if (Filler.IsPowerActive) yield break;
+
+        player.DieImmediate();
+    }
+
 }
+
+
