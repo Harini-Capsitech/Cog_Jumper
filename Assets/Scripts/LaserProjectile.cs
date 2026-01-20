@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class LaserProjectile : MonoBehaviour
 {
-    //
+    
     [SerializeField] private ParticleSystem hitEffect;
 
     private float speed = 500f;
-    private float lifeTime = 5f;
+    //private float lifeTime = 5f;
 
     private bool isMoving = false;
     private bool isMovingLeft = false;

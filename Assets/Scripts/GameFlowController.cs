@@ -29,7 +29,7 @@ public class GameFlowController : MonoBehaviour
     [Header("Combo Settings")]
     [SerializeField] private int comboTriggerScore = 35;
     private const int COMBO_HITS = 3;
-    [SerializeField] private float comboDuration = 5f;
+    //[SerializeField] private float comboDuration = 5f;
 
     //laser
     [Header("Laser Obstacle Settings")]
@@ -86,6 +86,7 @@ public class GameFlowController : MonoBehaviour
         FindSaveMeButton();
         Debug.Log("start");
         LogGameStart();
+        MetaAnalytics.Instance.LogGameStart();
         if (player == null && playerCubePrefab != null)
         {
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
@@ -223,6 +224,7 @@ public class GameFlowController : MonoBehaviour
             comboTriggered = true;
             scoreMultiplier = 2;
             comboRemainingHits = COMBO_HITS;
+            Debug.Log("Combo event");
             LogComboActivated();
             ComboX2Popup.Instance?.Show();
         }
@@ -238,6 +240,7 @@ public class GameFlowController : MonoBehaviour
         GameplayScoreUI.Instance?.UpdateScore(score);
         if (score % 25 == 0)
         {
+            Debug.Log("Milestone");
             LogScoreMilestone();
         }
 
@@ -246,6 +249,7 @@ public class GameFlowController : MonoBehaviour
         if (!perfectShown && score > 20)
         {
             perfectShown = true;
+            Debug.Log("Perfect Shown");
             LogPerfectJump();
 
             PerfectPopup.Instance?.Show();
@@ -262,7 +266,7 @@ public class GameFlowController : MonoBehaviour
         wheels.Add(nextWheel);
 
         //laser
-        // 🔥 LASER SPAWN LOGIC
+        // LASER SPAWN LOGIC
         if (score >= nextLaserSpawnScore && laserSpawner != null)
         {
             laserSpawner.SpawnLaserBetweenWheels(
@@ -272,8 +276,6 @@ public class GameFlowController : MonoBehaviour
 
             nextLaserSpawnScore += laserScoreInterval;
         }
-
-        ///
 
         if (score >= nextRodSpawnScore)
         {
@@ -287,6 +289,7 @@ public class GameFlowController : MonoBehaviour
     }
     void SpawnTwoRodsBetweenWheels(Transform wheelA, Transform wheelB)
     {
+        Debug.Log("Rod Event");
         LogRodSpawned();
         Debug.Log("Rods are spawned");
         if (rodPrefabA == null) return;
@@ -336,12 +339,14 @@ public class GameFlowController : MonoBehaviour
         }
         Debug.Log("game ends");
         LogGameOver();
+        MetaAnalytics.Instance.LogGameOver(score);
 
         Time.timeScale = 0f;
         AppManager.instance.isSaveMeActive = !saveMeUsed;
         AppManager.instance.GameOver();
         mainCam.transform.parent = null;
-        Destroy(player.gameObject);
+       if(player != null)
+            Destroy(player.gameObject);
         player = null;
 
         GameOverUI.Instance.Show(score, bestScore);

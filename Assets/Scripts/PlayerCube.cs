@@ -5,7 +5,7 @@ public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
     [SerializeField] private float jumpForce = 150f;
-    [SerializeField] private float jumpTimeout = 0.5f;
+    //[SerializeField] private float jumpTimeout = 0.5f;
 
     [Header("Game Over")]
     [SerializeField] private float gameOverDelay = 0.6f;
@@ -191,9 +191,6 @@ public class PlayerCube : MonoBehaviour
 
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = true;
-
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
         rb.useGravity = false;
     }
@@ -201,15 +198,13 @@ public class PlayerCube : MonoBehaviour
    public void DieImmediate()
     {
         if (!isAlive) return;
-        //
-
+       
         if (Filler.IsPowerActive)
         {
             ForceAttachToTargetWheel();
             return;
         }
-        //
-
+        
         GameFlowController.Instance.FinalGameOver();
         isAlive = false;
         inputLocked = true;
@@ -226,39 +221,33 @@ public class PlayerCube : MonoBehaviour
         yield return new WaitForSeconds(gameOverDelay);
         if (gameObject.transform.parent == null)
         {
-            //
-            // 🔥 POWER MODE SAFETY
+         
             if (Filler.IsPowerActive)
             {
                 ForceAttachToTargetWheel();
                 yield break;
             }
-            //
-
+           
             yield return new WaitForSeconds(1f);
             DieImmediate();
         }
     }
     void ForceAttachToTargetWheel()
     {
-        //
-        if (jumpResolved) return;           // 🔒 prevent double trigger
+      
+        if (jumpResolved) return;         
         
         if (targetWheel == null) return;
 
-        // 1️⃣ Find GapTrigger on target wheel
         GapTrigger gap = targetWheel.GetComponentInChildren<GapTrigger>(true);
         if (gap == null) return;
 
-        // Find a magnet on target wheel
         Transform[] children = targetWheel.GetComponentsInChildren<Transform>();
         foreach (Transform t in children)
         {
             if (t.CompareTag("Magnet"))
             {
                 AttachToMagnet(targetWheel, t);
-
-                // 4️⃣ Tell GameFlowController we "landed"
                 GameFlowController.Instance.PlayerLanded(gap);
                 break;
             }

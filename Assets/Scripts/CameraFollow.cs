@@ -4,11 +4,11 @@ using System.Collections;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private Vector3 offset = new Vector3(0f, 3f, -6f);
-    [SerializeField] private float followSpeed = 5f;
-    [SerializeField] private float followTime = 3f;
+    //[SerializeField] private float followSpeed = 5f;
+    //[SerializeField] private float followTime = 3f;
     private Transform target;
     public Transform player_;
-    private bool follow = false;
+    //private bool follow = false;
     public float smoothTime = 0.25f;
     private Vector3 velocity = Vector3.zero;
 
