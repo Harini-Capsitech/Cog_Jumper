@@ -1,7 +1,7 @@
-﻿using Firebase.Analytics;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameFlowController : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class GameFlowController : MonoBehaviour
     [Header("Combo Settings")]
     [SerializeField] private int comboTriggerScore = 35;
     private const int COMBO_HITS = 3;
-    //[SerializeField] private float comboDuration = 5f;
+    [SerializeField] private float comboDuration = 5f;
 
     //laser
     [Header("Laser Obstacle Settings")]
@@ -45,15 +45,18 @@ public class GameFlowController : MonoBehaviour
     private int scoreMultiplier = 1;
     private int comboRemainingHits = 0;
     [Header("Rod Obstacle Settings")]
-    [SerializeField] private GameObject rodPrefabA;
-    [SerializeField] private GameObject rodPrefabB;
+    [SerializeField] private GameObject rodPrefabA;   
+   [SerializeField] private GameObject rodPrefabB; 
     [SerializeField] private int firstRodScore = 35;
     [SerializeField] private int rodScoreInterval = 30;
 
     private GameObject saveMeButton;
     private bool saveMeUsed = false;
+    public int saveMeCount = 0; // how many times SaveMe is used
+
 
     private int nextRodSpawnScore;
+    
     [HideInInspector] public List<GameObject> wheels = new List<GameObject>();
 
     private PlayerCube player;
@@ -79,14 +82,16 @@ public class GameFlowController : MonoBehaviour
 
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
+      
+    }
+    private void Update()
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
     }
 
     void Start()
     {
         FindSaveMeButton();
-        Debug.Log("start");
-        LogGameStart();
-        MetaAnalytics.Instance.LogGameStart();
         if (player == null && playerCubePrefab != null)
         {
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
@@ -102,6 +107,7 @@ public class GameFlowController : MonoBehaviour
         if (!followPlayerAfterGameOver || player == null) return;
 
     }
+
     void FindSaveMeButton()
     {
         GameObject canvas = GameObject.Find("Canvas (Environment)");
@@ -216,6 +222,7 @@ public class GameFlowController : MonoBehaviour
 
     public void PlayerLanded(GapTrigger gap)
     {
+        
         int baseScore = 5;
         score += baseScore * scoreMultiplier;
         Filler.instance.FillSlider();
@@ -224,9 +231,8 @@ public class GameFlowController : MonoBehaviour
             comboTriggered = true;
             scoreMultiplier = 2;
             comboRemainingHits = COMBO_HITS;
-            Debug.Log("Combo event");
-            LogComboActivated();
             ComboX2Popup.Instance?.Show();
+           
         }
         if (scoreMultiplier > 1)
         {
@@ -237,21 +243,23 @@ public class GameFlowController : MonoBehaviour
                 scoreMultiplier = 1;
             }
         }
-        GameplayScoreUI.Instance?.UpdateScore(score);
-        if (score % 25 == 0)
+        x2ButtonUI x2 = FindObjectOfType<x2ButtonUI>();
+        if (x2 == null)
         {
-            Debug.Log("Milestone");
-            LogScoreMilestone();
+            Debug.Log("x2 is null");
         }
+        if (x2 != null)
+        {
+            x2.TryActivateX2(score);
+        }
+
+        GameplayScoreUI.Instance?.UpdateScore(score);
 
         UpdateWheelSpeed();
 
         if (!perfectShown && score > 20)
         {
             perfectShown = true;
-            Debug.Log("Perfect Shown");
-            LogPerfectJump();
-
             PerfectPopup.Instance?.Show();
         }
         Transform wheelTransform = gap.transform.parent;
@@ -266,7 +274,7 @@ public class GameFlowController : MonoBehaviour
         wheels.Add(nextWheel);
 
         //laser
-        // LASER SPAWN LOGIC
+        // 🔥 LASER SPAWN LOGIC
         if (score >= nextLaserSpawnScore && laserSpawner != null)
         {
             laserSpawner.SpawnLaserBetweenWheels(
@@ -277,6 +285,8 @@ public class GameFlowController : MonoBehaviour
             nextLaserSpawnScore += laserScoreInterval;
         }
 
+        ///
+
         if (score >= nextRodSpawnScore)
         {
             SpawnTwoRodsBetweenWheels(currentWheel.transform, nextWheel.transform);
@@ -286,19 +296,19 @@ public class GameFlowController : MonoBehaviour
 
         SetWheelGapTriggers(nextWheel, true);
         CleanupOldWheels();
+       
     }
     void SpawnTwoRodsBetweenWheels(Transform wheelA, Transform wheelB)
     {
-        Debug.Log("Rod Event");
-        LogRodSpawned();
         Debug.Log("Rods are spawned");
-        if (rodPrefabA == null) return;
+        if (rodPrefabA == null ) return;
         int offset = 5;
         Vector3 midPoint = (wheelA.position + wheelB.position) / 2f;
 
         Instantiate(rodPrefabA, new Vector3(midPoint.x - offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
-        Instantiate(rodPrefabB, new Vector3(midPoint.x + offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
+        Instantiate(rodPrefabB, new Vector3(midPoint.x + offset,midPoint.y,midPoint.z), Quaternion.identity, wheelsParent);
     }
+    
     void UpdateWheelSpeed()
     {
         int steps = score / SCORE_STEP;
@@ -337,16 +347,12 @@ public class GameFlowController : MonoBehaviour
             PlayerPrefs.SetInt(BEST_SCORE_KEY, bestScore);
             PlayerPrefs.Save();
         }
-        Debug.Log("game ends");
-        LogGameOver();
-        MetaAnalytics.Instance.LogGameOver(score);
 
         Time.timeScale = 0f;
-        AppManager.instance.isSaveMeActive = !saveMeUsed;
+        AppManager.instance.isSaveMeActive = true;
         AppManager.instance.GameOver();
         mainCam.transform.parent = null;
-       if(player != null)
-            Destroy(player.gameObject);
+        Destroy(player.gameObject);
         player = null;
 
         GameOverUI.Instance.Show(score, bestScore);
@@ -354,18 +360,26 @@ public class GameFlowController : MonoBehaviour
             saveMeButton.SetActive(true);
     }
 
+    public bool CanUseSaveMe()
+    {
+        if (saveMeUsed) return false;
+        if (saveMeCount >= 2) return false;   // your time-based limit
+        return true;
+    }
 
     public void SaveMe()
 
     {
+        if (saveMeCount >= 2) return;
+        //saveMeCount++;
+
         Debug.Log("save me activated 2");
-        if (saveMeUsed) return;
 
         saveMeUsed = true;
 
         Time.timeScale = 1f;
 
-        AppManager.instance.isSaveMeActive = false;
+        AppManager.instance.isSaveMeActive = true;
 
         if (saveMeButton != null)
 
@@ -402,64 +416,23 @@ public class GameFlowController : MonoBehaviour
         Debug.Log("SaveMe complete: gameplay fully restored at score " + score);
 
     }
-    #region Firebase Analytics
-
-    void LogGameStart()
+    // 2x 
+    // 🔒 Read-only access to score
+    public int GetScore()
     {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent("game_start");
-
+        return score;
     }
 
-    void LogGameOver()
+    // 🔥 Controlled x2 application
+    public void ApplyScoreMultiplierOnce(int multiplier)
     {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent(
-            "game_over",
-            new Parameter("score", score),
-            new Parameter("best_score", bestScore)
-        );
+        score *= multiplier;
+        GameplayScoreUI.Instance?.UpdateScore(score);
     }
-
-    void LogScoreMilestone()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent(
-            "score_milestone",
-            new Parameter("score", score)
-        );
-    }
-
-    void LogComboActivated()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent("combo_x2_activated");
-    }
-
-    void LogRodSpawned()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent(
-            "rod_spawned",
-            new Parameter("score", score)
-        );
-    }
-
-    void LogPerfectJump()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent("perfect_jump");
-    }
-
-    #endregion
 
 
 }
+
+
 
 

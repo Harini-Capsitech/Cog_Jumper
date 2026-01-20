@@ -9,7 +9,6 @@ public class AppManager : MonoBehaviour
     public static AppManager instance;
     public bool isSaveMeActive = false;
     private Vector3 camStartPos;
-
     private void Awake()
     {
        
