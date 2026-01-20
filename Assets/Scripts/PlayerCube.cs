@@ -39,6 +39,7 @@ public class PlayerCube : MonoBehaviour
 
     void Update()
     {
+
         if (!isAlive) return;
         if (Input.GetMouseButtonDown(0) && !inputLocked)
         {

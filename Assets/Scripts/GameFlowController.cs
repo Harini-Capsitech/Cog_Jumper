@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameFlowController : MonoBehaviour
 {
@@ -51,6 +52,8 @@ public class GameFlowController : MonoBehaviour
 
     private GameObject saveMeButton;
     private bool saveMeUsed = false;
+    public int saveMeCount = 0; // how many times SaveMe is used
+
 
     private int nextRodSpawnScore;
     
@@ -80,6 +83,10 @@ public class GameFlowController : MonoBehaviour
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
       
+    }
+    private void Update()
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
     }
 
     void Start()
@@ -236,7 +243,18 @@ public class GameFlowController : MonoBehaviour
                 scoreMultiplier = 1;
             }
         }
+        x2ButtonUI x2 = FindObjectOfType<x2ButtonUI>();
+        if (x2 == null)
+        {
+            Debug.Log("x2 is null");
+        }
+        if (x2 != null)
+        {
+            x2.TryActivateX2(score);
+        }
+
         GameplayScoreUI.Instance?.UpdateScore(score);
+
         UpdateWheelSpeed();
 
         if (!perfectShown && score > 20)
@@ -331,7 +349,7 @@ public class GameFlowController : MonoBehaviour
         }
 
         Time.timeScale = 0f;
-        AppManager.instance.isSaveMeActive = !saveMeUsed;
+        AppManager.instance.isSaveMeActive = true;
         AppManager.instance.GameOver();
         mainCam.transform.parent = null;
         Destroy(player.gameObject);
@@ -342,18 +360,26 @@ public class GameFlowController : MonoBehaviour
             saveMeButton.SetActive(true);
     }
 
+    public bool CanUseSaveMe()
+    {
+        if (saveMeUsed) return false;
+        if (saveMeCount >= 2) return false;   // your time-based limit
+        return true;
+    }
 
     public void SaveMe()
 
     {
+        if (saveMeCount >= 2) return;
+        //saveMeCount++;
+
         Debug.Log("save me activated 2");
-        if (saveMeUsed) return;
 
         saveMeUsed = true;
 
         Time.timeScale = 1f;
 
-        AppManager.instance.isSaveMeActive = false;
+        AppManager.instance.isSaveMeActive = true;
 
         if (saveMeButton != null)
 
@@ -390,6 +416,20 @@ public class GameFlowController : MonoBehaviour
         Debug.Log("SaveMe complete: gameplay fully restored at score " + score);
 
     }
+    // 2x 
+    // 🔒 Read-only access to score
+    public int GetScore()
+    {
+        return score;
+    }
+
+    // 🔥 Controlled x2 application
+    public void ApplyScoreMultiplierOnce(int multiplier)
+    {
+        score *= multiplier;
+        GameplayScoreUI.Instance?.UpdateScore(score);
+    }
+
 
 }
 

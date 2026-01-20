@@ -604,6 +604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameLogicPrefab: {fileID: 6233302562040447484, guid: 6d9c26eb9779fff4f95c585fd6decaa1, type: 3}
+  isSaveMeActive: 0
 --- !u!4 &957037330
 Transform:
   m_ObjectHideFlags: 0
@@ -680,6 +681,50 @@ MonoBehaviour:
     state: 6
     prefab: {fileID: 8181182587252473558, guid: b4131c9898659f748a16a08855465404, type: 3}
   overlays: []
+--- !u!1 &1309074279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1309074281}
+  - component: {fileID: 1309074280}
+  m_Layer: 0
+  m_Name: GoogleAdManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1309074280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309074279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c584a2ed5d264c44862328f2cefc980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1309074281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309074279}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1435874214
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,3 +984,4 @@ SceneRoots:
   - {fileID: 1107748999}
   - {fileID: 957037330}
   - {fileID: 1435874216}
+  - {fileID: 1309074281}
