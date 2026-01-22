@@ -94,4 +94,29 @@ public class AppManager : MonoBehaviour
 
         AppStateManager.Instance.SetHome();
     }
+
+    // ---------------- SETTINGS ----------------
+
+    public void OpenSettings()
+    {
+        SoundManager.Instance.PlaySfx();
+        Time.timeScale = 0f; // pause game
+        AppStateManager.Instance.SetSettings();
+    }
+
+    public void CloseSettings(SettingsType st)
+    {
+        if (st == SettingsType.home)
+        {
+            SoundManager.Instance.PlaySfx();
+            Time.timeScale = 1f;
+            AppStateManager.Instance.SetHome();
+        }
+        if (st == SettingsType.play)
+        {
+            SoundManager.Instance.PlaySfx();
+            Time.timeScale = 1f;
+            AppStateManager.Instance.SetGameplay();
+        }
+    }
 }

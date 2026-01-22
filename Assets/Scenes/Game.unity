@@ -680,6 +680,9 @@ MonoBehaviour:
   - name: GamePlayScreen
     state: 6
     prefab: {fileID: 8181182587252473558, guid: b4131c9898659f748a16a08855465404, type: 3}
+  - name: SettingScreen
+    state: 7
+    prefab: {fileID: 501359484110413024, guid: 17125ab977d34c747896a5bbcb074bce, type: 3}
   overlays: []
 --- !u!1 &1309074279
 GameObject:
