@@ -33,7 +33,9 @@ public class SaveMeButtonUI : MonoBehaviour
             GoogleMobileAdsDemoScript.Instance.ShowRewardedForStraighten(() =>
             {
                 Debug.Log("Rewarded ad completed → granting SaveMe");
-                GameFlowController.Instance.SaveMe();
+               
+
+                
             });
         }
         else

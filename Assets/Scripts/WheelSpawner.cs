@@ -10,8 +10,8 @@ public class WheelSpawner : MonoBehaviour
     public float centerY = 0f;
 
     public float centerX = 0f;
-    public float leftOffset = 1.5f;
-    public float rightOffset = 10f;
+    public float leftOffset = 2.5f;
+    public float rightOffset = 13f;
 
     public GameObject SpawnWheel(int index, Transform parent)
     {

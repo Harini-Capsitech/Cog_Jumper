@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Firebase.Analytics;
+
 
 public class GameFlowController : MonoBehaviour
 {
@@ -29,7 +31,7 @@ public class GameFlowController : MonoBehaviour
     [Header("Combo Settings")]
     [SerializeField] private int comboTriggerScore = 35;
     private const int COMBO_HITS = 3;
-    [SerializeField] private float comboDuration = 5f;
+    
 
     //laser
     [Header("Laser Obstacle Settings")]
@@ -38,8 +40,7 @@ public class GameFlowController : MonoBehaviour
     [SerializeField] private int laserScoreInterval = 70;
 
     private int nextLaserSpawnScore;
-
-
+    
     private bool comboActive = false;
     private bool comboTriggered = false;
     private int scoreMultiplier = 1;
@@ -84,14 +85,13 @@ public class GameFlowController : MonoBehaviour
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
       
     }
-    private void Update()
-    {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-    }
+    
 
     void Start()
     {
         FindSaveMeButton();
+        Debug.Log("start");
+        LogGameStart();
         if (player == null && playerCubePrefab != null)
         {
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
@@ -231,8 +231,10 @@ public class GameFlowController : MonoBehaviour
             comboTriggered = true;
             scoreMultiplier = 2;
             comboRemainingHits = COMBO_HITS;
+            Debug.Log("Combo event");
+            LogComboActivated();
             ComboX2Popup.Instance?.Show();
-           
+
         }
         if (scoreMultiplier > 1)
         {
@@ -243,7 +245,7 @@ public class GameFlowController : MonoBehaviour
                 scoreMultiplier = 1;
             }
         }
-        x2ButtonUI x2 = FindObjectOfType<x2ButtonUI>();
+        x2ButtonUI x2 = FindFirstObjectByType<x2ButtonUI>();
         if (x2 == null)
         {
             Debug.Log("x2 is null");
@@ -254,12 +256,20 @@ public class GameFlowController : MonoBehaviour
         }
 
         GameplayScoreUI.Instance?.UpdateScore(score);
+        if (score % 25 == 0)
+        {
+            Debug.Log("Milestone");
+            LogScoreMilestone();
+        }
 
         UpdateWheelSpeed();
 
         if (!perfectShown && score > 20)
         {
             perfectShown = true;
+            Debug.Log("Perfect Shown");
+            LogPerfectJump();
+
             PerfectPopup.Instance?.Show();
         }
         Transform wheelTransform = gap.transform.parent;
@@ -301,6 +311,8 @@ public class GameFlowController : MonoBehaviour
     void SpawnTwoRodsBetweenWheels(Transform wheelA, Transform wheelB)
     {
         Debug.Log("Rods are spawned");
+        LogRodSpawned();
+        Debug.Log("Rods are spawned");
         if (rodPrefabA == null ) return;
         int offset = 5;
         Vector3 midPoint = (wheelA.position + wheelB.position) / 2f;
@@ -338,7 +350,7 @@ public class GameFlowController : MonoBehaviour
 
         return null;
     }
-
+    
     public void FinalGameOver()
     {
         if (score > bestScore)
@@ -347,12 +359,16 @@ public class GameFlowController : MonoBehaviour
             PlayerPrefs.SetInt(BEST_SCORE_KEY, bestScore);
             PlayerPrefs.Save();
         }
-
+        Debug.Log("game ends");
+        LogGameOver();
         Time.timeScale = 0f;
+        AppManager.instance.disableGameLogic();
         AppManager.instance.isSaveMeActive = true;
         AppManager.instance.GameOver();
+        
         mainCam.transform.parent = null;
-        Destroy(player.gameObject);
+        if (player != null)
+            Destroy(player.gameObject);
         player = null;
 
         GameOverUI.Instance.Show(score, bestScore);
@@ -363,7 +379,7 @@ public class GameFlowController : MonoBehaviour
     public bool CanUseSaveMe()
     {
         if (saveMeUsed) return false;
-        if (saveMeCount >= 2) return false;   // your time-based limit
+        if (saveMeCount >= 2) return false; 
         return true;
     }
 
@@ -429,6 +445,62 @@ public class GameFlowController : MonoBehaviour
         score *= multiplier;
         GameplayScoreUI.Instance?.UpdateScore(score);
     }
+
+    void LogGameStart()
+    {
+        if (!FirebaseInitializer.IsFirebaseReady) return;
+
+        FirebaseAnalytics.LogEvent("game_start");
+
+    }
+
+    void LogGameOver()
+    {
+        if (!FirebaseInitializer.IsFirebaseReady) return;
+
+        FirebaseAnalytics.LogEvent(
+            "game_over",
+            new Parameter("score", score),
+            new Parameter("best_score", bestScore)
+        );
+    }
+
+    void LogScoreMilestone()
+    {
+        if (!FirebaseInitializer.IsFirebaseReady) return;
+
+        FirebaseAnalytics.LogEvent(
+            "score_milestone",
+            new Parameter("score", score)
+        );
+    }
+
+    void LogComboActivated()
+    {
+        if (!FirebaseInitializer.IsFirebaseReady) return;
+
+        FirebaseAnalytics.LogEvent("combo_x2_activated");
+    }
+
+    void LogRodSpawned()
+    {
+        if (!FirebaseInitializer.IsFirebaseReady) return;
+
+        FirebaseAnalytics.LogEvent(
+            "rod_spawned",
+            new Parameter("score", score)
+        );
+    }
+
+    void LogPerfectJump()
+    {
+        if (!FirebaseInitializer.IsFirebaseReady) return;
+
+        FirebaseAnalytics.LogEvent("perfect_jump");
+    }
+
+
+
 
 
 }

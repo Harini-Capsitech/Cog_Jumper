@@ -94,4 +94,19 @@ public class AppManager : MonoBehaviour
 
         AppStateManager.Instance.SetHome();
     }
+
+    public void disableGameLogic()
+    {
+        if(gameLogic != null)
+        {
+            gameLogic.SetActive(false);
+        }
+    }
+    public void enableGameLogic()
+    {
+        if (gameLogic != null)
+        {
+            gameLogic.SetActive(true);
+        }
+    }
 }

@@ -96,10 +96,11 @@ MonoBehaviour:
   startZ: 3
   centerY: 0
   centerX: 0
-  leftOffset: 8
-  rightOffset: 10
+  leftOffset: 15
+  rightOffset: 40
 --- !u!212 &4622913928228875220
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,6 +119,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -139,9 +142,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -151,7 +156,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2695612778112586996
 GameObject:
@@ -206,7 +210,6 @@ MonoBehaviour:
   playerCameraOffset: {x: 0, y: 2, z: -6}
   currentWheel: {fileID: 0}
   comboTriggerScore: 35
-  comboDuration: 5
   laserSpawner: {fileID: 6984260078055851734}
   firstLaserScore: 50
   laserScoreInterval: 70
@@ -214,6 +217,7 @@ MonoBehaviour:
   rodPrefabB: {fileID: 5765807966560365238, guid: 75893c5d46d0c0f4681efd780c55595e, type: 3}
   firstRodScore: 35
   rodScoreInterval: 30
+  saveMeCount: 0
   wheels: []
   IsStarted: 0
 --- !u!1 &6233302562040447484

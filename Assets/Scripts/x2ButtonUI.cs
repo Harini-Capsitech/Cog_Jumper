@@ -11,11 +11,13 @@ public class x2ButtonUI : MonoBehaviour
 
     private bool popupShown = false;
     private bool x2Used = false;
+    public static x2ButtonUI Instance { get; private set; }
 
     void Start()
     {
         //if (x2Button != null)
         //    x2Button.gameObject.SetActive(false);
+        Instance = this;
     }
 
     void Update()
@@ -47,11 +49,11 @@ public class x2ButtonUI : MonoBehaviour
 
         GoogleMobileAdsDemoScript.Instance.ShowInterstitialOnRestart(() =>
         {
-            ApplyX2();
+          
         });
     }
 
-    private void ApplyX2()
+    public void ApplyX2()
     {
         if (x2Used) return;
 
@@ -61,8 +63,8 @@ public class x2ButtonUI : MonoBehaviour
 
         GameFlowController.Instance.ApplyScoreMultiplierOnce(2);
 
-        if (x2Button != null)
-            x2Button.gameObject.SetActive(false);
+        //if (x2Button != null)
+        //    x2Button.gameObject.SetActive(false);
     }
     public void TryActivateX2(int currentScore)
     {

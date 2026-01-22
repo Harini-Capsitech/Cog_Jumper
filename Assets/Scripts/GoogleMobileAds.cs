@@ -9,6 +9,7 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour
     private RewardedAd rewardedAd;
     private InterstitialAd interstitialAd;
     private Action pendingRewardCallback;
+    
 
 #if UNITY_ANDROID
     private string rewardedAdUnitId = "ca-app-pub-2920265772112245/3787625121";
@@ -43,14 +44,18 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour
     // ---------------- Pause / Resume Game ----------------
     public void PauseGame()
     {
-       
+
         Time.timeScale = 0f;
+
     }
 
     public void ResumeGame()
     {
-        
+
         Time.timeScale = 1f;
+        //GamePauseManager.Instance?.ResumeGame();
+        //if (adBlockerPanel != null)
+        //    adBlockerPanel.SetActive(false);
     }
 
     #region Rewarded Ad
@@ -87,6 +92,7 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour
                 rewardedAd.OnAdFullScreenContentClosed += () =>
                 {
                     LoadRewardedAd();
+                    GameFlowController.Instance.SaveMe();
                 };
 
                 // 🔥 SHOW immediately if user is waiting
@@ -160,7 +166,12 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour
                 }
 
                 interstitialAd = ad;
-                interstitialAd.OnAdFullScreenContentClosed += LoadInterstitialAd;
+                interstitialAd.OnAdFullScreenContentClosed += () =>
+                {
+                    LoadInterstitialAd();
+                    x2ButtonUI.Instance.ApplyX2();
+                };
+                
             });
     }
 

@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerCube : MonoBehaviour
 {
@@ -40,12 +41,18 @@ public class PlayerCube : MonoBehaviour
     void Update()
     {
 
-        if (!isAlive) return;
-        if (Input.GetMouseButtonDown(0) && !inputLocked)
-        {
-            inputLocked = true;
-            JumpToTarget();
-        }
+       
+            if (!isAlive) return;
+
+            
+
+            if (Input.GetMouseButtonDown(0) && !inputLocked)
+            {
+                inputLocked = true;
+                JumpToTarget();
+            }
+        
+
     }
 
     void JumpToTarget()
@@ -162,6 +169,8 @@ public class PlayerCube : MonoBehaviour
         isAlive = true;
 
         StopAllCoroutines();
+
+        AppManager.instance.enableGameLogic();
     }
     void StartGameOver()
     {
