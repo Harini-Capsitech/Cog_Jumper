@@ -91,8 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff71fca86f8ec5f41a5be5a06ae5779d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelPrefab: {fileID: 3787950582631466220, guid: 73d4c75db91bcac4a96b9e34beeb6cb5, type: 3}
-  wheelSpacingZ: 20
+  wheelPrefab: {fileID: 2110913723211796381, guid: 83066773c85b1e24899f51a694c917ff, type: 3}
+  wheelSpacingZ: 50
   startZ: 3
   centerY: 0
   centerX: 0
