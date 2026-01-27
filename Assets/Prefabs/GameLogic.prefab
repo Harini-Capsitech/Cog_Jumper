@@ -91,21 +91,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff71fca86f8ec5f41a5be5a06ae5779d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  wheelPrefab: {fileID: 1219214541736046782, guid: 17f10a2cc60929943ac3b557ea71974c, type: 3}
-  wheelSpacingZ: 40
-=======
   wheelPrefab: {fileID: 2110913723211796381, guid: 83066773c85b1e24899f51a694c917ff, type: 3}
   wheelSpacingZ: 50
->>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   startZ: 3
   centerY: 0
   centerX: 0
-  leftOffset: 15
-  rightOffset: 40
+  leftOffset: 8
+  rightOffset: 10
 --- !u!212 &4622913928228875220
 SpriteRenderer:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -124,8 +118,6 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -147,11 +139,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -161,6 +151,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2695612778112586996
 GameObject:
@@ -208,24 +199,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelSpawner: {fileID: 1921079208375927919}
   wheelsParent: {fileID: 1899641290537445062}
-  playerCubePrefab: {fileID: 175990738131915796, guid: d6a421539bcb06b4cb731750024e8703, type: 3}
+  playerCubePrefab: {fileID: 1154865867092905632, guid: 2f1653044ac92924e935c562f67e7517, type: 3}
   cameraMoveSpeed: 4
   followPlayerAfterGameOver: 0
   followSmoothSpeed: 5
   playerCameraOffset: {x: 0, y: 2, z: -6}
   currentWheel: {fileID: 0}
   comboTriggerScore: 35
+  comboDuration: 5
   laserSpawner: {fileID: 6984260078055851734}
+  firstLaserScore: 50
+  laserScoreInterval: 70
   rodPrefabA: {fileID: 3723179775636540319, guid: 7ac1d84fc24f0734fad38c7bb4031fa6, type: 3}
   rodPrefabB: {fileID: 5765807966560365238, guid: 75893c5d46d0c0f4681efd780c55595e, type: 3}
-<<<<<<< HEAD
-  saveMeCount: 0
-  obstacleStartScore: 35
-=======
   firstRodScore: 35
   rodScoreInterval: 30
   saveMeCount: 0
->>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   wheels: []
   IsStarted: 0
 --- !u!1 &6233302562040447484

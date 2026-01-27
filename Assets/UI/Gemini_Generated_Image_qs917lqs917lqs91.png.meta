@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/UI/GameOverBG 1.png.meta
+guid: 6d0ec3069b92ef14da3b889c0a52c8f3
+========
 guid: 01a56d55fde42ec439dd358926108f73
+>>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42:Assets/UI/Gemini_Generated_Image_qs917lqs917lqs91.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

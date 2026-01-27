@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/UI/BackBG.png.meta
 guid: de6fb543e4b678440b890da9a15670d8
+========
+guid: ce5b4bd1764cd8e4cb394ba5f886c038
+>>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42:Assets/UI/Frame 1686556239.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
