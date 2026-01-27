@@ -91,8 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff71fca86f8ec5f41a5be5a06ae5779d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelPrefab: {fileID: 2110913723211796381, guid: 83066773c85b1e24899f51a694c917ff, type: 3}
-  wheelSpacingZ: 45
+  wheelPrefab: {fileID: 955912679318729153, guid: d940f344e307d5c49a204046c9222a48, type: 3}
+  wheelSpacingZ: 50
   startZ: 3
   centerY: 0
   centerX: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelSpawner: {fileID: 1921079208375927919}
   wheelsParent: {fileID: 1899641290537445062}
-  playerCubePrefab: {fileID: 1154865867092905632, guid: 2f1653044ac92924e935c562f67e7517, type: 3}
+  playerCubePrefab: {fileID: 175990738131915796, guid: d6a421539bcb06b4cb731750024e8703, type: 3}
   cameraMoveSpeed: 4
   followPlayerAfterGameOver: 0
   followSmoothSpeed: 5
@@ -220,6 +220,9 @@ MonoBehaviour:
   saveMeCount: 0
   wheels: []
   IsStarted: 0
+  obstacleStartScore: 35
+  rodScoreGap: 15
+  laserScoreGap: 30
 --- !u!1 &6233302562040447484
 GameObject:
   m_ObjectHideFlags: 0

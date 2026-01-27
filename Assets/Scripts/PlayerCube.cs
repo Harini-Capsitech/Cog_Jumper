@@ -6,8 +6,7 @@ public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
     [SerializeField] private float jumpForce = 150f;
-    //[SerializeField] private float jumpTimeout = 0.5f;
-
+   
     [Header("Game Over")]
     [SerializeField] private float gameOverDelay = 0.6f;
 
@@ -17,6 +16,9 @@ public class PlayerCube : MonoBehaviour
     public float shakeDuration = 0.2f;
     public float shakeStrength = 0.5f;
     public Camera cameraObj;
+
+    [SerializeField]
+    private Vector3 fixedAttachRotation = new Vector3(-85f, 12f, 192f);
 
     private bool hasAttachedOnce = false;
     private bool hasJumped = false;
@@ -41,20 +43,20 @@ public class PlayerCube : MonoBehaviour
     void Update()
     {
 
-       
-            if (!isAlive) return;
 
-            
+        if (!isAlive) return;
 
-            if (Input.GetMouseButtonDown(0) && !inputLocked)
-            {
-                inputLocked = true;
-                JumpToTarget();
-            }
-        
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (Input.GetMouseButtonDown(0) && !inputLocked)
+        {
+            inputLocked = true;
+            JumpToTarget();
+        }
+
 
     }
 
+  
     void JumpToTarget()
     {
         hasJumped = true;
@@ -130,33 +132,90 @@ public class PlayerCube : MonoBehaviour
     }
     IEnumerator InputLockCoroutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
         inputLocked = false;
     }
+
+    //IEnumerator SmoothAttach(Transform wheel, Transform magnet)
+    //{
+    //    rb.isKinematic = true;
+    //    GetComponent<Collider>().enabled = false;
+
+    //    Vector3 startPos = transform.position;
+    //    Quaternion startRot = transform.rotation;
+
+    //    float t = 0f;
+    //    float duration = 0.22f;
+
+    //    while (t < 1f)
+    //    {
+    //        t += Time.deltaTime / duration;
+    //        transform.position = Vector3.Lerp(startPos, magnet.position, t);
+    //        transform.rotation = Quaternion.Slerp(startRot, magnet.rotation, t);
+    //        yield return null;
+    //    }
+
+    //    transform.position = magnet.position;
+    //    transform.rotation = magnet.rotation;
+    //    transform.SetParent(wheel, true);
+    //}
+
+
+    //IEnumerator SmoothAttach(Transform wheel, Transform magnet)
+    //{
+    //    rb.isKinematic = true;
+    //    GetComponent<Collider>().enabled = false;
+
+
+    //    Vector3 outwardDir = (magnet.position - wheel.position).normalized;
+
+
+    //    float surfaceOffset = 0.55f; // 🔧 tweak if needed
+
+    //    Vector3 targetPos = magnet.position + outwardDir * surfaceOffset;
+
+    //    //Quaternion targetRot = Quaternion.Euler(fixedAttachRotation);
+    //    Quaternion targetRot = Quaternion.LookRotation(outwardDir, Vector3.up);
+
+    //    Vector3 startPos = transform.position;
+    //    Quaternion startRot = transform.rotation;
+
+    //    float t = 0f;
+    //    float duration = 0.22f;
+
+    //    while (t < 1f)
+    //    {
+    //        t += Time.deltaTime / duration;
+    //        transform.position = Vector3.Lerp(startPos, targetPos, t);
+    //        transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
+    //        yield return null;
+    //    }
+
+    //    transform.position = targetPos;
+    //    transform.rotation = targetRot;
+
+    //    // 4️⃣ Parent AFTER alignment
+    //    transform.SetParent(wheel, true);
+    //}
 
     IEnumerator SmoothAttach(Transform wheel, Transform magnet)
     {
         rb.isKinematic = true;
         GetComponent<Collider>().enabled = false;
 
-        Vector3 startPos = transform.position;
-        Quaternion startRot = transform.rotation;
+       
+        transform.SetParent(wheel, false);
 
-        float t = 0f;
-        float duration = 0.22f;
+        
+        transform.localPosition = new Vector3(0.0044f, -0.0017f, 0.0115f);
+        transform.localRotation = Quaternion.Euler(-85f, 12f, 192f);
+        transform.localScale = new Vector3(0.0018f, 0.0014f, 0.0018f);
 
-        while (t < 1f)
-        {
-            t += Time.deltaTime / duration;
-            transform.position = Vector3.Lerp(startPos, magnet.position, t);
-            transform.rotation = Quaternion.Slerp(startRot, magnet.rotation, t);
-            yield return null;
-        }
-
-        transform.position = magnet.position;
-        transform.rotation = magnet.rotation;
-        transform.SetParent(wheel, true);
+        yield break;
     }
+
+
+
     public void ResetJumpState()
     {
         hasAttachedOnce = false;
@@ -205,7 +264,8 @@ public class PlayerCube : MonoBehaviour
         rb.useGravity = false;
     }
 
-   public void DieImmediate()
+    
+    public void DieImmediate()
     {
         if (!isAlive) return;
        

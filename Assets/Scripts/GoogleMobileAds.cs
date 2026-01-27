@@ -59,22 +59,6 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour
     }
 
     #region Rewarded Ad
-    //public void LoadRewardedAd()
-    //{
-    //    RewardedAd.Load(rewardedAdUnitId, new AdRequest(),
-    //        (RewardedAd ad, LoadAdError error) =>
-    //        {
-    //            if (error != null || ad == null)
-    //            {
-    //                Debug.LogError("RewardedAd failed: " + error);
-    //                return;
-    //            }
-
-    //            Debug.Log("Rewarded ad loaded successfully");
-    //            rewardedAd = ad;
-    //            rewardedAd.OnAdFullScreenContentClosed += LoadRewardedAd;
-    //        });
-    //}
     public void LoadRewardedAd()
     {
         RewardedAd.Load(rewardedAdUnitId, new AdRequest(),
@@ -106,25 +90,6 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour
             });
     }
 
-    //public void ShowRewardedForStraighten(Action onReward)
-    //{
-    //    if (rewardedAd != null && rewardedAd.CanShowAd())
-    //    {
-    //        Debug.Log("Showing rewarded ad");
-    //        PauseGame();
-
-    //        rewardedAd.Show(reward =>
-    //        {
-    //            ResumeGame();
-    //            onReward?.Invoke();
-    //        });
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning("Rewarded ad not ready yet, loading...");
-    //        LoadRewardedAd();
-    //    }
-    //}
     public void ShowRewardedForStraighten(Action onReward)
     {
         if (rewardedAd != null && rewardedAd.CanShowAd())
@@ -179,12 +144,15 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour
     {
         if (interstitialAd != null && interstitialAd.CanShowAd())
         {
+            
             PauseGame();
 
             void OnClosedHandler()
             {
                 interstitialAd.OnAdFullScreenContentClosed -= OnClosedHandler;
                 ResumeGame();
+                
+                //GameFlowController.IsGameplayInputBlocked = false;
                 afterAd?.Invoke();
             }
 

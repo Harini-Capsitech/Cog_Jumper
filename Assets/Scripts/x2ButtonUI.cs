@@ -43,7 +43,9 @@ public class x2ButtonUI : MonoBehaviour
     // Called from Button OnClick()
     public void OnX2Clicked()
     {
+       
         if (x2Used) return;
+        
 
         Debug.Log("X2 button clicked → showing interstitial");
 

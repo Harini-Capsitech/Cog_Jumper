@@ -27,6 +27,8 @@ public class GameFlowController : MonoBehaviour
     private int score = 0;
     private int wheelIndex = 0;
     public GameObject currentWheel;
+    [Header("Gameplay Background")]
+   
 
     [Header("Combo Settings")]
     [SerializeField] private int comboTriggerScore = 35;
@@ -53,7 +55,8 @@ public class GameFlowController : MonoBehaviour
 
     private GameObject saveMeButton;
     private bool saveMeUsed = false;
-    public int saveMeCount = 0; // how many times SaveMe is used
+    public int saveMeCount = 0;
+    public static bool IsGameplayInputBlocked = false;
 
 
     private int nextRodSpawnScore;
@@ -74,6 +77,7 @@ public class GameFlowController : MonoBehaviour
     private bool perfectShown = false;
     void Awake()
     {
+        
         Time.timeScale = 1f;
         Instance = this;
         mainCam = Camera.main;
@@ -126,6 +130,7 @@ public class GameFlowController : MonoBehaviour
     public void ResetGame()
     {
         StopAllCoroutines();
+        
         if (player == null)
         {
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
@@ -199,6 +204,7 @@ public class GameFlowController : MonoBehaviour
     {
         List<Transform> magnets = new List<Transform>();
         Transform[] allChildren = wheel.GetComponentsInChildren<Transform>();
+       // Transform[] allChildren = wheel.transform.GetComponentsInChildren<Transform>();
 
         foreach (Transform child in allChildren)
         {
@@ -272,8 +278,14 @@ public class GameFlowController : MonoBehaviour
 
             PerfectPopup.Instance?.Show();
         }
+        //Transform wheelTransform = gap.transform.parent;
+        //GameObject landedWheel = wheelTransform.parent.gameObject;
+        //new prefab code
         Transform wheelTransform = gap.transform.parent;
-        GameObject landedWheel = wheelTransform.parent.gameObject;
+        GameObject landedWheel = wheelTransform.gameObject;
+
+
+
 
         player.AttachToMagnet(wheelTransform, gap.snapMagnet);
         currentWheel = landedWheel;
@@ -283,8 +295,7 @@ public class GameFlowController : MonoBehaviour
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
 
-        //laser
-        // 🔥 LASER SPAWN LOGIC
+        
         if (score >= nextLaserSpawnScore && laserSpawner != null)
         {
             laserSpawner.SpawnLaserBetweenWheels(
@@ -294,8 +305,6 @@ public class GameFlowController : MonoBehaviour
 
             nextLaserSpawnScore += laserScoreInterval;
         }
-
-        ///
 
         if (score >= nextRodSpawnScore)
         {
@@ -361,6 +370,7 @@ public class GameFlowController : MonoBehaviour
         }
         Debug.Log("game ends");
         LogGameOver();
+        
         Time.timeScale = 0f;
         AppManager.instance.disableGameLogic();
         AppManager.instance.isSaveMeActive = true;

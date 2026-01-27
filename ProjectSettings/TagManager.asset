@@ -11,6 +11,8 @@ TagManager:
   - FixedCube
   - Border
   - Rod
+  - GameplayBackground
+  - Laser
   layers:
   - Default
   - TransparentFX

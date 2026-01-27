@@ -13,10 +13,10 @@ public class RodObstacle : MonoBehaviour
     private bool isMovingLeft = false;
     private bool isMovingRight = false;
 
-    private float distance = 30f;
+    private float distance = 60f;
     private float travelDis = 0f;
 
-     private float MoveSpeed = 50f;
+     private float MoveSpeed = 80f;
     [SerializeField] private cubeDirection direction;
 
     private void Update()
@@ -69,7 +69,7 @@ public class RodObstacle : MonoBehaviour
 
     IEnumerator rightMoveRoutine()
     {
-        distance = 30f;
+        distance = 80f;
         travelDis = 0f;
         yield return new WaitForSeconds(3f);
         isMovingRight = true;
@@ -77,7 +77,7 @@ public class RodObstacle : MonoBehaviour
 
     IEnumerator leftMoveRoutine()
     {
-        distance = 30f;
+        distance = 80f;
         travelDis = 0f;
         yield return new WaitForSeconds(3f);
         isMovingLeft = true;
@@ -91,5 +91,10 @@ public class RodObstacle : MonoBehaviour
         {
             isMovingLeft = true;
         }
+    }
+
+    private void OnEnable()
+    {
+        ActivateMovingCube();
     }
 }
