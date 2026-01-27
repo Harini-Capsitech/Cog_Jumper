@@ -203,13 +203,13 @@ public class PlayerCube : MonoBehaviour
         rb.isKinematic = true;
         GetComponent<Collider>().enabled = false;
 
-       
+
         transform.SetParent(wheel, false);
 
-        
-        transform.localPosition = new Vector3(0.0044f, -0.0017f, 0.0115f);
-        transform.localRotation = Quaternion.Euler(-85f, 12f, 192f);
-        transform.localScale = new Vector3(0.0018f, 0.0014f, 0.0018f);
+
+        transform.localPosition = new Vector3(-8.14f, -0.1900f, -2.62997f);
+        transform.localRotation = Quaternion.Euler(-85f, -114f, 178f);
+        transform.localScale = new Vector3(1f, 1f, 1f);
 
         yield break;
     }

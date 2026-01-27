@@ -38,8 +38,6 @@ public class GameFlowController : MonoBehaviour
     //laser
     [Header("Laser Obstacle Settings")]
     [SerializeField] private LaserSpawner laserSpawner;
-    [SerializeField] private int firstLaserScore = 50;
-    [SerializeField] private int laserScoreInterval = 70;
 
     private int nextLaserSpawnScore;
     
@@ -50,16 +48,20 @@ public class GameFlowController : MonoBehaviour
     [Header("Rod Obstacle Settings")]
     [SerializeField] private GameObject rodPrefabA;   
    [SerializeField] private GameObject rodPrefabB; 
-    [SerializeField] private int firstRodScore = 35;
-    [SerializeField] private int rodScoreInterval = 30;
 
     private GameObject saveMeButton;
     private bool saveMeUsed = false;
     public int saveMeCount = 0;
     public static bool IsGameplayInputBlocked = false;
 
+    private enum ObstacleType { None, Laser, Rod }
+    private ObstacleType lastSpawnedObstacle = ObstacleType.None;
 
-    private int nextRodSpawnScore;
+    [SerializeField] private int obstacleStartScore = 30;
+ 
+
+    private int nextObstacleAllowedScore;
+      private int nextRodSpawnScore;
     
     [HideInInspector] public List<GameObject> wheels = new List<GameObject>();
 
@@ -149,10 +151,9 @@ public class GameFlowController : MonoBehaviour
         comboTriggered = false;
         scoreMultiplier = 1;
         comboRemainingHits = 0;
-
-        nextRodSpawnScore = firstRodScore;
+        nextObstacleAllowedScore = obstacleStartScore;
+        lastSpawnedObstacle = ObstacleType.None;
         //laser
-        nextLaserSpawnScore = firstLaserScore;
         Debug.Log("laser emitted");
         //
 
@@ -295,22 +296,70 @@ public class GameFlowController : MonoBehaviour
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
 
-        
-        if (score >= nextLaserSpawnScore && laserSpawner != null)
-        {
-            laserSpawner.SpawnLaserBetweenWheels(
-                currentWheel.transform,
-                nextWheel.transform
-            );
 
-            nextLaserSpawnScore += laserScoreInterval;
+        // 🚧 OBSTACLE SPAWN CONTROLLER
+        //if (score >= obstacleStartScore && score >= nextObstacleAllowedScore)
+        //{
+        //    bool canSpawnLaser = laserSpawner != null && score >= nextLaserSpawnScore;
+        //    bool canSpawnRod = score >= nextRodSpawnScore;
+
+        //    // Prevent same obstacle repeating
+        //    if (lastSpawnedObstacle == ObstacleType.Laser)
+        //        canSpawnLaser = false;
+        //    if (lastSpawnedObstacle == ObstacleType.Rod)
+        //        canSpawnRod = false;
+
+        //    if (canSpawnLaser)
+        //    {
+        //        laserSpawner.SpawnLaserBetweenWheels(
+        //            currentWheel.transform,
+        //            nextWheel.transform
+        //        );
+
+        //        lastSpawnedObstacle = ObstacleType.Laser;
+        //        nextLaserSpawnScore += laserScoreInterval;
+        //    }
+        //    else if (canSpawnRod)
+        //    {
+        //        SpawnTwoRodsBetweenWheels(
+        //            currentWheel.transform,
+        //            nextWheel.transform
+        //        );
+
+        //        lastSpawnedObstacle = ObstacleType.Rod;
+        //        nextRodSpawnScore += rodScoreInterval;
+        //    }
+
+        //    // Enforce GAP after ANY obstacle
+        //    nextObstacleAllowedScore = score + obstacleGapScore;
+        //}
+
+        if(score >= obstacleStartScore && score % 15 == 0)
+        {
+            Debug.Log("obstacle spawned at a score " + score);
+            if(lastSpawnedObstacle == ObstacleType.None)
+            {
+                SpawnTwoRodsBetweenWheels(
+                    currentWheel.transform,
+                    nextWheel.transform
+                );
+                lastSpawnedObstacle = ObstacleType.Rod;
+            }
+
+            else if(lastSpawnedObstacle == ObstacleType.Rod)
+            {
+                laserSpawner.SpawnLaserBetweenWheels(
+                    currentWheel.transform,
+                    nextWheel.transform
+                );
+                lastSpawnedObstacle = ObstacleType.Laser;
+            }
+            else
+            {
+                lastSpawnedObstacle = ObstacleType.None;
+            }
         }
 
-        if (score >= nextRodSpawnScore)
-        {
-            SpawnTwoRodsBetweenWheels(currentWheel.transform, nextWheel.transform);
-            nextRodSpawnScore += rodScoreInterval;
-        }
         player.targetWheel = nextWheel.transform;
 
         SetWheelGapTriggers(nextWheel, true);
@@ -508,9 +557,6 @@ public class GameFlowController : MonoBehaviour
 
         FirebaseAnalytics.LogEvent("perfect_jump");
     }
-
-
-
 
 
 }
