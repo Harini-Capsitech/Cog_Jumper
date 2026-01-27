@@ -63,8 +63,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -86,11 +89,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &9042426939677098866
 BoxCollider:
@@ -189,8 +198,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -212,11 +224,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &3632968079309460178
 BoxCollider:
@@ -315,8 +333,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -338,11 +359,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &5514082393844104251
 BoxCollider:
@@ -473,8 +500,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -496,11 +526,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7885208238432455458
 BoxCollider:
@@ -599,8 +635,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -622,11 +661,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &2042973800290355306
 BoxCollider:
@@ -725,8 +770,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -748,11 +796,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &2011764981316166448
 BoxCollider:
@@ -851,8 +905,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -874,11 +931,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1622112630381864379
 BoxCollider:
@@ -977,8 +1040,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1000,11 +1066,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &9112451461818442779
 BoxCollider:
@@ -1103,8 +1175,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1126,11 +1201,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &9151983162571970419
 BoxCollider:
@@ -1239,8 +1320,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1266,11 +1350,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &5043590188423668642
 CapsuleCollider:
@@ -1371,8 +1461,11 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+<<<<<<< HEAD
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
+=======
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1394,11 +1487,17 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+<<<<<<< HEAD
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
+=======
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+>>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1204235239735233112
 BoxCollider:
