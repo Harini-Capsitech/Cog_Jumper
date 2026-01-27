@@ -95,11 +95,7 @@ public class AppManager : MonoBehaviour
         AppStateManager.Instance.SetHome();
     }
 
-<<<<<<< HEAD
-=======
-    // ---------------- SETTINGS ----------------
 
->>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
     public void OpenSettings()
     {
         SoundManager.Instance.PlaySfx();
@@ -122,7 +118,6 @@ public class AppManager : MonoBehaviour
             AppStateManager.Instance.SetGameplay();
         }
     }
-<<<<<<< HEAD
 
     public void disableGameLogic()
     {
@@ -138,6 +133,4 @@ public class AppManager : MonoBehaviour
             gameLogic.SetActive(true);
         }
     }
-=======
->>>>>>> 7ae73a8beeba362d2dd6f50f53126be8eda42c42
 }
