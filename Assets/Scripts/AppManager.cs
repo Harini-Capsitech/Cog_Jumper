@@ -5,7 +5,7 @@ public class AppManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameLogicPrefab;
     private GameObject gameLogic;
-
+    public bool IsPaused { get; private set; } = false;
     public static AppManager instance;
     public bool isSaveMeActive = false;
     private Vector3 camStartPos;
@@ -118,6 +118,68 @@ public class AppManager : MonoBehaviour
         }
     }
 
+    public void PauseGame()
+    {
+        if (IsPaused) return;
+
+        IsPaused = true;
+
+        SoundManager.Instance.PlaySfx();
+
+        Time.timeScale = 0f;
+
+        AppStateManager.Instance.SetPause();
+    }
+
+    public void ResumeGame()
+    {
+        if (!IsPaused) return;
+
+        IsPaused = false;
+
+        SoundManager.Instance.PlaySfx();
+
+        Time.timeScale = 1f;
+
+        AppStateManager.Instance.SetGameplay();
+    }
+
+    public void ExitGameToHomeFromPause()
+    {
+        IsPaused = false;
+
+        SoundManager.Instance.PlaySfx();
+
+        Time.timeScale = 1f;
+
+        if (gameLogic != null)
+        {
+            Destroy(gameLogic);
+            gameLogic = null;
+        }
+
+        AppStateManager.Instance.SetHome();
+    }
+
+    public void ClosePause()
+    {
+        if (!IsPaused) return;
+
+        IsPaused = false;
+
+        SoundManager.Instance.PlaySfx();
+
+        Time.timeScale = 1f;
+        Debug.Log("pause closed");
+        //
+        AppStateManager.Instance.SetGameplay();
+    }
+
+    public void OpenLanguagePanel()
+    {
+        SoundManager.Instance.PlaySfx();
+        AppStateManager.Instance.ShowOverlay("Language");
+    }
     public void disableGameLogic()
     {
         if(gameLogic != null)
