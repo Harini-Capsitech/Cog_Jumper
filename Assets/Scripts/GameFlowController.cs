@@ -18,36 +18,32 @@ public class GameFlowController : MonoBehaviour
     public GameObject playerCubePrefab;
 
     [Header("Camera")]
-    public float cameraMoveSpeed = 4f;
     public bool followPlayerAfterGameOver = false;
-    public float followSmoothSpeed = 5f;
-    public Vector3 playerCameraOffset = new Vector3(0, 2f, -6f);
+   
 
     [Header("Gameplay")]
     private int score = 0;
     private int wheelIndex = 0;
     public GameObject currentWheel;
     [Header("Gameplay Background")]
-   
+
 
     [Header("Combo Settings")]
     [SerializeField] private int comboTriggerScore = 35;
     private const int COMBO_HITS = 3;
-    
 
     //laser
     [Header("Laser Obstacle Settings")]
     [SerializeField] private LaserSpawner laserSpawner;
 
-    private int nextLaserSpawnScore;
     
     private bool comboActive = false;
     private bool comboTriggered = false;
     private int scoreMultiplier = 1;
     private int comboRemainingHits = 0;
     [Header("Rod Obstacle Settings")]
-    [SerializeField] private GameObject rodPrefabA;   
-   [SerializeField] private GameObject rodPrefabB; 
+    [SerializeField] private GameObject rodPrefabA;
+    [SerializeField] private GameObject rodPrefabB;
 
     private GameObject saveMeButton;
     private bool saveMeUsed = false;
@@ -58,11 +54,11 @@ public class GameFlowController : MonoBehaviour
     private ObstacleType lastSpawnedObstacle = ObstacleType.None;
 
     [SerializeField] private int obstacleStartScore = 30;
- 
+
 
     private int nextObstacleAllowedScore;
-      private int nextRodSpawnScore;
-    
+    private int nextRodSpawnScore;
+
     [HideInInspector] public List<GameObject> wheels = new List<GameObject>();
 
     private PlayerCube player;
@@ -72,14 +68,14 @@ public class GameFlowController : MonoBehaviour
     public static float CurrentWheelSpeed;
     private const float BASE_WHEEL_SPEED = 100f;
     private const int SCORE_STEP = 25;
-    private const float SPEED_INCREMENT = 25f;
+    private const float SPEED_INCREMENT = 5f;
     private Vector3 startPos;
     private Quaternion rot;
 
     private bool perfectShown = false;
     void Awake()
     {
-        
+
         Time.timeScale = 1f;
         Instance = this;
         mainCam = Camera.main;
@@ -89,9 +85,9 @@ public class GameFlowController : MonoBehaviour
 
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
-      
+
     }
-    
+
 
     void Start()
     {
@@ -131,8 +127,10 @@ public class GameFlowController : MonoBehaviour
 
     public void ResetGame()
     {
+       
         StopAllCoroutines();
-        
+        PlayerCube.ResetTutorial();
+       
         if (player == null)
         {
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
@@ -170,11 +168,20 @@ public class GameFlowController : MonoBehaviour
         }
 
         player.ResetPlayerState();
+        EnableAimHintPopup();
+
         player.transform.SetParent(null);
         player.transform.position = Vector3.zero;
         player.transform.rotation = Quaternion.identity;
 
         SpawnInitialWheels();
+    }
+
+    void EnableAimHintPopup()
+    {
+        AimHintPopupUI popup = FindFirstObjectByType<AimHintPopupUI>();
+        if (popup != null)
+            popup.gameObject.SetActive(true);
     }
 
     void SpawnInitialWheels()
@@ -205,7 +212,7 @@ public class GameFlowController : MonoBehaviour
     {
         List<Transform> magnets = new List<Transform>();
         Transform[] allChildren = wheel.GetComponentsInChildren<Transform>();
-       // Transform[] allChildren = wheel.transform.GetComponentsInChildren<Transform>();
+        // Transform[] allChildren = wheel.transform.GetComponentsInChildren<Transform>();
 
         foreach (Transform child in allChildren)
         {
@@ -229,20 +236,30 @@ public class GameFlowController : MonoBehaviour
 
     public void PlayerLanded(GapTrigger gap)
     {
-        
+
         int baseScore = 5;
         score += baseScore * scoreMultiplier;
         Filler.instance.FillSlider();
+        bool comboShownThisHit = false;
+
+        
         if (!comboTriggered && score >= comboTriggerScore)
         {
             comboTriggered = true;
             scoreMultiplier = 2;
             comboRemainingHits = COMBO_HITS;
-            Debug.Log("Combo event");
-            LogComboActivated();
-            ComboX2Popup.Instance?.Show();
 
+            ComboX2Popup.Instance?.Show();
+            comboShownThisHit = true;
         }
+
+        
+        if (!comboShownThisHit && !perfectShown && score > 20)
+        {
+            perfectShown = true;
+            PerfectPopup.Instance?.Show();
+        }
+
         if (scoreMultiplier > 1)
         {
             comboRemainingHits--;
@@ -271,14 +288,7 @@ public class GameFlowController : MonoBehaviour
 
         UpdateWheelSpeed();
 
-        if (!perfectShown && score > 20)
-        {
-            perfectShown = true;
-            Debug.Log("Perfect Shown");
-            LogPerfectJump();
-
-            PerfectPopup.Instance?.Show();
-        }
+        
         //Transform wheelTransform = gap.transform.parent;
         //GameObject landedWheel = wheelTransform.parent.gameObject;
         //new prefab code
@@ -295,49 +305,12 @@ public class GameFlowController : MonoBehaviour
 
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
+      //  CoinSpawner.Instance.SpawnCoinsBetweenWheels(currentWheel.transform, nextWheel.transform);
 
-
-        // 🚧 OBSTACLE SPAWN CONTROLLER
-        //if (score >= obstacleStartScore && score >= nextObstacleAllowedScore)
-        //{
-        //    bool canSpawnLaser = laserSpawner != null && score >= nextLaserSpawnScore;
-        //    bool canSpawnRod = score >= nextRodSpawnScore;
-
-        //    // Prevent same obstacle repeating
-        //    if (lastSpawnedObstacle == ObstacleType.Laser)
-        //        canSpawnLaser = false;
-        //    if (lastSpawnedObstacle == ObstacleType.Rod)
-        //        canSpawnRod = false;
-
-        //    if (canSpawnLaser)
-        //    {
-        //        laserSpawner.SpawnLaserBetweenWheels(
-        //            currentWheel.transform,
-        //            nextWheel.transform
-        //        );
-
-        //        lastSpawnedObstacle = ObstacleType.Laser;
-        //        nextLaserSpawnScore += laserScoreInterval;
-        //    }
-        //    else if (canSpawnRod)
-        //    {
-        //        SpawnTwoRodsBetweenWheels(
-        //            currentWheel.transform,
-        //            nextWheel.transform
-        //        );
-
-        //        lastSpawnedObstacle = ObstacleType.Rod;
-        //        nextRodSpawnScore += rodScoreInterval;
-        //    }
-
-        //    // Enforce GAP after ANY obstacle
-        //    nextObstacleAllowedScore = score + obstacleGapScore;
-        //}
-
-        if(score >= obstacleStartScore && score % 15 == 0)
+        if (score >= obstacleStartScore && score % 15 == 0)
         {
             Debug.Log("obstacle spawned at a score " + score);
-            if(lastSpawnedObstacle == ObstacleType.None)
+            if (lastSpawnedObstacle == ObstacleType.None)
             {
                 SpawnTwoRodsBetweenWheels(
                     currentWheel.transform,
@@ -346,7 +319,7 @@ public class GameFlowController : MonoBehaviour
                 lastSpawnedObstacle = ObstacleType.Rod;
             }
 
-            else if(lastSpawnedObstacle == ObstacleType.Rod)
+            else if (lastSpawnedObstacle == ObstacleType.Rod)
             {
                 laserSpawner.SpawnLaserBetweenWheels(
                     currentWheel.transform,
@@ -361,24 +334,23 @@ public class GameFlowController : MonoBehaviour
         }
 
         player.targetWheel = nextWheel.transform;
-
         SetWheelGapTriggers(nextWheel, true);
         CleanupOldWheels();
-       
+
     }
     void SpawnTwoRodsBetweenWheels(Transform wheelA, Transform wheelB)
     {
         Debug.Log("Rods are spawned");
         LogRodSpawned();
         Debug.Log("Rods are spawned");
-        if (rodPrefabA == null ) return;
+        if (rodPrefabA == null) return;
         int offset = 5;
         Vector3 midPoint = (wheelA.position + wheelB.position) / 2f;
 
         Instantiate(rodPrefabA, new Vector3(midPoint.x - offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
-        Instantiate(rodPrefabB, new Vector3(midPoint.x + offset,midPoint.y,midPoint.z), Quaternion.identity, wheelsParent);
+        Instantiate(rodPrefabB, new Vector3(midPoint.x + offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
     }
-    
+
     void UpdateWheelSpeed()
     {
         int steps = score / SCORE_STEP;
@@ -408,7 +380,7 @@ public class GameFlowController : MonoBehaviour
 
         return null;
     }
-    
+
     public void FinalGameOver()
     {
         if (score > bestScore)
@@ -419,12 +391,12 @@ public class GameFlowController : MonoBehaviour
         }
         Debug.Log("game ends");
         LogGameOver();
-        
+
         Time.timeScale = 0f;
         AppManager.instance.disableGameLogic();
         AppManager.instance.isSaveMeActive = true;
         AppManager.instance.GameOver();
-        
+
         mainCam.transform.parent = null;
         if (player != null)
             Destroy(player.gameObject);
@@ -438,7 +410,7 @@ public class GameFlowController : MonoBehaviour
     public bool CanUseSaveMe()
     {
         if (saveMeUsed) return false;
-        if (saveMeCount >= 2) return false; 
+        if (saveMeCount >= 2) return false;
         return true;
     }
 
@@ -467,6 +439,10 @@ public class GameFlowController : MonoBehaviour
         GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
 
         player = obj.GetComponent<PlayerCube>();
+        PlayerCube.DisableTutorial();
+
+        player.DisableAimHintPopup();   
+
 
         player.ResetJumpState();
 
@@ -491,14 +467,13 @@ public class GameFlowController : MonoBehaviour
         Debug.Log("SaveMe complete: gameplay fully restored at score " + score);
 
     }
-    // 2x 
-    // 🔒 Read-only access to score
+    
     public int GetScore()
     {
         return score;
     }
 
-    // 🔥 Controlled x2 application
+  
     public void ApplyScoreMultiplierOnce(int multiplier)
     {
         score *= multiplier;
@@ -515,8 +490,12 @@ public class GameFlowController : MonoBehaviour
 
     void LogGameOver()
     {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
+        if (!FirebaseInitializer.IsFirebaseReady)
+        {
+            Debug.Log("not IsFirebaseReady");
+            return;
+        }
+        Debug.Log("FirebaseAnalytics.LogEventgame_over");
         FirebaseAnalytics.LogEvent(
             "game_over",
             new Parameter("score", score),
@@ -560,7 +539,5 @@ public class GameFlowController : MonoBehaviour
 
 
 }
-
-
 
 

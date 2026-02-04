@@ -13,10 +13,10 @@ public class RodObstacle : MonoBehaviour
     private bool isMovingLeft = false;
     private bool isMovingRight = false;
 
-    private float distance = 60f;
+    private float distance = 70f;
     private float travelDis = 0f;
 
-     private float MoveSpeed = 80f;
+     private float MoveSpeed = 90f;
     [SerializeField] private cubeDirection direction;
 
     private void Update()

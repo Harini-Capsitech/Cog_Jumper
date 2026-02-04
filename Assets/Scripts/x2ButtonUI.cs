@@ -22,42 +22,43 @@ public class x2ButtonUI : MonoBehaviour
 
     void Update()
     {
-    //    if (x2Used) return;
-    //    if (GameFlowController.Instance == null) return;
+        //    if (x2Used) return;
+        //    if (GameFlowController.Instance == null) return;
 
-    //    int currentScore = GameFlowController.Instance.GetScore();
+        //    int currentScore = GameFlowController.Instance.GetScore();
 
-    //    if (currentScore >= scoreThreshold && !popupShown)
-    //    {
-    //        popupShown = true;
+        //    if (currentScore >= scoreThreshold && !popupShown)
+        //    {
+        //        popupShown = true;
 
-    //        Debug.Log("Score reached 200 → showing x2 popup");
+        //        Debug.Log("Score reached 200 → showing x2 popup");
 
-    //        PerfectPopup.Instance?.Show();
+        //        PerfectPopup.Instance?.Show();
 
-    //        if (x2Button != null)
-    //            x2Button.gameObject.SetActive(true);
-    //    }
+        //        if (x2Button != null)
+        //            x2Button.gameObject.SetActive(true);
+        //    }
     }
 
     // Called from Button OnClick()
     public void OnX2Clicked()
     {
-       
-        if (x2Used) return;
-        
+
+        //if (x2Used) return;
+
 
         Debug.Log("X2 button clicked → showing interstitial");
 
         GoogleMobileAdsDemoScript.Instance.ShowInterstitialOnRestart(() =>
         {
-          
+
         });
+        x2Used = false;
     }
 
     public void ApplyX2()
     {
-        if (x2Used) return;
+        //if (x2Used) return;
 
         x2Used = true;
 
@@ -70,7 +71,7 @@ public class x2ButtonUI : MonoBehaviour
     }
     public void TryActivateX2(int currentScore)
     {
-        if (x2Used) return;
+        //if (x2Used) return;
         if (popupShown) return;
 
         if (currentScore >= scoreThreshold)
@@ -87,3 +88,4 @@ public class x2ButtonUI : MonoBehaviour
     }
 
 }
+

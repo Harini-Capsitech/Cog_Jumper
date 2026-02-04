@@ -91,8 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff71fca86f8ec5f41a5be5a06ae5779d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelPrefab: {fileID: 1219214541736046782, guid: 17f10a2cc60929943ac3b557ea71974c, type: 3}
-  wheelSpacingZ: 40
+  wheelPrefab: {fileID: 2113964551216476819, guid: fc9aeed7b895958459d95784f4b36f4b, type: 3}
+  wheelSpacingZ: 50
   startZ: 3
   centerY: 0
   centerX: 0
@@ -210,13 +210,62 @@ MonoBehaviour:
   playerCameraOffset: {x: 0, y: 2, z: -6}
   currentWheel: {fileID: 0}
   comboTriggerScore: 35
+  coinSpawner: {fileID: 3826911237819264562}
   laserSpawner: {fileID: 6984260078055851734}
-  rodPrefabA: {fileID: 3723179775636540319, guid: 7ac1d84fc24f0734fad38c7bb4031fa6, type: 3}
-  rodPrefabB: {fileID: 5765807966560365238, guid: 75893c5d46d0c0f4681efd780c55595e, type: 3}
+  rodPrefabA: {fileID: 285954543630780392, guid: d321504ec5e73374ca004aca8e67c467, type: 3}
+  rodPrefabB: {fileID: 285954543630780392, guid: 86eb27d6bb9a44e449a1b596be7bfa08, type: 3}
   saveMeCount: 0
-  obstacleStartScore: 35
+  obstacleStartScore: 30
   wheels: []
   IsStarted: 0
+--- !u!1 &3674374686182785648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8269622599583003631}
+  - component: {fileID: 3826911237819264562}
+  m_Layer: 0
+  m_Name: CoinSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8269622599583003631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3674374686182785648}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -378.22168, y: -696.56226, z: -19.7656}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8944357362448714746}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3826911237819264562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3674374686182785648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d2995916679284a9f2f57b2603289f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoinSpawner
+  coinPrefab: {fileID: 5618335343037775236, guid: 019254186c386fa4bb3ddc842a14fe0d, type: 3}
+  easyCoinCount: 3
+  coinSpacing: 2.5
+  heightOffset: 0.3
 --- !u!1 &6233302562040447484
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +299,7 @@ Transform:
   - {fileID: 6062548830678652497}
   - {fileID: 1899641290537445062}
   - {fileID: 2360667553148848420}
+  - {fileID: 8269622599583003631}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6475883896263233123
