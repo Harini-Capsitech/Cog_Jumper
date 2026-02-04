@@ -32,6 +32,7 @@ public class AppStateManager : MonoBehaviour
         TutorialOnLoad,
         Home,
         Gameplay,
+        Pause,        // ✅ ADD THIS
         Settings,
         Credits,
         Loading,
@@ -102,8 +103,9 @@ public class AppStateManager : MonoBehaviour
     public void SetSettings() => SetState(AppState.Settings);
     public void SetCredits() => SetState(AppState.Credits);
     public void SetLoading() => SetState(AppState.Loading);
-
+    
     public void ForceSetState(AppState state) => SetState(state);
+    public void SetPause() => SetState(AppState.Pause);
 
     private void EnsureScreenInstantiated(ScreenBinding b)
     {

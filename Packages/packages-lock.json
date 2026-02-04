@@ -87,7 +87,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
+<<<<<<< HEAD
       "version": "1.17.0",
+=======
+      "version": "1.18.0",
+>>>>>>> 6404f28 (Ui changes)
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -124,6 +128,7 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+<<<<<<< HEAD
     "com.unity.probuilder": {
       "version": "6.0.8",
       "depth": 0,
@@ -134,6 +139,13 @@
         "com.unity.modules.physics": "1.0.0",
         "com.unity.settings-manager": "1.0.3"
       },
+=======
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+>>>>>>> 6404f28 (Ui changes)
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
@@ -177,7 +189,11 @@
     },
     "com.unity.settings-manager": {
       "version": "2.1.1",
+<<<<<<< HEAD
       "depth": 1,
+=======
+      "depth": 2,
+>>>>>>> 6404f28 (Ui changes)
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

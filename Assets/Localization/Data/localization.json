@@ -1,0 +1,57 @@
+{
+  "PLAY": {
+    "en": "Play",
+    "pt-BR": "Jogar",
+    "id": "Main"
+  },
+  "SETTINGS": {
+    "en": "Settings",
+    "pt-BR": "Configurações",
+    "id": "Pengaturan"
+  },
+  "HOME": {
+    "en": "Home",
+    "pt-BR": "Início",
+    "id": "Beranda"
+  },
+  "HEIGHT": {
+    "en": "Height",
+    "pt-BR": "Altura",
+    "id": "Tinggi"
+  },
+  "HIGHEST": {
+    "en": "Highest",
+    "pt-BR": "Mais alto",
+    "id": "Tertinggi"
+  },
+  "BEST": {
+    "en": "Best",
+    "pt-BR": "Melhor",
+    "id": "Terbaik"
+  },
+  "CRASHED": {
+    "en": "Crashed",
+    "pt-BR": "Colidiu",
+    "id": "Menabrak"
+  },
+  "SFX": {
+    "en": "SFX",
+    "pt-BR": "Efeitos",
+    "id": "Efek"
+  },
+  "VIBRATION": {
+    "en": "Vibration",
+    "pt-BR": "Vibração",
+    "id": "Getaran"
+  },
+  "LANGUAGE": {
+    "en": "Language",
+    "pt-BR": "Idioma",
+    "id": "Bahasa"
+  },
+  "WELCOME_MSG": {
+    "en": "Welcome to the game!",
+    "pt-BR": "Bem-vindo ao jogo!",
+    "id": "Selamat datang di game!"
+  }
+}
