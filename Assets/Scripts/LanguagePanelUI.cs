@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class LanguagePanelUI : MonoBehaviour
 {
-    [SerializeField] public GameObject lanPanel;
+    [SerializeField] private GameObject lanPanel;
 
-    
 
+    //private void Awake()
+    //{
+    //    lanPanel.SetActive(false);
+    //}
     public void OpenLanguagePanel()
     {
-        Debug.Log("LANGUAGE BUTTON CLICKED");
         lanPanel.SetActive(true);
+        Debug.Log("LANGUAGE BUTTON CLICKED");
     }
 
     public void CloseLanguagePanel()

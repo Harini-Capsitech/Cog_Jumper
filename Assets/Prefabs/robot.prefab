@@ -160,8 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCube
   jumpForce: 150
-  gameOverDelay: 0.6
-  moveSpeed: 8
+  gameOverDelay: 0.2
   jumpEffect: {fileID: 4555470411829009011}
   shakeDuration: 0.2
   shakeStrength: 0.5

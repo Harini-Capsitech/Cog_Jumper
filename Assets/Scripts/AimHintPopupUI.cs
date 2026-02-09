@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class AimHintPopupUI : MonoBehaviour
@@ -6,9 +6,14 @@ public class AimHintPopupUI : MonoBehaviour
     [SerializeField] private float autoHideTime = 3f;
     private Coroutine hideRoutine;
 
-    // DO NOT disable in Awake
+
     void OnEnable()
     {
+        if (GameFlowController.Instance.isHintConsumed)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         if (hideRoutine != null)
             StopCoroutine(hideRoutine);
 
@@ -26,3 +31,4 @@ public class AimHintPopupUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
+

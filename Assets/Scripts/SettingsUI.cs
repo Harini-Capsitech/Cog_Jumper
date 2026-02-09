@@ -9,6 +9,7 @@ public class SettingsUI : MonoBehaviour
 {
     [SerializeField] private Button backButton;
     [SerializeField] private SettingsType st;
+    [SerializeField] private GameObject lanPanel;
     // [SerializeField] private Button privacyPolicyButton;
 
     private void OnEnable()
@@ -16,6 +17,19 @@ public class SettingsUI : MonoBehaviour
         backButton.onClick.AddListener(OnBackClicked);
         // privacyPolicyButton.onClick.AddListener(OnPrivacyPolicyClicked);
     }
+
+
+    public void OpenLanguagePanel()
+    {
+        lanPanel.SetActive(true);
+        Debug.Log("LANGUAGE BUTTON CLICKED");
+    }
+
+    public void CloseLanguagePanel()
+    {
+        lanPanel.SetActive(false);
+    }
+
 
     private void OnDisable()
     {
@@ -27,6 +41,8 @@ public class SettingsUI : MonoBehaviour
     {
         AppManager.instance.CloseSettings(st);
     }
+
+
 
     void OnPrivacyPolicyClicked()
     {

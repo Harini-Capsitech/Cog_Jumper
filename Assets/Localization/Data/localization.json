@@ -1,17 +1,85 @@
 {
-  "PLAY": {
-    "en": "Play",
-    "pt-BR": "Jogar",
-    "id": "Main"
-  },
+ "PLAY": {
+  "en": "Play",
+  "fr": "Jouer",
+  "pt": "Jogar",
+  "ar": "ابدأ اللعب",
+  "id": "Main",
+  "es": "Jugar"
+ },
+  
+  
   "SETTINGS": {
     "en": "Settings",
-    "pt-BR": "Configurações",
-    "id": "Pengaturan"
+    "fr": "Paramètres",
+    "pt": "Configurações",
+    "ar": "الإعدادات",
+    "id": "Pengaturan",
+    "es": "Configuración"
   },
-  "WELCOME_MSG": {
-    "en": "Welcome to the game!",
-    "pt-BR": "Bem-vindo ao jogo!",
-    "id": "Selamat datang di game!"
+  "SFX": {
+    "en": "SFX",
+    "fr": "Effets sonores",
+    "pt": "Efeitos sonoros",
+    "ar": "المؤثرات الصوتية",
+    "id": "Efek suara",
+    "es": "Efectos de sonido"
+  },
+  "VIBRATE": {
+    "en": "Vibrate",
+    "fr": "Vibration",
+    "pt": "Vibração",
+    "ar": "اهتزاز",
+    "id": "Getar",
+    "es": "Vibración"
+  },
+  "LANGUAGE": {
+    "en": "Language",
+    "fr": "Langue",
+    "pt": "Idioma",
+    "ar": "اللغة",
+    "id": "Bahasa",
+    "es": "Idioma"
+  },
+  "PRIVACY_POLICY": {
+    "en": "Privacy & Policy",
+    "fr": "Confidentialité et politique",
+    "pt": "Privacidade e política",
+    "ar": "سياسة الخصوصية",
+    "id": "Kebijakan privasi",
+    "es": "Privacidad y política"
+  },
+  "HEIGHT": {
+    "en": "Height",
+    "fr": "Hauteur",
+    "pt": "Altura",
+    "ar": "الارتفاع",
+    "id": "Tinggi",
+    "es": "Altura"
+  },
+  "PAUSED": {
+    "en": "Paused",
+    "fr": "En pause",
+    "pt": "Pausado",
+    "ar": "متوقف مؤقتًا",
+    "id": "Dijeda",
+    "es": "Pausado"
+  },
+  "CRASHED": {
+    "en": "Crashed",
+    "fr": "Écrasé",
+    "pt": "Colidiu",
+    "ar": "تحطم",
+    "id": "Menabrak",
+    "es": "Chocado"
+  },
+  "BEST": {
+    "en": "Best",
+    "fr": "Meilleur",
+    "pt": "Melhor",
+    "ar": "الأفضل",
+    "id": "Terbaik",
+    "es": "Mejor"
   }
+
 }

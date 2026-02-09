@@ -8,7 +8,7 @@ public class PlayerCube : MonoBehaviour
     [SerializeField] private float jumpForce = 150f;
 
     [Header("Game Over")]
-    [SerializeField] private float gameOverDelay = 0.6f;
+    [SerializeField] private float gameOverDelay = 0.2f;
 
     private Rigidbody rb;
     public PlayerJumpEffect jumpEffect;
@@ -46,7 +46,7 @@ public class PlayerCube : MonoBehaviour
 
     [SerializeField] float castRadius = 0.8f;  
     [SerializeField] float castDistance = 60f;
-    private static bool tutorialHintConsumed = false;
+    public static bool tutorialHintConsumed = false;
 
     RaycastHit hit;
     bool hasValidTarget;
@@ -134,6 +134,7 @@ public class PlayerCube : MonoBehaviour
             {
                 ShowHintLine(finalOrigin, lockedHit.point);
                 if (aimHintPopup != null && aimHintPopup.gameObject.activeSelf)
+                    GameFlowController.Instance.isHintConsumed = true;
                     aimHintPopup.Show();
             }
            
@@ -141,16 +142,8 @@ public class PlayerCube : MonoBehaviour
             else
             {
                 HideHintLine();
+               
             }
-            //if (!coinsLocked)
-            //{
-            //    CoinSpawner.Instance?.SpawnCoinsAlongRay(
-            //      finalOrigin,
-            //      dir,
-            //      dist
-            //  );
-            //    coinsLocked = true;
-            //}
             
         }
         else
@@ -268,8 +261,7 @@ public class PlayerCube : MonoBehaviour
 
         successfulJumpCount++;
         HideHintLine();
-        CoinSpawner.Instance?.ClearCoins();
-        coinsLocked = false;
+       
 
         if (!isAlive) return;
 
@@ -384,8 +376,6 @@ public class PlayerCube : MonoBehaviour
        
         StopAllCoroutines();
         coinsLocked = false;
-CoinSpawner.Instance?.ClearCoins();
-
         hasAttachedOnce = false;
         hasJumped = false;
         jumpResolved = false;
@@ -421,9 +411,6 @@ CoinSpawner.Instance?.ClearCoins();
         rb.useGravity = true;
         SoundManager.Instance.StopSfx();
         SoundManager.Instance.PlayGameOver();
-        CoinSpawner.Instance?.ClearCoins();
-        coinsLocked = false;
-
     }
 
     IEnumerator CheckForGameOver()
@@ -444,7 +431,7 @@ CoinSpawner.Instance?.ClearCoins();
             DieImmediate();
         }
     }
-
+   
     public void DisableAimHintPopup()
     {
         if (aimHintPopup != null)

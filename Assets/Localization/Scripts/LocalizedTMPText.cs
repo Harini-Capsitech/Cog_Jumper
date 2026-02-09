@@ -1,43 +1,64 @@
+﻿using ArabicSupport;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
 public class LocalizedTMPText : MonoBehaviour
 {
-    [SerializeField] string localizationKey;
-    TextMeshProUGUI text;
+    [SerializeField] private string key;
 
-    void Awake()
+    [Header("Fonts")]
+    [SerializeField] private TMP_FontAsset defaultFont;
+    [SerializeField] private TMP_FontAsset arabicFont;
+
+    private TMP_Text text;
+
+    private void Awake()
     {
-        text = GetComponent<TextMeshProUGUI>();
+        text = GetComponent<TMP_Text>();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        if (LocalizationManager.Instance == null)
-        {
-            Debug.LogError(
-                $"LocalizationManager not found for {gameObject.name}",
-                this
-            );
-            return;
-        }
-
         LocalizationManager.Instance.OnLanguageChanged += UpdateText;
         UpdateText();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        if (LocalizationManager.Instance == null)
-            return;
-
-        LocalizationManager.Instance.OnLanguageChanged -= UpdateText;
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged -= UpdateText;
     }
 
-
-    void UpdateText()
+    private void UpdateText()
     {
-        text.text = LocalizationManager.Instance.GetText(localizationKey);
+        string lang = LocalizationManager.Instance.CurrentLanguage;
+        string value = LocalizationManager.Instance.GetText(key);
+
+        switch (lang)
+        {
+            case "ar":
+                ApplyArabic(value);
+                break;
+
+            default:
+                ApplyLTR(value);
+                break;
+        }
+    }
+
+    private void ApplyArabic(string value)
+    {
+        text.font = arabicFont;
+        text.isRightToLeftText = true;
+        text.alignment = TextAlignmentOptions.Center;
+        text.text = ArabicFixer.Fix(value, true, true);
+    }
+
+    private void ApplyLTR(string value)
+    {
+        text.font = defaultFont;
+        text.isRightToLeftText = false;
+        text.alignment = TextAlignmentOptions.Center;
+        text.text = value;
     }
 }

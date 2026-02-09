@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Firebase.Analytics;
+
 
 
 public class GameFlowController : MonoBehaviour
@@ -16,13 +16,14 @@ public class GameFlowController : MonoBehaviour
     public WheelSpawner wheelSpawner;
     public Transform wheelsParent;
     public GameObject playerCubePrefab;
+    public bool isHintConsumed = false;
 
     [Header("Camera")]
     public bool followPlayerAfterGameOver = false;
-   
+
 
     [Header("Gameplay")]
-    private int score = 0;
+    public int score = 0;
     private int wheelIndex = 0;
     public GameObject currentWheel;
     [Header("Gameplay Background")]
@@ -36,7 +37,7 @@ public class GameFlowController : MonoBehaviour
     [Header("Laser Obstacle Settings")]
     [SerializeField] private LaserSpawner laserSpawner;
 
-    
+
     private bool comboActive = false;
     private bool comboTriggered = false;
     private int scoreMultiplier = 1;
@@ -92,8 +93,9 @@ public class GameFlowController : MonoBehaviour
     void Start()
     {
         FindSaveMeButton();
+        StartCoroutine(LogGameStartWhenFirebaseReady());
         Debug.Log("start");
-        LogGameStart();
+
         if (player == null && playerCubePrefab != null)
         {
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
@@ -125,12 +127,22 @@ public class GameFlowController : MonoBehaviour
         saveMeButton.SetActive(false);
     }
 
+
+    IEnumerator LogGameStartWhenFirebaseReady()
+    {
+        while (!FirebaseInitializer.IsFirebaseReady)
+            yield return null;
+
+        Debug.Log("✅ Firebase ready, logging game_start");
+        AnalyticsLogger.LogGameStart();
+    }
+
     public void ResetGame()
     {
-       
+
         StopAllCoroutines();
         PlayerCube.ResetTutorial();
-       
+
         if (player == null)
         {
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
@@ -144,7 +156,7 @@ public class GameFlowController : MonoBehaviour
         score = 0;
         wheelIndex = 0;
         perfectShown = false;
-
+        isHintConsumed = false;
         comboActive = false;
         comboTriggered = false;
         scoreMultiplier = 1;
@@ -242,7 +254,7 @@ public class GameFlowController : MonoBehaviour
         Filler.instance.FillSlider();
         bool comboShownThisHit = false;
 
-        
+
         if (!comboTriggered && score >= comboTriggerScore)
         {
             comboTriggered = true;
@@ -251,13 +263,17 @@ public class GameFlowController : MonoBehaviour
 
             ComboX2Popup.Instance?.Show();
             comboShownThisHit = true;
+            AnalyticsLogger.LogComboActivated();
+
         }
 
-        
+
         if (!comboShownThisHit && !perfectShown && score > 20)
         {
             perfectShown = true;
             PerfectPopup.Instance?.Show();
+            AnalyticsLogger.LogPerfectJump();
+
         }
 
         if (scoreMultiplier > 1)
@@ -283,12 +299,12 @@ public class GameFlowController : MonoBehaviour
         if (score % 25 == 0)
         {
             Debug.Log("Milestone");
-            LogScoreMilestone();
+            AnalyticsLogger.LogScoreMilestone(score);
         }
 
         UpdateWheelSpeed();
 
-        
+
         //Transform wheelTransform = gap.transform.parent;
         //GameObject landedWheel = wheelTransform.parent.gameObject;
         //new prefab code
@@ -305,7 +321,7 @@ public class GameFlowController : MonoBehaviour
 
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(nextWheel);
-      //  CoinSpawner.Instance.SpawnCoinsBetweenWheels(currentWheel.transform, nextWheel.transform);
+        //  CoinSpawner.Instance.SpawnCoinsBetweenWheels(currentWheel.transform, nextWheel.transform);
 
         if (score >= obstacleStartScore && score % 15 == 0)
         {
@@ -340,15 +356,14 @@ public class GameFlowController : MonoBehaviour
     }
     void SpawnTwoRodsBetweenWheels(Transform wheelA, Transform wheelB)
     {
-        Debug.Log("Rods are spawned");
-        LogRodSpawned();
-        Debug.Log("Rods are spawned");
+
         if (rodPrefabA == null) return;
         int offset = 5;
         Vector3 midPoint = (wheelA.position + wheelB.position) / 2f;
 
         Instantiate(rodPrefabA, new Vector3(midPoint.x - offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
         Instantiate(rodPrefabB, new Vector3(midPoint.x + offset, midPoint.y, midPoint.z), Quaternion.identity, wheelsParent);
+        AnalyticsLogger.LogRodSpawned(score);
     }
 
     void UpdateWheelSpeed()
@@ -390,12 +405,13 @@ public class GameFlowController : MonoBehaviour
             PlayerPrefs.Save();
         }
         Debug.Log("game ends");
-        LogGameOver();
+
 
         Time.timeScale = 0f;
         AppManager.instance.disableGameLogic();
         AppManager.instance.isSaveMeActive = true;
         AppManager.instance.GameOver();
+        AnalyticsLogger.LogGameOver(score, bestScore);
 
         mainCam.transform.parent = null;
         if (player != null)
@@ -427,6 +443,8 @@ public class GameFlowController : MonoBehaviour
         Time.timeScale = 1f;
 
         AppManager.instance.isSaveMeActive = true;
+        AnalyticsLogger.LogSaveMeUsed(score);
+
 
         if (saveMeButton != null)
 
@@ -441,7 +459,7 @@ public class GameFlowController : MonoBehaviour
         player = obj.GetComponent<PlayerCube>();
         PlayerCube.DisableTutorial();
 
-        player.DisableAimHintPopup();   
+        player.DisableAimHintPopup();
 
 
         player.ResetJumpState();
@@ -467,77 +485,17 @@ public class GameFlowController : MonoBehaviour
         Debug.Log("SaveMe complete: gameplay fully restored at score " + score);
 
     }
-    
+
     public int GetScore()
     {
         return score;
     }
 
-  
+
     public void ApplyScoreMultiplierOnce(int multiplier)
     {
         score *= multiplier;
         GameplayScoreUI.Instance?.UpdateScore(score);
     }
 
-    void LogGameStart()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent("game_start");
-
-    }
-
-    void LogGameOver()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady)
-        {
-            Debug.Log("not IsFirebaseReady");
-            return;
-        }
-        Debug.Log("FirebaseAnalytics.LogEventgame_over");
-        FirebaseAnalytics.LogEvent(
-            "game_over",
-            new Parameter("score", score),
-            new Parameter("best_score", bestScore)
-        );
-    }
-
-    void LogScoreMilestone()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent(
-            "score_milestone",
-            new Parameter("score", score)
-        );
-    }
-
-    void LogComboActivated()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent("combo_x2_activated");
-    }
-
-    void LogRodSpawned()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent(
-            "rod_spawned",
-            new Parameter("score", score)
-        );
-    }
-
-    void LogPerfectJump()
-    {
-        if (!FirebaseInitializer.IsFirebaseReady) return;
-
-        FirebaseAnalytics.LogEvent("perfect_jump");
-    }
-
-
 }
-
-

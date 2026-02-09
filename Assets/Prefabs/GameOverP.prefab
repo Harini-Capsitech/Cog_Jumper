@@ -197,6 +197,7 @@ MonoBehaviour:
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -264,7 +265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.80200005, y: 0.83867836}
   m_AnchorMax: {x: 0.80200005, y: 0.83867836}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -53, y: -0}
   m_SizeDelta: {x: 52.3992, y: 47.715}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6389267001618292075
@@ -399,10 +400,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 47.7
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 17
@@ -410,6 +411,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -455,7 +457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186d7dc21b1be30468aa9ceab2eae8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localizationKey: BEST
+  key: BEST
+  defaultFont: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
+  arabicFont: {fileID: 11400000, guid: b23cc21def0be41468a45bcdb9bb0abc, type: 2}
 --- !u!1 &2624370539676751070
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,6 +695,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1104,6 +1109,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1322,6 +1328,7 @@ MonoBehaviour:
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1448,17 +1455,18 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 46.5
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1504,7 +1512,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186d7dc21b1be30468aa9ceab2eae8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localizationKey: CRASHED
+  key: CRASHED
+  defaultFont: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
+  arabicFont: {fileID: 11400000, guid: b23cc21def0be41468a45bcdb9bb0abc, type: 2}
 --- !u!1 &8762201170165937147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,10 +1611,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 33.2
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 17
@@ -1612,6 +1622,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1657,4 +1668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186d7dc21b1be30468aa9ceab2eae8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localizationKey: HEIGHT
+  key: HEIGHT
+  defaultFont: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
+  arabicFont: {fileID: 11400000, guid: b23cc21def0be41468a45bcdb9bb0abc, type: 2}

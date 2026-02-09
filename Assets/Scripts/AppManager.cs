@@ -127,7 +127,7 @@ public class AppManager : MonoBehaviour
         SoundManager.Instance.PlaySfx();
 
         Time.timeScale = 0f;
-
+      
         AppStateManager.Instance.SetPause();
     }
 

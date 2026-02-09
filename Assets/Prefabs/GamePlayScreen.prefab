@@ -568,6 +568,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreThreshold: 50
   x2Button: {fileID: 6225017877753422210}
+--- !u!1 &3218073748629304297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 764694066802673832}
+  - component: {fileID: 542504640106999730}
+  m_Layer: 0
+  m_Name: ppoup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &764694066802673832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218073748629304297}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.348144, y: -378.33328, z: -773.0935}
+  m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6811564174204685171}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &542504640106999730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218073748629304297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e7335de23e3c824da529b75ecbee35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseButtonUI
 --- !u!1 &3236940592719763120
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,6 +671,7 @@ GameObject:
   - component: {fileID: 7830410747723577076}
   - component: {fileID: 4087097878490891437}
   - component: {fileID: 866191999609652010}
+  - component: {fileID: 121082868726579961}
   m_Layer: 5
   m_Name: musicoff
   m_TagString: Untagged
@@ -734,7 +779,34 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4087097878490891437}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 121082868726579961}
+        m_TargetAssemblyTypeName: ToggleSound, Assembly-CSharp
+        m_MethodName: OnButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &121082868726579961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3564214939906334959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377071a4f9f257a439ab4202d24cecff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleSound
+  soundIcon: {fileID: 4087097878490891437}
+  musicOnSprite: {fileID: 21300000, guid: a2ea7cb540df33d4698c6eebda340e13, type: 3}
+  musicOffSprite: {fileID: 21300000, guid: f05c658208d89094a92fcbaf00cd63aa, type: 3}
 --- !u!1 &4992053176041920183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,7 +1214,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2679880669619339563}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 542504640106999730}
+        m_TargetAssemblyTypeName: PauseButtonUI, Assembly-CSharp
+        m_MethodName: OnPauseClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6418958128561170203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,6 +1564,7 @@ RectTransform:
   - {fileID: 8328162877172562032}
   - {fileID: 6864058091010074871}
   - {fileID: 2396674462662634212}
+  - {fileID: 764694066802673832}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1669,12 +1754,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 110480160877395856, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
       propertyPath: m_text
-      value: 
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 110480160877395856, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
+    - target: {fileID: 110480160877395856, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 110480160877395856, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
       propertyPath: m_fontColor.a
       value: 1
@@ -1703,6 +1792,18 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 225119323942327699, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
+      propertyPath: key
+      value: HEIGHT
+      objectReference: {fileID: 0}
+    - target: {fileID: 225119323942327699, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
+      propertyPath: arabicFont
+      value: 
+      objectReference: {fileID: 11400000, guid: b23cc21def0be41468a45bcdb9bb0abc, type: 2}
+    - target: {fileID: 225119323942327699, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
+      propertyPath: defaultFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
     - target: {fileID: 837972143865885083, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
       propertyPath: m_Name
       value: ScoreP (1)
@@ -1792,6 +1893,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3470367546973921379, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
+      propertyPath: m_fontSize
+      value: 56.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470367546973921379, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
@@ -1811,6 +1916,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -548075064835342987, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
+    - target: {fileID: 3470367546973921379, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3470367546973921379, guid: 3a2abed1e77fe7749a5acccbfd77ffbc, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295

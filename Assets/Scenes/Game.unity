@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 8d3af93e9eda4bf4080e913cf5c7bf57, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -508,7 +508,7 @@ Camera:
   m_GameObject: {fileID: 831216894}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.21698111, g: 0.009211458, b: 0.009211458, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -587,7 +587,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
+  m_VolumeFrameworkUpdateModeOption: 0
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -755,6 +755,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1107748999}
   - component: {fileID: 1107749000}
+  - component: {fileID: 1107749001}
   m_Layer: 0
   m_Name: AppStateManager
   m_TagString: Untagged
@@ -794,21 +795,39 @@ MonoBehaviour:
   overlaysParent: {fileID: 940995666}
   screens:
   - name: StartScreen
-    state: 9
+    state: 10
     prefab: {fileID: 4858155214548326322, guid: b823783193d6a864f9a8941010fe834f, type: 3}
   - name: GameScreen
     state: 5
     prefab: {fileID: 1265042922941599372, guid: 82e341d4464baff4595d1d30fcaa1979, type: 3}
   - name: GameOver
-    state: 10
+    state: 11
     prefab: {fileID: 1059436625298345478, guid: c04d0dfcadf89aa44970e46d0d304d35, type: 3}
   - name: GamePlayScreen
     state: 6
     prefab: {fileID: 8181182587252473558, guid: b4131c9898659f748a16a08855465404, type: 3}
   - name: SettingScreen
-    state: 7
+    state: 8
     prefab: {fileID: 501359484110413024, guid: 17125ab977d34c747896a5bbcb074bce, type: 3}
-  overlays: []
+  - name: Pausepopup
+    state: 7
+    prefab: {fileID: 2746252341987898305, guid: 7e94a67c210747542a5c5588a87daf99, type: 3}
+  overlays:
+  - key: Language
+    prefab: {fileID: 2343510613377678907, guid: 434fee9e38a18d34d967760e15e30397, type: 3}
+--- !u!114 &1107749001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107748997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8a83eab17b7a3d48b8ad4293b3c5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizationManager
+  localizationJson: {fileID: 4900000, guid: feefe73fa44c51049ae05fe674430436, type: 3}
 --- !u!1 &1309074279
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,7 +854,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1309074279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c584a2ed5d264c44862328f2cefc980, type: 3}
+  m_Script: {fileID: 11500000, guid: 76bba189e682f484cbcd112b740e9037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1309074281
@@ -999,51 +1018,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1497599566
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1497599568}
-  - component: {fileID: 1497599567}
-  m_Layer: 0
-  m_Name: CoinManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1497599567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497599566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be8ebfd616b88d74a9cb25a5a4af7c4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CoinManager
-  totalCoins: 0
---- !u!4 &1497599568
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497599566}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.55348, y: 0, z: -25.07025}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1688768277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,4 +1178,3 @@ SceneRoots:
   - {fileID: 1309074281}
   - {fileID: 1688768279}
   - {fileID: 147149503}
-  - {fileID: 1497599568}

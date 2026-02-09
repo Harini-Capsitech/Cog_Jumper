@@ -28,7 +28,7 @@ PluginImporter:
         Exclude Editor: 0
         Exclude Linux64: 0
         Exclude OSXUniversal: 0
-        Exclude Win: 0
+        Exclude Win: 1
         Exclude Win64: 0
     Editor:
       enabled: 1
@@ -48,9 +48,9 @@ PluginImporter:
       enabled: 0
       settings: {}
     Win:
-      enabled: 1
+      enabled: 0
       settings:
-        CPU: AnyCPU
+        CPU: None
     Win64:
       enabled: 1
       settings:

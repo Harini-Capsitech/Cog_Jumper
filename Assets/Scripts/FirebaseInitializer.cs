@@ -23,22 +23,20 @@ public class FirebaseInitializer : MonoBehaviour
 
     private void Start()
     {
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.Result == DependencyStatus.Available)
+        FirebaseApp.CheckAndFixDependenciesAsync()
+            .ContinueWithOnMainThread(task =>
             {
-                FirebaseApp app = FirebaseApp.DefaultInstance;
-                FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+                if (task.Result == DependencyStatus.Available)
+                {
+                    FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+                    IsFirebaseReady = true;
 
-                IsFirebaseReady = true;
-
-                Debug.Log("🔥 Firebase initialized successfully!");
-                FirebaseAnalytics.LogEvent("firebase_initialized");   
-            }
-            else
-            {
-                Debug.LogError("❌ Firebase dependency error: " + task.Result);
-            }
-        });
+                    Debug.Log("🔥 Firebase initialized");
+                }
+                else
+                {
+                    Debug.LogError("❌ Firebase dependency error: " + task.Result);
+                }
+            });
     }
 }
