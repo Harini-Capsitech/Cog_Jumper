@@ -6,460 +6,277 @@ public class PlayerCube : MonoBehaviour
 {
     [Header("Jump Settings")]
     [SerializeField] private float jumpForce = 150f;
+    [SerializeField] private float allowedTapAngle = 60f;
+    [SerializeField] private float upwardBias = 0.25f;
 
     [Header("Game Over")]
-    [SerializeField] private float gameOverDelay = 0.2f;
-
-    private Rigidbody rb;
+    [SerializeField] private float gameOverDelay = 0.25f;
     public PlayerJumpEffect jumpEffect;
-
-    public float shakeDuration = 0.2f;
-    public float shakeStrength = 0.5f;
-    public Camera cameraObj;
-
-    [SerializeField]
-    private Vector3 fixedAttachRotation = new Vector3(-85f, 12f, 192f);
-
     private bool hasAttachedOnce = false;
-    private bool hasJumped = false;
-    private bool jumpResolved = false;
-    private bool isAlive = true;
-    private bool inputLocked = false;
-    private bool jumpSfxUnlocked = false;
-    private bool gameOverStarted = false;
-    private int count = 0;
+    private Rigidbody rb;
+    private Vector3 originalScale;
 
     [HideInInspector] public Transform targetWheel;
-    [SerializeField] float steeringDuration = 0.25f;
-    [SerializeField] float steeringStrength = 6f;
-    [SerializeField] float upwardBias = 0.25f;
-    [SerializeField] private Transform head;
-    [SerializeField] private Transform head1;
-    [SerializeField] private Transform head2;
-    private RaycastHit groundHit;
-             
-    [SerializeField] LayerMask targetMask;
-    public Transform HitWheel;
-    private Vector3 rayHitPoint;
-    private Vector3 rayHitNormal;
-    private Transform rayHitWheel;
+    [HideInInspector] public Transform currentWheel;
 
-    [SerializeField] float castRadius = 0.8f;  
-    [SerializeField] float castDistance = 60f;
-    public static bool tutorialHintConsumed = false;
+    private Transform selectedMagnet;
 
-    RaycastHit hit;
-    bool hasValidTarget;
-    bool hasValidTarget1;
-    bool hasValidTarget2;
-
-    private bool tutorialHintUsed = false;
-
-
-    private Transform lockedWheel;
-    private RaycastHit lockedHit;
-    private float lockTimer = 0f;
-
-    [SerializeField] private float lockGraceTime = 0.8f;
-
-    private AimHintPopupUI aimHintPopup;
-
-    private bool coinsLocked = false;
-
-
-    [Header("Tutorial Aim Hint")]
-    [SerializeField] private int tutorialSuccessLimit = 2;
-    [SerializeField] private LineRenderer hintLine;
-    [SerializeField] private LayerMask wheelLayer;
-    private int successfulJumpCount = 0;
-
+    private bool isAlive = true;
+    private bool isAttached = true;
+    private bool isJumping = false;
+    private bool inputLocked = false;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
-        cameraObj = Camera.main;
-        aimHintPopup = FindFirstObjectByType<AimHintPopupUI>();
-        count = 0;
+        rb.useGravity = false;
 
+        originalScale = new Vector3(3f,3f,3f);
+
+        Debug.Log("[PlayerCube] Awake completed");
     }
 
     void Update()
     {
-        if (!isAlive) return;
-
-        Vector3 direction = head.up;
-        direction = Quaternion.AngleAxis(5f, head.right) * direction;
-
-        RaycastHit hit0, hit1, hit2;
-        bool h0 = Physics.SphereCast(head.position, castRadius, direction, out hit0, castDistance,wheelLayer);
-        bool h1 = Physics.SphereCast(head1.position, castRadius, direction, out hit1, castDistance,wheelLayer);
-        bool h2 = Physics.SphereCast(head2.position, castRadius, direction, out hit2, castDistance, wheelLayer);
-
-        bool hasAnyHit = false;
-        RaycastHit finalHit = new RaycastHit();
-        Vector3 finalOrigin = Vector3.zero;
-
-       
-        if (h0)
+        if (!isAlive)
         {
-            hasAnyHit = true;
-            finalHit = hit0;
-            finalOrigin = head.position;
-        }
-
-        if (h1 && (!hasAnyHit || hit1.distance < finalHit.distance))
-        {
-            hasAnyHit = true;
-            finalHit = hit1;
-            finalOrigin = head1.position;
-        }
-
-        if (h2 && (!hasAnyHit || hit2.distance < finalHit.distance))
-        {
-            hasAnyHit = true;
-            finalHit = hit2;
-            finalOrigin = head2.position;
-        }
-
-        if (hasAnyHit)
-        {
-            lockedWheel = finalHit.collider.transform.root;
-            lockedHit = finalHit;
-            lockTimer = lockGraceTime;
-            Vector3 dir = (lockedHit.point - finalOrigin).normalized;
-            float dist = Vector3.Distance(finalOrigin, lockedHit.point);
-
-            if (!tutorialHintConsumed && lockedWheel != null)
-            {
-                ShowHintLine(finalOrigin, lockedHit.point);
-                if (aimHintPopup != null && aimHintPopup.gameObject.activeSelf)
-                    GameFlowController.Instance.isHintConsumed = true;
-                    aimHintPopup.Show();
-            }
-           
-           
-            else
-            {
-                HideHintLine();
-               
-            }
-            
-        }
-        else
-        {
-            lockTimer -= Time.deltaTime;
-            if (lockTimer <= 0f)
-                lockedWheel = null;
-            HideHintLine();
-        }
-       
-        if (hasAnyHit)
-        {
-            Debug.DrawRay(finalOrigin, direction * finalHit.distance, Color.green);
-            HitWheel = finalHit.collider.transform;
-        }
-        else
-        {
-            Debug.DrawRay(head.position, direction * castDistance, Color.red);
-            Debug.DrawRay(head1.position, direction * castDistance, Color.red);
-            Debug.DrawRay(head2.position, direction * castDistance, Color.red);
-        }
-
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-
-        
-        if (Input.GetMouseButtonDown(0) && !inputLocked)
-        {
-            tutorialHintConsumed = true;
-            HideHintLine();
-            inputLocked = true;
-            if (lockedWheel != null)
-            {
-                rayHitPoint = lockedHit.point;
-                rayHitNormal = lockedHit.normal;
-                rayHitWheel = lockedWheel;
-
-                JumpToTarget();
-                count++;
-            }
-            else
-            {
-              
-                transform.SetParent(null);
-
-                rb.isKinematic = false;
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-
-                rb.AddForce(transform.position / 3f, ForceMode.Impulse);
-                count++;
-                StartCoroutine(CheckForGameOver());
-               
-            }
-
-        }
-    }
-
-
-
-    void JumpToTarget()
-    {
-        hasJumped = true;
-        jumpResolved = false;
-
-        GetComponent<Collider>().enabled = true;
-        GameFlowController.Instance.OnPlayerJumped();
-        transform.parent.gameObject.layer = 0;
-        foreach (Transform t in transform.parent)
-        {
-            t.gameObject.layer = 0;
-        }
-        transform.SetParent(null);
-
-        rb.isKinematic = false;
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-
-
-        Vector3 dir = (targetWheel.position - transform.position).normalized;
-        dir.y += upwardBias;
-        dir.Normalize();
-
-        rb.linearVelocity = dir * jumpForce;
-
-        StartCoroutine(SteerTowardTarget());
-        StartCoroutine(CheckForGameOver());
-    }
-
-    IEnumerator SteerTowardTarget()
-    {
-        float timer = 0f;
-
-        while (timer < steeringDuration)
-        {
-            timer += Time.fixedDeltaTime;
-
-            Vector3 desiredDir =
-                (targetWheel.position - rb.position).normalized;
-
-            Vector3 desiredVelocity =
-                desiredDir * rb.linearVelocity.magnitude;
-
-            rb.linearVelocity = Vector3.Lerp(
-                rb.linearVelocity,
-                desiredVelocity,
-                steeringStrength * Time.fixedDeltaTime
-            );
-
-            yield return new WaitForFixedUpdate();
-        }
-    }
-
-    public void AttachToMagnet(Transform wheel, Transform magnet)
-    {
-
-        successfulJumpCount++;
-        HideHintLine();
-       
-
-        if (!isAlive) return;
-
-        CancelGameOver();
-
-        hasJumped = false;
-        jumpResolved = true;
-        StartCoroutine(InputLockCoroutine());
-        if (!jumpSfxUnlocked)
-            jumpSfxUnlocked = true;
-        else
-            SoundManager.Instance.PlayJump();
-
-        if (hasAttachedOnce)
-            jumpEffect?.PlayAttachEffect(0.1f);
-        else
-            hasAttachedOnce = true;
-
-        StartCoroutine(SmoothAttach(wheel, HitWheel));
-
-    }
-    IEnumerator InputLockCoroutine()
-    {
-        yield return new WaitForSecondsRealtime(0.5f);
-        inputLocked = false;
-    }
-
-    public static void ResetTutorial()
-    {
-        tutorialHintConsumed = false;
-    }
-
-    public static void DisableTutorial()
-    {
-        tutorialHintConsumed = true;
-    }
-
-    void ShowHintLine(Vector3 start, Vector3 end)
-    {
-        if (hintLine == null) return;
-
-        hintLine.enabled = true;
-
-        Vector3 dir = (end - start).normalized;
-        float hintLength = 25.0f;
-        Vector3 startPos = start + dir * 0.25f;
-
-        Vector3 endPos = startPos + dir * hintLength;
-
-        hintLine.SetPosition(0, startPos);
-        hintLine.SetPosition(1, endPos);
-    }
-
-    void HideHintLine()
-    {
-        if (hintLine != null && hintLine.enabled)
-            hintLine.enabled = false;
-    }
-
-    IEnumerator SmoothAttach(Transform wheel, Transform magnet)
-    {
-        rb.isKinematic = true;
-        GetComponent<Collider>().enabled = false;
-
-
-        transform.SetParent(wheel, false);
-        transform.localPosition = new Vector3(-8.14f, -0.1900f, -2.62997f);
-
-        transform.localRotation = Quaternion.Euler(-99f, 134.2f, -66.3f);
-        transform.localScale = new Vector3(1f, 1f, 1f);
-
-        yield break;
-    }
-    public void ResetTutorialState()
-    {
-        tutorialHintUsed = false;
-        successfulJumpCount = 0;
-    }
-
-
-    public void ResetJumpState()
-    {
-        
-        hasAttachedOnce = false;
-        hasJumped = false;
-        jumpResolved = false;
-        inputLocked = false;
-        jumpSfxUnlocked = false;
-        gameOverStarted = false;
-
-        isAlive = true;
-
-        StopAllCoroutines();
-
-        AppManager.instance.enableGameLogic();
-    }
-    void StartGameOver()
-    {
-        if (gameOverStarted) return;
-
-        gameOverStarted = true;
-    }
-
-    void CancelGameOver()
-    {
-        gameOverStarted = false;
-        StopAllCoroutines();
-    }
-
-    public void ResetPlayerState()
-    {
-       
-        StopAllCoroutines();
-        coinsLocked = false;
-        hasAttachedOnce = false;
-        hasJumped = false;
-        jumpResolved = false;
-        isAlive = true;
-        inputLocked = false;
-        jumpSfxUnlocked = false;
-        gameOverStarted = false;
-
-        targetWheel = null;
-
-        Collider col = GetComponent<Collider>();
-        if (col != null) col.enabled = true;
-        rb.isKinematic = true;
-        rb.useGravity = false;
-    }
-
-
-    public void DieImmediate()
-    {
-        if (!isAlive) return;
-
-        if (Filler.IsPowerActive)
-        {
-            ForceAttachToTargetWheel();
+            Debug.Log("[PlayerCube] Update blocked → isAlive = false");
             return;
         }
 
-        GameFlowController.Instance.FinalGameOver();
+        if (!isAttached)
+            return;
+
+        if (inputLocked)
+        {
+            Debug.Log("[PlayerCube] Input locked");
+            return;
+        }
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("[PlayerCube] Pointer over UI → Ignored");
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("[PlayerCube] Tap detected");
+            inputLocked = true;
+            TryJump();
+        }
+    }
+
+    
+    void TryJump()
+    {
+        Debug.Log("[PlayerCube] TryJump called");
+
+        if (!IsTapAngleValid(out selectedMagnet))
+        {
+            Debug.Log("[PlayerCube] ❌ Tap angle invalid → GameOverRoutine started");
+            StartCoroutine(GameOverRoutine());
+            return;
+        }
+
+        Debug.Log($"[PlayerCube] ✅ Tap valid → Selected Magnet: {selectedMagnet.name}");
+        StartJump();
+    }
+
+    bool IsTapAngleValid(out Transform nearestMagnet)
+    {
+        nearestMagnet = null;
+
+        if (targetWheel == null)
+        {
+            Debug.Log("[PlayerCube] ❌ targetWheel is NULL");
+            return false;
+        }
+
+        Debug.Log($"[PlayerCube] Checking magnets on targetWheel: {targetWheel.name}");
+
+        Vector3 origin = transform.position;
+        Vector3 toWheel = (targetWheel.position - origin).normalized;
+
+        float bestDistance = float.MaxValue;
+
+        GapTrigger[] gaps = targetWheel.GetComponentsInChildren<GapTrigger>(true);
+
+        Debug.Log($"[PlayerCube] Found {gaps.Length} GapTriggers on targetWheel");
+
+        foreach (var gap in gaps)
+        {
+            if (gap.snapMagnet == null)
+            {
+                Debug.Log($"[PlayerCube] Gap {gap.name} has NULL snapMagnet");
+                continue;
+            }
+
+            Vector3 toMagnet = gap.snapMagnet.position - origin;
+            float angle = Vector3.Angle(toWheel, toMagnet.normalized);
+
+            Debug.Log($"[PlayerCube] Checking magnet {gap.snapMagnet.name} → Angle = {angle}");
+
+            if (angle > allowedTapAngle)
+            {
+                Debug.Log($"[PlayerCube] ❌ Angle too large (> {allowedTapAngle})");
+                continue;
+            }
+
+            float dist = toMagnet.magnitude;
+
+            if (dist < bestDistance)
+            {
+                bestDistance = dist;
+                nearestMagnet = gap.snapMagnet;
+            }
+        }
+
+        if (nearestMagnet == null)
+            Debug.Log("[PlayerCube] ❌ No valid magnet found");
+
+        return nearestMagnet != null;
+    }
+
+    void StartJump()
+    {
+        Debug.Log("[PlayerCube] 🚀 StartJump");
+
+        isAttached = false;
+        isJumping = true;
+
+        Debug.Log($"[PlayerCube] CurrentWheel before jump: {(currentWheel != null ? currentWheel.name : "NULL")}");
+
+        GameFlowController.Instance.OnPlayerJumped();
+
+        transform.SetParent(null);
+        transform.localScale = originalScale;
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        Vector3 dir = (selectedMagnet.position - transform.position).normalized;
+        dir.y += upwardBias;
+
+        Debug.Log($"[PlayerCube] Jump direction: {dir}");
+
+        rb.linearVelocity = dir * jumpForce;
+
+        Debug.Log($"[PlayerCube] Applied velocity: {rb.linearVelocity}");
+
+        StartCoroutine(GameOverRoutine());
+    }
+
+  
+    public void AttachToMagnet(Transform wheel, Transform magnet)
+    {
+        if (!isAlive || magnet == null)
+        {
+            Debug.Log("[PlayerCube] ❌ AttachToMagnet aborted → isAlive false or magnet null");
+            return;
+        }
+
+        Debug.Log($"[PlayerCube] ✅ Attaching to wheel: {wheel.name} → magnet: {magnet.name}");
+
+        StopAllCoroutines();
+
+        currentWheel = wheel;
+
+        isAttached = true;
+        isJumping = false;
+        inputLocked = false;
+
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        transform.SetParent(magnet, false);
+        transform.localPosition = new Vector3(-1.8f,0.4f,-1f);
+        transform.localRotation = Quaternion.identity;
+        transform.Rotate(-87f, 113f, -40f);
+        transform.localScale = new Vector3(1.5f,1.5f,1.5f);
+        // 🔥 PLAY ATTACH EFFECT
+        if (hasAttachedOnce)
+        {
+            jumpEffect?.PlayAttachEffect(0.1f);
+            Debug.Log("[PlayerCube] ✨ Jump Attach Effect Played");
+        }
+        else
+        {
+            hasAttachedOnce = true;
+            Debug.Log("[PlayerCube] First attachment → Effect skipped");
+        }
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        Debug.Log("[PlayerCube] GameOverRoutine started");
+
+        yield return new WaitForSeconds(gameOverDelay);
+
+        if (!isAttached && isJumping)
+        {
+            Debug.Log("[PlayerCube] ❌ Player did not attach → dying in 0.8s");
+
+            yield return new WaitForSeconds(0.8f);
+            DieImmediate();
+        }
+        else
+        {
+            Debug.Log("[PlayerCube] Player attached successfully before timeout");
+        }
+    }
+
+    public void DieImmediate()
+    {
+        if (!isAlive)
+            return;
+
+        Debug.Log("[PlayerCube] 💀 DieImmediate called");
+
         isAlive = false;
         inputLocked = true;
 
         rb.isKinematic = false;
         rb.useGravity = true;
-        SoundManager.Instance.StopSfx();
-        SoundManager.Instance.PlayGameOver();
+
+        GameFlowController.Instance.FinalGameOver();
     }
 
-    IEnumerator CheckForGameOver()
+    
+    public void ResetPlayerState()
     {
-        Debug.Log("the game over check is running");
-        yield return new WaitForSeconds(gameOverDelay);
-        if (gameObject.transform.parent == null)
-        {
+        Debug.Log("[PlayerCube] ResetPlayerState called");
 
-            if (Filler.IsPowerActive)
-            {
-                ForceAttachToTargetWheel();
-                while (Filler.IsPowerActive)
-                    yield return null;
-            }
+        StopAllCoroutines();
 
-            yield return new WaitForSeconds(1f);
-            DieImmediate();
-        }
+        isAlive = true;
+        isAttached = true;
+        isJumping = false;
+        inputLocked = false;
+
+        targetWheel = null;
+        currentWheel = null;
+
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        transform.SetParent(null);
+        transform.localScale = originalScale;
     }
-   
-    public void DisableAimHintPopup()
+
+    public void ResetJumpState()
     {
-        if (aimHintPopup != null)
-            aimHintPopup.gameObject.SetActive(false);
+        Debug.Log("[PlayerCube] ResetJumpState called");
+        ResetPlayerState();
     }
 
-    void ForceAttachToTargetWheel()
-    {
-
-        if (jumpResolved) return;
-
-        if (targetWheel == null) return;
-
-        GapTrigger gap = targetWheel.GetComponentInChildren<GapTrigger>(true);
-        if (gap == null) return;
-
-        Transform[] children = targetWheel.GetComponentsInChildren<Transform>();
-        foreach (Transform t in children)
-        {
-            if (t.CompareTag("Magnet"))
-            {
-                AttachToMagnet(targetWheel, t);
-                GameFlowController.Instance.PlayerLanded(gap);
-                break;
-            }
-        }
-    }
-
+    public bool IsJumping => isJumping;
 }
-
-
+  

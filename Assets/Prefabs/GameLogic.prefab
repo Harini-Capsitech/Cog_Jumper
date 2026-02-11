@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheelPrefab: {fileID: 2113964551216476819, guid: fc9aeed7b895958459d95784f4b36f4b, type: 3}
-  wheelSpacingZ: 50
+  wheelSpacingZ: 60
   startZ: 3
   centerY: 0
   centerX: 0
@@ -204,6 +204,7 @@ MonoBehaviour:
   wheelSpawner: {fileID: 1921079208375927919}
   wheelsParent: {fileID: 1899641290537445062}
   playerCubePrefab: {fileID: 175990738131915796, guid: d6a421539bcb06b4cb731750024e8703, type: 3}
+  isHintConsumed: 0
   followPlayerAfterGameOver: 0
   score: 0
   currentWheel: {fileID: 0}

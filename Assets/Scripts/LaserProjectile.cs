@@ -102,14 +102,14 @@ public class LaserProjectile : MonoBehaviour
 
         //other.GetComponent<PlayerCube>()?.DieImmediate();
         // ⏱ Delay death
-        StartCoroutine(DelayedKill(other.GetComponent<PlayerCube>()));
+        StartCoroutine(  DelayedKill(other.GetComponent<PlayerCube>()));
     }
 
     IEnumerator DelayedKill(PlayerCube player)
     {
         if (player == null) yield break;
 
-        yield return new WaitForSeconds(2f); // ⏱ adjust delay here
+        yield return new WaitForSeconds(0.7f); // ⏱ adjust delay here
 
         // Check again (player might already be saved / attached)
         if (Filler.IsPowerActive) yield break;

@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.012523285, y: 0.8243796, z: 0.0077740443, w: 0.5658453}
   m_LocalPosition: {x: 8.1302, y: -3.3793, z: 9.7085}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1269491903539984871}
@@ -118,8 +118,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.842374, y: 4.192952, z: 4.2821217}
-  m_Center: {x: -0.028480215, y: 0.022495111, z: 0.27413893}
+  m_Size: {x: 2.3624017, y: 2.4911237, z: 2.0290062}
+  m_Center: {x: 0.04741424, y: -0.12900817, z: -0.037528988}
 --- !u!54 &4270019876191731051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -160,31 +160,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCube
   jumpForce: 150
+  allowedTapAngle: 35
+  upwardBias: 0.25
   gameOverDelay: 0.2
   jumpEffect: {fileID: 4555470411829009011}
-  shakeDuration: 0.2
-  shakeStrength: 0.5
-  cameraObj: {fileID: 0}
-  fixedAttachRotation: {x: -85, y: 12, z: 192}
   targetWheel: {fileID: 0}
-  steeringDuration: 0.25
-  steeringStrength: 6
-  upwardBias: 0.25
-  head: {fileID: 3233370041081997738}
-  head1: {fileID: 3100830799794767258}
-  head2: {fileID: 473393061919441061}
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  HitWheel: {fileID: 0}
-  castRadius: 0.4
-  castDistance: 60
-  lockGraceTime: 0.8
-  tutorialSuccessLimit: 2
-  hintLine: {fileID: 3460327545475809830}
-  wheelLayer:
-    serializedVersion: 2
-    m_Bits: 768
+  currentWheel: {fileID: 0}
 --- !u!1 &2428462116539598285
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5964501782448207508
 Transform:
   m_ObjectHideFlags: 0

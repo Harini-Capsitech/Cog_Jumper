@@ -15,8 +15,20 @@ public class GapTrigger : MonoBehaviour
         if (!isActive) return;
         if (!other.CompareTag("PlayerCube")) return;
 
+        PlayerCube player = other.GetComponent<PlayerCube>();
+        if (player == null || !player.IsJumping) return;
+
+        WheelRotation wheel = GetComponentInParent<WheelRotation>();
+        if (wheel == null)
+        {
+            Debug.LogError("WheelRotation not found in parent!");
+            return;
+        }
+
+        Transform wheelTransform = wheel.transform;
+        if (player.currentWheel == wheelTransform)
+            return;
+
         GameFlowController.Instance.PlayerLanded(this);
     }
 }
-
-

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-
-
 public class GameFlowController : MonoBehaviour
 {
     private int bestScore = 0;
@@ -76,7 +73,7 @@ public class GameFlowController : MonoBehaviour
     private bool perfectShown = false;
     void Awake()
     {
-
+        Debug.Log("[GFC] Awake");
         Time.timeScale = 1f;
         Instance = this;
         mainCam = Camera.main;
@@ -86,18 +83,20 @@ public class GameFlowController : MonoBehaviour
 
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
-
+        Debug.Log("[GFC] Initialized. BaseSpeed = " + CurrentWheelSpeed);
     }
 
 
     void Start()
     {
+        Debug.Log("[GFC] Start called");
         FindSaveMeButton();
         StartCoroutine(LogGameStartWhenFirebaseReady());
         Debug.Log("start");
 
         if (player == null && playerCubePrefab != null)
         {
+            Debug.Log("[GFC] Instantiating PlayerCube");
             GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
             player = obj.GetComponent<PlayerCube>();
             IsStarted = true;
@@ -139,9 +138,10 @@ public class GameFlowController : MonoBehaviour
 
     public void ResetGame()
     {
+        Debug.Log("========== RESET GAME ==========");
 
         StopAllCoroutines();
-        PlayerCube.ResetTutorial();
+        //PlayerCube.ResetTutorial();
 
         if (player == null)
         {
@@ -156,7 +156,7 @@ public class GameFlowController : MonoBehaviour
         score = 0;
         wheelIndex = 0;
         perfectShown = false;
-        isHintConsumed = false;
+        isHintConsumed = false;   
         comboActive = false;
         comboTriggered = false;
         scoreMultiplier = 1;
@@ -171,6 +171,7 @@ public class GameFlowController : MonoBehaviour
         wheels.Clear();
 
         CurrentWheelSpeed = BASE_WHEEL_SPEED;
+        Debug.Log("[GFC] Cleared wheels list");
 
         if (wheelsParent != null)
         {
@@ -185,7 +186,7 @@ public class GameFlowController : MonoBehaviour
         player.transform.SetParent(null);
         player.transform.position = Vector3.zero;
         player.transform.rotation = Quaternion.identity;
-
+        Debug.Log("[GFC] Spawning initial wheels...");
         SpawnInitialWheels();
     }
 
@@ -198,50 +199,45 @@ public class GameFlowController : MonoBehaviour
 
     void SpawnInitialWheels()
     {
+        Debug.Log("========== SpawnInitialWheels ==========");
+
         followPlayerAfterGameOver = false;
         GameObject firstWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(firstWheel);
-
+        Debug.Log("[GFC] First wheel: " + firstWheel.name);
         GameObject secondWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         wheels.Add(secondWheel);
-
+        Debug.Log("[GFC] Second wheel: " + secondWheel.name);
         StartCoroutine(InitializePlayerAfterFrame(firstWheel, secondWheel));
     }
 
     System.Collections.IEnumerator InitializePlayerAfterFrame(GameObject firstWheel, GameObject secondWheel)
     {
         yield return null;
-
+        Debug.Log("[GFC] Initializing Player After Frame");
         AttachPlayerToFirstWheel(firstWheel);
         currentWheel = firstWheel;
+        Debug.Log("[GFC] CurrentWheel = " + currentWheel.name);
+
         player.targetWheel = secondWheel.transform;
+        Debug.Log("[GFC] TargetWheel = " + player.targetWheel.name);
 
         SetWheelGapTriggers(firstWheel, false);
         SetWheelGapTriggers(secondWheel, true);
     }
-
     void AttachPlayerToFirstWheel(GameObject wheel)
     {
-        List<Transform> magnets = new List<Transform>();
-        Transform[] allChildren = wheel.GetComponentsInChildren<Transform>();
-        // Transform[] allChildren = wheel.transform.GetComponentsInChildren<Transform>();
+        GapTrigger[] gaps = wheel.GetComponentsInChildren<GapTrigger>(true);
+        if (gaps.Length == 0) return;
 
-        foreach (Transform child in allChildren)
-        {
-            if (child.CompareTag("Magnet"))
-                magnets.Add(child);
-        }
-
-        if (magnets.Count == 0)
-        {
-            return;
-        }
-
-        Transform chosenMagnet = magnets[Random.Range(0, magnets.Count)];
-        player.AttachToMagnet(wheel.transform, chosenMagnet);
+        GapTrigger randomGap = gaps[Random.Range(0, gaps.Length)];
+        Debug.Log("[GFC] Attaching player to first wheel: " + wheel.name);
+        player.AttachToMagnet(wheel.transform, randomGap.snapMagnet);
     }
+
     public void OnPlayerJumped()
     {
+        Debug.Log("[GFC] Jumped from: " + (currentWheel != null ? currentWheel.name : "NULL"));
         if (currentWheel != null)
             SetWheelGapTriggers(currentWheel, false);
     }
@@ -253,7 +249,7 @@ public class GameFlowController : MonoBehaviour
         score += baseScore * scoreMultiplier;
         Filler.instance.FillSlider();
         bool comboShownThisHit = false;
-
+        bool popupTriggered = false;
 
         if (!comboTriggered && score >= comboTriggerScore)
         {
@@ -264,16 +260,18 @@ public class GameFlowController : MonoBehaviour
             ComboX2Popup.Instance?.Show();
             comboShownThisHit = true;
             AnalyticsLogger.LogComboActivated();
+            popupTriggered = true;
 
         }
 
-
-        if (!comboShownThisHit && !perfectShown && score > 20)
+        else if (!perfectShown && score > 20)
         {
             perfectShown = true;
+
             PerfectPopup.Instance?.Show();
             AnalyticsLogger.LogPerfectJump();
 
+            popupTriggered = true;
         }
 
         if (scoreMultiplier > 1)
@@ -308,18 +306,30 @@ public class GameFlowController : MonoBehaviour
         //Transform wheelTransform = gap.transform.parent;
         //GameObject landedWheel = wheelTransform.parent.gameObject;
         //new prefab code
-        Transform wheelTransform = gap.transform.parent;
+        //Transform wheelTransform = gap.transform.parent;
+        //GameObject landedWheel = wheelTransform.gameObject;
+        //updated
+        Debug.Log("[GFC] Landed via gap: " + gap.name);
+        WheelRotation wheel = gap.GetComponentInParent<WheelRotation>();
+
+        if (wheel == null)
+        {
+            Debug.LogError("WheelRotation not found in PlayerLanded!");
+            return;
+        }
+
+        Transform wheelTransform = wheel.transform;
         GameObject landedWheel = wheelTransform.gameObject;
 
-
-
+        Debug.Log("[GFC] LandedWheel detected: " + landedWheel.name);
 
         player.AttachToMagnet(wheelTransform, gap.snapMagnet);
         currentWheel = landedWheel;
-
+        Debug.Log("[GFC] CurrentWheel updated to: " + currentWheel.name);
         SetWheelGapTriggers(landedWheel, false);
 
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
+        Debug.Log("[GFC] Spawned NextWheel: " + nextWheel.name);
         wheels.Add(nextWheel);
         //  CoinSpawner.Instance.SpawnCoinsBetweenWheels(currentWheel.transform, nextWheel.transform);
 
@@ -350,6 +360,7 @@ public class GameFlowController : MonoBehaviour
         }
 
         player.targetWheel = nextWheel.transform;
+        Debug.Log("[GFC] New TargetWheel = " + player.targetWheel.name);
         SetWheelGapTriggers(nextWheel, true);
         CleanupOldWheels();
 
@@ -375,18 +386,24 @@ public class GameFlowController : MonoBehaviour
     void SetWheelGapTriggers(GameObject wheel, bool value)
     {
         GapTrigger[] gaps = wheel.GetComponentsInChildren<GapTrigger>(true);
+        Debug.Log($"[GFC] SetWheelGapTriggers → {wheel.name} | Active = {value} | Count = {gaps.Length}");
         foreach (var gap in gaps)
             gap.EnableTrigger(value);
     }
 
+    
     void CleanupOldWheels()
+{
+    while (wheels.Count > 3)
     {
-        while (wheels.Count > 3)
-        {
-            Destroy(wheels[0]);
-            wheels.RemoveAt(0);
-        }
+        if (player != null && player.transform.IsChildOf(wheels[0].transform))
+            return;
+
+        Destroy(wheels[0]);
+        wheels.RemoveAt(0);
     }
+}
+
     GameObject GetNextWheelAfter(GameObject wheel)
     {
         int index = wheels.IndexOf(wheel);
@@ -398,6 +415,7 @@ public class GameFlowController : MonoBehaviour
 
     public void FinalGameOver()
     {
+
         if (score > bestScore)
         {
             bestScore = score;
@@ -405,11 +423,13 @@ public class GameFlowController : MonoBehaviour
             PlayerPrefs.Save();
         }
         Debug.Log("game ends");
-
-
         Time.timeScale = 0f;
         AppManager.instance.disableGameLogic();
         AppManager.instance.isSaveMeActive = true;
+        GoogleMobileAdsDemoScript.Instance.ShowInterstitialOnRestart(() =>
+        {
+
+        });
         AppManager.instance.GameOver();
         AnalyticsLogger.LogGameOver(score, bestScore);
 
@@ -457,9 +477,11 @@ public class GameFlowController : MonoBehaviour
         GameObject obj = Instantiate(playerCubePrefab, Vector3.zero, Quaternion.identity);
 
         player = obj.GetComponent<PlayerCube>();
-        PlayerCube.DisableTutorial();
 
-        player.DisableAimHintPopup();
+        AppManager.instance.enableGameLogic();
+        //PlayerCube.DisableTutorial();
+
+        //player.DisableAimHintPopup();
 
 
         player.ResetJumpState();

@@ -78,7 +78,7 @@ public class AppManager : MonoBehaviour
     public void GoToHome()
     {
 
-        // to stop sound after GAME starts .
+        
         SoundManager.Instance.StopSfx();
 
         
@@ -92,6 +92,10 @@ public class AppManager : MonoBehaviour
             gameLogic = null;
         }
 
+        GoogleMobileAdsDemoScript.Instance.ShowInterstitialOnRestart(() =>
+        {
+
+        });
         AppStateManager.Instance.SetHome();
     }
 
@@ -158,6 +162,10 @@ public class AppManager : MonoBehaviour
             gameLogic = null;
         }
 
+        GoogleMobileAdsDemoScript.Instance.ShowInterstitialOnRestart(() =>
+        {
+
+        });
         AppStateManager.Instance.SetHome();
     }
 

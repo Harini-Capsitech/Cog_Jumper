@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 90493610111157217}
   - component: {fileID: 2325978785636385452}
   - component: {fileID: 4810959378986153186}
-  - component: {fileID: 1634392345376683161}
   - component: {fileID: 6896954958365799004}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BS_06
-  m_TagString: Magnet
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +31,8 @@ Transform:
   m_LocalPosition: {x: -0.03280632, y: 0.1057172, z: 5.587536}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5698135321514277594}
   m_Father: {fileID: 2834450497417931710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2325978785636385452
@@ -92,19 +92,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1634392345376683161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 255528576483386262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
-  snapMagnet: {fileID: 90493610111157217}
 --- !u!64 &6896954958365799004
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -127,6 +114,73 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 720720192114740705, guid: 53ddb9f818cfacc4f92b0a28ba33377e, type: 3}
+--- !u!1 &680614456171742731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5698135321514277594}
+  - component: {fileID: 1235199154218074023}
+  - component: {fileID: 1865535152691871959}
+  m_Layer: 8
+  m_Name: SpawnPoint (5)
+  m_TagString: Magnet
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5698135321514277594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680614456171742731}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.006557308, y: -0.70718586, z: -0.03487281, w: -0.7061367}
+  m_LocalPosition: {x: -0.06, y: 0.2, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 90493610111157217}
+  m_LocalEulerAnglesHint: {x: -2.296, y: -269.982, z: 3.358}
+--- !u!65 &1235199154218074023
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680614456171742731}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.513136, y: 5.3607183, z: 4.0023026}
+  m_Center: {x: -10, y: 2.24, z: 0.07}
+--- !u!114 &1865535152691871959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680614456171742731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
+  snapMagnet: {fileID: 5698135321514277594}
 --- !u!1 &823275775273837816
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,11 +192,10 @@ GameObject:
   - component: {fileID: 1788506362167691004}
   - component: {fileID: 1652537411559542340}
   - component: {fileID: 4196800146974591266}
-  - component: {fileID: 5712790145478219309}
   - component: {fileID: 1859838462732631816}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BS_02
-  m_TagString: Magnet
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,7 +212,8 @@ Transform:
   m_LocalPosition: {x: -2.79078, y: 0.10571733, z: -5.1237426}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1018809108662716149}
   m_Father: {fileID: 2834450497417931710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1652537411559542340
@@ -219,19 +273,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5712790145478219309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 823275775273837816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
-  snapMagnet: {fileID: 1788506362167691004}
 --- !u!64 &1859838462732631816
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -265,11 +306,10 @@ GameObject:
   - component: {fileID: 6277453049456818911}
   - component: {fileID: 1699833086202582288}
   - component: {fileID: 2907292247057372979}
-  - component: {fileID: 5626029448985576145}
   - component: {fileID: 2066667564599827056}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BS_05
-  m_TagString: Magnet
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -286,7 +326,8 @@ Transform:
   m_LocalPosition: {x: 4.5555243, y: 0.105717026, z: 3.818888}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6637599165641073303}
   m_Father: {fileID: 2834450497417931710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1699833086202582288
@@ -346,19 +387,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5626029448985576145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508737205612649808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
-  snapMagnet: {fileID: 6277453049456818911}
 --- !u!64 &2066667564599827056
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -392,11 +420,10 @@ GameObject:
   - component: {fileID: 3822202620238096268}
   - component: {fileID: 3628979912437562919}
   - component: {fileID: 4445499671430296024}
-  - component: {fileID: 2599770222866021355}
   - component: {fileID: 3362221784717941574}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BS_01
-  m_TagString: Magnet
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -410,10 +437,11 @@ Transform:
   m_GameObject: {fileID: 1658275769383373663}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.426079, y: 0.10571756, z: -1.6314471}
+  m_LocalPosition: {x: -5.38, y: 0.11, z: -1.6314471}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3995454990470045566}
   m_Father: {fileID: 2834450497417931710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3628979912437562919
@@ -473,19 +501,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2599770222866021355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658275769383373663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
-  snapMagnet: {fileID: 3822202620238096268}
 --- !u!64 &3362221784717941574
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -597,11 +612,10 @@ GameObject:
   - component: {fileID: 5373813512937627464}
   - component: {fileID: 3272423543972222221}
   - component: {fileID: 6567504461468815281}
-  - component: {fileID: 723348842353480482}
   - component: {fileID: 6041744143981996309}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BS_04
-  m_TagString: Magnet
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -618,7 +632,8 @@ Transform:
   m_LocalPosition: {x: 5.428787, y: 0.10571699, z: -1.5643548}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 129261343037735098}
   m_Father: {fileID: 2834450497417931710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3272423543972222221
@@ -678,19 +693,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &723348842353480482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2527402232068621476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
-  snapMagnet: {fileID: 5373813512937627464}
 --- !u!64 &6041744143981996309
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -713,6 +715,207 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1019768917831596054, guid: 53ddb9f818cfacc4f92b0a28ba33377e, type: 3}
+--- !u!1 &2650942472469310710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1018809108662716149}
+  - component: {fileID: 8334358841182758250}
+  - component: {fileID: 4234431962681116545}
+  m_Layer: 8
+  m_Name: SpawnPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1018809108662716149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650942472469310710}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.07279441, y: -0.4260748, z: -0.028495185, w: 0.90130424}
+  m_LocalPosition: {x: -1.9, y: 0.3, z: -0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1788506362167691004}
+  m_LocalEulerAnglesHint: {x: -8.946, y: -50.652, z: 0.619}
+--- !u!65 &8334358841182758250
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650942472469310710}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.513136, y: 5.3607183, z: 4.0023026}
+  m_Center: {x: -10, y: 2.24, z: 0.07}
+--- !u!114 &4234431962681116545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650942472469310710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
+  snapMagnet: {fileID: 1018809108662716149}
+--- !u!1 &4488480372851076013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6637599165641073303}
+  - component: {fileID: 7032820097809859459}
+  - component: {fileID: 8588572426578846252}
+  m_Layer: 8
+  m_Name: SpawnPoint (4)
+  m_TagString: Magnet
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6637599165641073303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488480372851076013}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.028661842, y: -0.94723535, z: -0.03557689, w: -0.31726673}
+  m_LocalPosition: {x: 0.8, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6277453049456818911}
+  m_LocalEulerAnglesHint: {x: -2.821, y: -217.144, z: 4.414}
+--- !u!65 &7032820097809859459
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488480372851076013}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.513136, y: 5.3607183, z: 4.0023026}
+  m_Center: {x: -10, y: 2.24, z: 0.07}
+--- !u!114 &8588572426578846252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488480372851076013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
+  snapMagnet: {fileID: 6637599165641073303}
+--- !u!1 &4488525327861767669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3995454990470045566}
+  - component: {fileID: 8551257626540727900}
+  - component: {fileID: 2121315771620927798}
+  m_Layer: 8
+  m_Name: SpawnPoint
+  m_TagString: Magnet
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3995454990470045566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488525327861767669}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.07097315, y: -0.08890994, z: -0.005038947, w: 0.99349505}
+  m_LocalPosition: {x: -1.77, y: -1.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3822202620238096268}
+  m_LocalEulerAnglesHint: {x: -8.159, y: -10.239, z: 0.151}
+--- !u!65 &8551257626540727900
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488525327861767669}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.513136, y: 5.3607183, z: 4.0023026}
+  m_Center: {x: -10, y: 2.24, z: 0.07}
+--- !u!114 &2121315771620927798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488525327861767669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
+  snapMagnet: {fileID: 3995454990470045566}
 --- !u!1 &5862878210964799182
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,11 +927,10 @@ GameObject:
   - component: {fileID: 6395440317059530315}
   - component: {fileID: 4677922289961799188}
   - component: {fileID: 7873984311234154950}
-  - component: {fileID: 1356783304683839803}
   - component: {fileID: 6609731846877001157}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BS_07
-  m_TagString: Magnet
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -745,7 +947,8 @@ Transform:
   m_LocalPosition: {x: -4.588432, y: 0.10571749, z: 3.7812855}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4702687035254540476}
   m_Father: {fileID: 2834450497417931710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4677922289961799188
@@ -805,19 +1008,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1356783304683839803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5862878210964799182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
-  snapMagnet: {fileID: 6395440317059530315}
 --- !u!64 &6609731846877001157
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -930,6 +1120,140 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6283786108838905662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4702687035254540476}
+  - component: {fileID: 2783041825014805329}
+  - component: {fileID: 5148544677693331987}
+  m_Layer: 8
+  m_Name: SpawnPoint (6)
+  m_TagString: Magnet
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4702687035254540476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283786108838905662}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.01779572, y: -0.30198887, z: -0.026426308, w: -0.95277894}
+  m_LocalPosition: {x: -1.9, y: 0.2, z: -0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6395440317059530315}
+  m_LocalEulerAnglesHint: {x: -2.859, y: -324.884, z: 2.273}
+--- !u!65 &2783041825014805329
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283786108838905662}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.513136, y: 5.3607183, z: 4.0023026}
+  m_Center: {x: -10, y: 2.24, z: 0.07}
+--- !u!114 &5148544677693331987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283786108838905662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
+  snapMagnet: {fileID: 4702687035254540476}
+--- !u!1 &6524710436899149025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1372371847231190567}
+  - component: {fileID: 4372779694493233118}
+  - component: {fileID: 9068463348692452129}
+  m_Layer: 8
+  m_Name: SpawnPoint (2)
+  m_TagString: Magnet
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1372371847231190567
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6524710436899149025}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.057668857, y: -0.8391549, z: -0.057514455, w: 0.53775966}
+  m_LocalPosition: {x: 0.2, y: 0.3, z: -0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9088529482070906070}
+  m_LocalEulerAnglesHint: {x: -9.123, y: -114.855, z: 2.027}
+--- !u!65 &4372779694493233118
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6524710436899149025}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.513136, y: 5.3607183, z: 4.0023026}
+  m_Center: {x: -10, y: 2.24, z: 0.07}
+--- !u!114 &9068463348692452129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6524710436899149025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
+  snapMagnet: {fileID: 1372371847231190567}
 --- !u!1 &6937111081503362404
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,11 +1265,10 @@ GameObject:
   - component: {fileID: 9088529482070906070}
   - component: {fileID: 6991621822757150312}
   - component: {fileID: 6097039441221960112}
-  - component: {fileID: 2660768579497810937}
   - component: {fileID: 980592272480659612}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BS_03
-  m_TagString: Magnet
+  m_TagString: FixedCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -962,7 +1285,8 @@ Transform:
   m_LocalPosition: {x: 2.831193, y: 0.10571706, z: -5.105477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1372371847231190567}
   m_Father: {fileID: 2834450497417931710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6991621822757150312
@@ -1022,19 +1346,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2660768579497810937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6937111081503362404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
-  snapMagnet: {fileID: 9088529482070906070}
 --- !u!64 &980592272480659612
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1147,3 +1458,70 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8746521237274590435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129261343037735098}
+  - component: {fileID: 4933139750763342462}
+  - component: {fileID: 7274946628607110941}
+  m_Layer: 8
+  m_Name: SpawnPoint (3)
+  m_TagString: Magnet
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &129261343037735098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746521237274590435}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.048097707, y: -0.9893131, z: -0.016935254, w: 0.13659894}
+  m_LocalPosition: {x: 1.4, y: 0.1, z: 0.22106183}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5373813512937627464}
+  m_LocalEulerAnglesHint: {x: -2.674, y: -164.399, z: 5.2}
+--- !u!65 &4933139750763342462
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746521237274590435}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.513136, y: 5.3607183, z: 4.0023026}
+  m_Center: {x: -10, y: 2.24, z: 0.07}
+--- !u!114 &7274946628607110941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746521237274590435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b035bc6d8038546a6a82a865ef6f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GapTrigger
+  snapMagnet: {fileID: 129261343037735098}

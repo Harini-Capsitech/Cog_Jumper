@@ -28,6 +28,7 @@ public class PausePopupUI : MonoBehaviour
 
     public void OnHomeClicked()
     {
+        
         AppManager.instance.ExitGameToHomeFromPause();
     }
     public void OnBackClicked()
