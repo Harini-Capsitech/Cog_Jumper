@@ -331,7 +331,7 @@ public class GameFlowController : MonoBehaviour
         GameObject nextWheel = wheelSpawner.SpawnWheel(wheelIndex++, wheelsParent);
         Debug.Log("[GFC] Spawned NextWheel: " + nextWheel.name);
         wheels.Add(nextWheel);
-        //  CoinSpawner.Instance.SpawnCoinsBetweenWheels(currentWheel.transform, nextWheel.transform);
+        
 
         if (score >= obstacleStartScore && score % 15 == 0)
         {
