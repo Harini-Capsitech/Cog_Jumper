@@ -67,7 +67,7 @@ public class AppManager : MonoBehaviour
     public void RestartGame()
     {
 
-        SoundManager.Instance.PlaySfx();
+       
         Time.timeScale = 1f;
         this.StartGame();
         Camera.main.transform.position = camStartPos;
@@ -79,7 +79,7 @@ public class AppManager : MonoBehaviour
     {
 
         
-        SoundManager.Instance.StopSfx();
+        
 
         
 
@@ -101,7 +101,7 @@ public class AppManager : MonoBehaviour
 
     public void OpenSettings()
     {
-        SoundManager.Instance.PlaySfx();
+      
         Time.timeScale = 0f; // pause game
         AppStateManager.Instance.SetSettings();
     }
@@ -110,13 +110,13 @@ public class AppManager : MonoBehaviour
     {
         if (st == SettingsType.home)
         {
-            SoundManager.Instance.PlaySfx();
+            
             Time.timeScale = 1f;
             AppStateManager.Instance.SetHome();
         }
         if (st == SettingsType.play)
         {
-            SoundManager.Instance.PlaySfx();
+          
             Time.timeScale = 1f;
             AppStateManager.Instance.SetGameplay();
         }
@@ -128,7 +128,7 @@ public class AppManager : MonoBehaviour
 
         IsPaused = true;
 
-        SoundManager.Instance.PlaySfx();
+      
 
         Time.timeScale = 0f;
       
@@ -141,7 +141,7 @@ public class AppManager : MonoBehaviour
 
         IsPaused = false;
 
-        SoundManager.Instance.PlaySfx();
+     
 
         Time.timeScale = 1f;
 
@@ -152,7 +152,7 @@ public class AppManager : MonoBehaviour
     {
         IsPaused = false;
 
-        SoundManager.Instance.PlaySfx();
+        
 
         Time.timeScale = 1f;
 
@@ -175,7 +175,7 @@ public class AppManager : MonoBehaviour
 
         IsPaused = false;
 
-        SoundManager.Instance.PlaySfx();
+      
 
         Time.timeScale = 1f;
         Debug.Log("pause closed");
@@ -185,7 +185,7 @@ public class AppManager : MonoBehaviour
 
     public void OpenLanguagePanel()
     {
-        SoundManager.Instance.PlaySfx();
+       
         AppStateManager.Instance.ShowOverlay("Language");
     }
     public void disableGameLogic()

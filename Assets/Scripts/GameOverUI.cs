@@ -8,6 +8,8 @@ public class GameOverUI : MonoBehaviour
     public static GameOverUI Instance;
 
     public GameObject panel;
+
+
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bestScoreText;
     void Awake()

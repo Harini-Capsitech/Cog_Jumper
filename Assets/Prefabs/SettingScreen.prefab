@@ -209,8 +209,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46086204, y: 0.55231637}
   m_AnchorMax: {x: 0.46086204, y: 0.55231637}
-  m_AnchoredPosition: {x: -26.386597, y: -11.079}
-  m_SizeDelta: {x: 383.4623, y: 94.0888}
+  m_AnchoredPosition: {x: 13.114, y: 0}
+  m_SizeDelta: {x: 409.69, y: 94.0888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4244996657433140375
 CanvasRenderer:
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 9212643022738129112}
   - component: {fileID: 349521037219156768}
   m_Layer: 5
-  m_Name: sfxText
+  m_Name: musicText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: sfx
+  m_text: MUSIC
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
   m_sharedMaterial: {fileID: -548075064835342987, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.25
+  m_fontSize: 42.6
   m_fontSizeBase: 45.8
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186d7dc21b1be30468aa9ceab2eae8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: SFX
+  key: MUSIC
   defaultFont: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
   arabicFont: {fileID: 11400000, guid: b23cc21def0be41468a45bcdb9bb0abc, type: 2}
 --- !u!1 &3699397054785689644
@@ -933,8 +933,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5196172, y: 0.273}
   m_AnchorMax: {x: 0.5196172, y: 0.273}
-  m_AnchoredPosition: {x: 1.5526, y: 11.3879}
-  m_SizeDelta: {x: 468.152, y: 99.2338}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 404.2733, y: 87.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6914328519228131031
 CanvasRenderer:
@@ -964,7 +964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 110f48693fc7f3f458d6d9bd442b3935, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bb7e0f2aa1b8c9e4faea517a4d7233d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1042,8 +1042,6 @@ GameObject:
   - component: {fileID: 6704327071365463402}
   - component: {fileID: 292169120699702138}
   - component: {fileID: 7226208295009335654}
-  - component: {fileID: 410736935331742077}
-  - component: {fileID: 7547539124614490472}
   m_Layer: 5
   m_Name: MUSIC
   m_TagString: Untagged
@@ -1153,7 +1151,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 410736935331742077}
+      - m_Target: {fileID: 2079361854647385088}
         m_TargetAssemblyTypeName: ToggleSound, Assembly-CSharp
         m_MethodName: OnButtonClicked
         m_Mode: 1
@@ -1165,118 +1163,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &410736935331742077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7094553348543638283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 377071a4f9f257a439ab4202d24cecff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleSound
-  soundIcon: {fileID: 292169120699702138}
-  musicOnSprite: {fileID: 21300000, guid: a2ea7cb540df33d4698c6eebda340e13, type: 3}
-  musicOffSprite: {fileID: 21300000, guid: f05c658208d89094a92fcbaf00cd63aa, type: 3}
---- !u!82 &7547539124614490472
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7094553348543638283}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &7183827482643031661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,9 +1175,8 @@ GameObject:
   - component: {fileID: 7478842715744284233}
   - component: {fileID: 1641362114557467077}
   - component: {fileID: 3456875135167900878}
-  - component: {fileID: 421626710344487660}
   m_Layer: 5
-  m_Name: vibrate
+  m_Name: Sfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1344,7 +1229,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 069719c85409ee247b9caa5dbbf2d19e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8815704691306154fb30125727063dd9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1398,9 +1283,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 421626710344487660}
-        m_TargetAssemblyTypeName: VibrationManager, Assembly-CSharp
-        m_MethodName: Toggle
+      - m_Target: {fileID: 2079361854647385088}
+        m_TargetAssemblyTypeName: ToggleSound, Assembly-CSharp
+        m_MethodName: OnButtonsfxClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1410,18 +1295,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &421626710344487660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7183827482643031661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556ddbaaabc5aa4499930396e17f69af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VibrationManager
 --- !u!1 &7639144220423981607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,6 +1304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1515883005856966673}
+  - component: {fileID: 2079361854647385088}
   m_Layer: 5
   m_Name: Audio
   m_TagString: Untagged
@@ -1461,6 +1335,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 874.5303, y: 557.2984}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2079361854647385088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7639144220423981607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377071a4f9f257a439ab4202d24cecff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleSound
+  soundIcon: {fileID: 292169120699702138}
+  sfxIcon: {fileID: 1641362114557467077}
+  musicOnSprite: {fileID: 21300000, guid: a2ea7cb540df33d4698c6eebda340e13, type: 3}
+  musicOffSprite: {fileID: 21300000, guid: f05c658208d89094a92fcbaf00cd63aa, type: 3}
+  soundOnSprite: {fileID: 21300000, guid: 8815704691306154fb30125727063dd9, type: 3}
+  soundOffSprite: {fileID: 21300000, guid: 6b2705a64e71a1b44b5fb83210c09569, type: 3}
 --- !u!1 &7809903134179228004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1670,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 410736935331742077}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleSound, Assembly-CSharp
         m_MethodName: StopSfx
         m_Mode: 1
@@ -1803,7 +1695,7 @@ GameObject:
   - component: {fileID: 2371932369563005327}
   - component: {fileID: 1551461576017047346}
   m_Layer: 5
-  m_Name: vibrationText
+  m_Name: sfxText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1826,7 +1718,7 @@ RectTransform:
   m_AnchorMin: {x: 0.42800003, y: 0.31500003}
   m_AnchorMax: {x: 0.42800003, y: 0.31500003}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 203.7547, y: 57.6673}
+  m_SizeDelta: {x: 203.7547, y: 71.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1265572172295716118
 CanvasRenderer:
@@ -1856,9 +1748,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'VIBRATE
-
-'
+  m_text: SFX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
   m_sharedMaterial: {fileID: -548075064835342987, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
@@ -1885,7 +1775,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.3
+  m_fontSize: 47.15
   m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1942,7 +1832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186d7dc21b1be30468aa9ceab2eae8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: VIBRATE
+  key: SFX
   defaultFont: {fileID: 11400000, guid: 4e59073b4fbae3f4198b13a54ae247d2, type: 2}
   arabicFont: {fileID: 11400000, guid: b23cc21def0be41468a45bcdb9bb0abc, type: 2}
 --- !u!1001 &2450046952692062954

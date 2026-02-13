@@ -185,6 +185,7 @@ public class PlayerCube : MonoBehaviour
 
         currentWheel = wheel;
 
+
         isAttached = true;
         isJumping = false;
         inputLocked = false;
@@ -202,6 +203,7 @@ public class PlayerCube : MonoBehaviour
         // 🔥 PLAY ATTACH EFFECT
         if (hasAttachedOnce)
         {
+            SoundManager.Instance.PlayJump();
             jumpEffect?.PlayAttachEffect(0.1f);
             Debug.Log("[PlayerCube] ✨ Jump Attach Effect Played");
         }

@@ -1,14 +1,12 @@
 {
- "PLAY": {
-  "en": "Play",
-  "fr": "Jouer",
-  "pt": "Jogar",
-  "ar": "ابدأ اللعب",
-  "id": "Main",
-  "es": "Jugar"
- },
-  
-  
+  "PLAY": {
+    "en": "Play",
+    "fr": "Jouer",
+    "pt": "Jogar",
+    "ar": "ابدأ اللعب",
+    "id": "Main",
+    "es": "Jugar"
+  },
   "SETTINGS": {
     "en": "Settings",
     "fr": "Paramètres",
@@ -25,13 +23,13 @@
     "id": "Efek suara",
     "es": "Efectos de sonido"
   },
-  "VIBRATE": {
-    "en": "Vibrate",
-    "fr": "Vibration",
-    "pt": "Vibração",
-    "ar": "اهتزاز",
-    "id": "Getar",
-    "es": "Vibración"
+  "MUSIC": {
+    "en": "Music",
+    "fr": "Musique",
+    "pt": "Música",
+    "ar": "الموسيقى",
+    "id": "Musik",
+    "es": "Música"
   },
   "LANGUAGE": {
     "en": "Language",
@@ -81,5 +79,4 @@
     "id": "Terbaik",
     "es": "Mejor"
   }
-
 }
